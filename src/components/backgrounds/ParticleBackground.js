@@ -6,7 +6,7 @@ const object = {
   "autoPlay": true,
   "background": {
     "color": {
-      "value": "#0d47a1"
+      "value": "#414243"
     },
     "image": "",
     "position": "50% 50%",
@@ -202,7 +202,7 @@ const object = {
       }
     },
     "color": {
-      "value": "#ffffff",
+      "value": "rgb(210, 217, 34)", // dots
       "animation": {
         "h": {
           "count": 0,
@@ -514,13 +514,13 @@ const object = {
     "links": {
       "blink": false,
       "color": {
-        "value": "#ffffff"
+        "value": "rgb(210, 217, 34)" // links color
       },
       "consent": false,
       "distance": 150,
       "enable": true,
       "frequency": 1,
-      "opacity": 0.4,
+      "opacity": 0.8,
       "shadow": {
         "blur": 5,
         "color": {

@@ -9,7 +9,14 @@ export default function IconTextInput(props) {
     <Box sx={{ "& > :not(style)": { m: 1 } }}>
       <Box sx={{ display: "flex", alignItems: "flex-end" }}>
         {renderIcon(props.icon)}
-        <TextField id="input-with-sx" label={props.title} variant="standard" />
+        <TextField
+          fullWidth
+          id="input-with-sx"
+          label={props.title}
+          variant="standard"
+          color="white"
+          inputProps={{ style: { color: "white" } }}
+        />
       </Box>
     </Box>
   );
@@ -18,11 +25,13 @@ export default function IconTextInput(props) {
 const renderIcon = (iconType) => {
   switch (iconType) {
     case "username":
-      return <AccountCircle sx={{ color: "action.active", mr: 1, my: 0.5 }} />;
+      return (
+        <AccountCircle style={{ color: "white" }} sx={{ mr: 1, my: 0.5 }} />
+      );
 
     case "password":
       return (
-        <HttpsRoundedIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
+        <HttpsRoundedIcon style={{ color: "white" }} sx={{ mr: 1, my: 0.5 }} />
       );
   }
 };

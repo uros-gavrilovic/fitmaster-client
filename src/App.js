@@ -1,21 +1,54 @@
-import { Fragment } from "react";
 import "./App.css";
+import "./styles/center.css";
+import "./styles/container.css";
 import ParticleBackground from "./components/backgrounds/ParticleBackground";
-import { Container } from "@mui/material";
 import IconTextInput from "./components/reusable/inputFields/IconTextInput";
 import IconButton from "./components/reusable/buttons/IconButton";
-
+import CustomContainer from "./components/reusable/containers/CustomContainer";
+import { ThemeProvider, color, createTheme } from "@mui/system";
+import theme from "./utils/ThemeMUI";
+import LoginIcon from "@mui/icons-material/Login";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 
 function App() {
   return (
-    <Fragment className="App">
+    <ThemeProvider theme={theme}>
       <ParticleBackground />
-      <Container maxWidth="100px">
-        <IconTextInput id="txtUsername" title="Username" icon="username"/>
-        <IconTextInput id="txtPassword" title="Password" icon="password"/>
-        <IconButton title="Login" />
-      </Container>
-    </Fragment>
+      <CustomContainer id="test" className="vertical-center container">
+        <FitnessCenterIcon fontSize="large" />
+        <h1 style={{ color: "white" }}>
+          Fit<i>Master</i>
+        </h1>
+        <IconTextInput id="txtUsername" title="Username" icon="username" />
+        <IconTextInput
+          id="txtPassword"
+          title="Password"
+          icon="password"
+          margin="dense"
+        />
+        <div
+          style={{
+            display: "grid",
+            width: "auto",
+            gridTemplateColumns: "1fr 1fr",
+          }}
+        >
+          <IconButton
+            title="Register"
+            leftIcon={<HowToRegIcon style={{ color: "white" }} />}
+            variant="outlined"
+            width="100%"
+          />
+          <IconButton
+            title="Login"
+            rightIcon={<LoginIcon style={{ color: "white" }} />}
+            variant="contained"
+            width="100%"
+          />
+        </div>
+      </CustomContainer>
+    </ThemeProvider>
   );
 }
 
