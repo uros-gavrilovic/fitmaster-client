@@ -1,6 +1,7 @@
 import "./App.css";
 import "./styles/center.css";
 import "./styles/container.css";
+import "./styles/text.css";
 import ParticleBackground from "./components/backgrounds/ParticleBackground";
 import IconTextInput from "./components/reusable/inputFields/IconTextInput";
 import IconButton from "./components/reusable/buttons/IconButton";
@@ -16,10 +17,15 @@ function App() {
     <ThemeProvider theme={theme}>
       <ParticleBackground />
       <CustomContainer id="test" className="vertical-center container">
+        <div style={{ color: "white", display: "inline" }}>
+          <center>
+            <h1>
+              Fit<i>Master</i>
+              <sub className="subscript">v0.1</sub>
+            </h1>
+          </center>
+        </div>
         <FitnessCenterIcon fontSize="large" />
-        <h1 style={{ color: "white" }}>
-          Fit<i>Master</i>
-        </h1>
         <IconTextInput id="txtUsername" title="Username" icon="username" />
         <IconTextInput
           id="txtPassword"
@@ -29,6 +35,7 @@ function App() {
         />
         <div
           style={{
+            marginTop: "5vh",
             display: "grid",
             width: "auto",
             gridTemplateColumns: "1fr 1fr",
