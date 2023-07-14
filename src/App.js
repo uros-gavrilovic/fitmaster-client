@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import Particles from './components/ParticeBackground/Particles';
 
 function App() {
   return (
@@ -17,7 +18,16 @@ function App() {
         >
           Learn React
         </a>
+        <a
+          className="App-link"
+          href="https://particles.js.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          tsParticles
+        </a>
       </header>
+      <Particles id="tsparticles" />
     </div>
   );
 }
