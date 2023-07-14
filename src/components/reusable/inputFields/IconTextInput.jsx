@@ -16,6 +16,7 @@ export default function IconTextInput(props) {
           variant="standard"
           color="white"
           inputProps={{ style: { color: "white" } }}
+          focused //  6 Hours wasted trying to figure out how to change the color of the border when unfocused
         />
       </Box>
     </Box>

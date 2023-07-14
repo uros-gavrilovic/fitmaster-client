@@ -13,19 +13,6 @@ const theme = createTheme({
       main: "white",
     },
   },
-
-  overrides: {
-    MuiOutlinedInput: {
-      root: {
-        "& $notchedOutline": {
-          borderColor: "red", // Set your desired color here
-        },
-        "&:hover:not($disabled):not($focused):not($error) $notchedOutline": {
-          borderColor: "green", // Set the hover color here
-        },
-      },
-    },
-  },
 });
 
 // const theme = createTheme({

@@ -23,9 +23,10 @@ function App() {
               Fit<i>Master</i>
               <sub className="subscript">v0.1</sub>
             </h1>
+            <FitnessCenterIcon sx={{ fontSize: "10vh" }} />
           </center>
         </div>
-        <FitnessCenterIcon fontSize="large" />
+
         <IconTextInput id="txtUsername" title="Username" icon="username" />
         <IconTextInput
           id="txtPassword"
