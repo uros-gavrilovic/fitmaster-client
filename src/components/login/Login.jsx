@@ -24,12 +24,19 @@ const Login = () => {
           </center>
         </div>
 
-        <IconTextInput id="txtUsername" title="Username" icon="username" />
+        <IconTextInput
+          id="txtUsername"
+          title="Username"
+          icon="username"
+          fullWidth
+        />
         <IconTextInput
           id="txtPassword"
           title="Password"
+          type="password"
           icon="password"
           margin="dense"
+          fullWidth
         />
         <div
           style={{
