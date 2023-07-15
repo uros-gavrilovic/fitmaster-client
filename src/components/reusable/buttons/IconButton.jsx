@@ -5,18 +5,18 @@ import SendIcon from "@mui/icons-material/Send";
 import Stack from "@mui/material/Stack";
 
 export default function IconLabelButtons(props) {
-  console.log(props.variant);
-  let leftIcon = props.leftIcon ? props.leftIcon : false;
-  let rightIcon = props.rightIcon ? props.rightIcon : false;
+  const { leftIcon, rightIcon, variant, width, height, title, ...otherProps } =
+    props || {};
 
   return (
     <Stack direction="row" spacing={2}>
       <Button
-        variant={props.variant}
+        {...otherProps}
+        variant={variant}
         color="secondary"
         startIcon={leftIcon}
         endIcon={rightIcon}
-        style={{ width: props.width, height: props.height }}
+        style={{ width, height }}
       >
         {props.title}
       </Button>

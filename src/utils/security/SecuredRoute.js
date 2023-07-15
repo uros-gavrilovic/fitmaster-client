@@ -1,19 +1,15 @@
 import { useContext } from "react";
+import AuthContext from "./AuthContext";
+import { Navigate } from "react-router-dom";
 
 const SecuredRoute = ({ component: Component, ...otherProps }) => {
   const context = useContext(AuthContext);
+  console.log(context);
 
-  return (
-    <Route
-      {...otherProps}
-      render={(props) => {
-        if (context.validToken) {
-          return <Component {...props} />;
-        } else {
-          return <Redirect to="/" />;
-        }
-      }}
-    />
+  return context.validToken ? (
+    <Component {...otherProps} />
+  ) : (
+    <Navigate to="/" />
   );
 };
 

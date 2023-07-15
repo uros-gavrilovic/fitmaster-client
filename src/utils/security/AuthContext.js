@@ -1,6 +1,8 @@
+import React from "react";
+
 const AuthContext = React.createContext({
   user: null,
-  validToken: false,
+  validToken: null, // TESTING ONLY
 });
 
 export default AuthContext;
