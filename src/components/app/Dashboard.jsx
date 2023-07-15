@@ -1,10 +1,10 @@
 import { Fragment } from "react";
+import MiniDrawer from "./MiniDrawer";
 
 const Dashboard = (props) => {
   return (
     <Fragment>
-      <h2>hello hello</h2>
-      <h1>Hello World!</h1>
+      <MiniDrawer />
     </Fragment>
   );
 };

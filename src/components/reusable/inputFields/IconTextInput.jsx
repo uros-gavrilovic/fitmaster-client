@@ -10,7 +10,7 @@ export default function IconTextInput(props) {
       <Box sx={{ display: "flex", alignItems: "flex-end" }}>
         {renderIcon(props.icon)}
         <TextField
-          fullWidth
+          {...props}
           id="input-with-sx"
           label={props.title}
           variant="standard"
