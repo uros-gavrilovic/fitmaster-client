@@ -1,6 +1,10 @@
 import { NotificationManager } from "react-notifications";
 
-export const createNotification = (type, titleMessage, descriptionMessage) => {
+export default function createNotification(
+  type,
+  titleMessage,
+  descriptionMessage
+) {
   switch (type) {
     case notificationType.info:
       NotificationManager.info(descriptionMessage, titleMessage, 3000);
@@ -17,4 +21,4 @@ export const createNotification = (type, titleMessage, descriptionMessage) => {
     default:
       break;
   }
-};
+}
