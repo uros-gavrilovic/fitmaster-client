@@ -1,5 +1,4 @@
 import axios from "axios";
-// import { clearHeadersAndTokens } from '../actions/security';
 
 const handleErrors = async (error) => {
   const { response } = error || {};
@@ -44,7 +43,8 @@ const apiService = {
 
 function getSimpleHeaders() {
   return {
-    "Content-Type": "application/json",
+    // "Content-Type": "application/json",
+    "Content-Type": "text/plain",
     // locale: fetchLocaleFromSessionStorage(),
   };
 }

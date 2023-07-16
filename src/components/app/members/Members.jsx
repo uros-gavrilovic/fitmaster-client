@@ -10,7 +10,6 @@ export default function Members(props) {
   useEffect(() => {
     dispatch(membersActions.fetchDTOMembers());
   }, [dispatch]);
-
   apiService.get(membersDTOPath()).then((response) => {
     console.log(response);
   });

@@ -8,8 +8,12 @@ import LoginIcon from "@mui/icons-material/Login";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Login = () => {
+  const [usernameState, setUsernameState] = useState("");
+  const [passwordState, setPasswordState] = useState("");
+
   return (
     <ThemeProvider theme={theme}>
       <ParticleBackground />
@@ -29,6 +33,7 @@ const Login = () => {
           title="Username"
           icon="username"
           fullWidth
+          onChange={(e) => setUsernameState(e.target.value)}
         />
         <IconTextInput
           id="txtPassword"
@@ -37,6 +42,7 @@ const Login = () => {
           icon="password"
           margin="dense"
           fullWidth
+          onChange={(e) => setPasswordState(e.target.value)}
         />
         <div
           style={{
