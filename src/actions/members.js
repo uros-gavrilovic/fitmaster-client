@@ -23,7 +23,6 @@ export const fetchMembers = () => {
 };
 
 export const fetchDTOMembers = () => {
-  console.log("Poslat zahtev za DTO members");
   return (dispatch) => {
     dispatch(membersActions.actionStart());
     return apiService

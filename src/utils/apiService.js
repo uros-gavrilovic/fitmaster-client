@@ -43,8 +43,8 @@ const apiService = {
 
 function getSimpleHeaders() {
   return {
-    // "Content-Type": "application/json",
-    "Content-Type": "text/plain",
+    "Content-Type": "application/json",
+    // "Content-Type": "text/plain",
     // locale: fetchLocaleFromSessionStorage(),
   };
 }

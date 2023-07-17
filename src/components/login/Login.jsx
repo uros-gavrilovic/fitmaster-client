@@ -7,12 +7,57 @@ import theme from "../../utils/ThemeMUI";
 import LoginIcon from "@mui/icons-material/Login";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as userActions from "../../actions/user";
+import AuthContext from "../../utils/security/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const authContext = useContext(AuthContext);
+  const { user, token } = useSelector((state) => state.userReducer);
+
   const [usernameState, setUsernameState] = useState("");
   const [passwordState, setPasswordState] = useState("");
+
+  const [usernameError, setUsernameError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+
+  const handleRegister = () => {
+    console.log("Register successful!");
+    // NotificationManager.info("Registration successful!");
+  };
+  const handleLogIn = () => {
+    if (usernameState === "") {
+      setUsernameError(true);
+      return;
+    } else {
+      setUsernameError(false);
+    }
+    if (passwordState === "") {
+      setPasswordError(true);
+      return;
+    } else {
+      setPasswordError(false);
+    }
+
+    dispatch(
+      userActions.login({ username: usernameState, password: passwordState })
+    );
+  };
+
+  useEffect(() => {
+    if (token !== undefined) {
+      authContext.user = user;
+      authContext.token = token;
+      authContext.validToken = true;
+      console.log(authContext);
+
+      navigate("/dashboard");
+    }
+  }, [token]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -33,6 +78,8 @@ const Login = () => {
           title="Username"
           icon="username"
           fullWidth
+          required
+          error={usernameError}
           onChange={(e) => setUsernameState(e.target.value)}
         />
         <IconTextInput
@@ -42,6 +89,8 @@ const Login = () => {
           icon="password"
           margin="dense"
           fullWidth
+          required
+          error={passwordError}
           onChange={(e) => setPasswordState(e.target.value)}
         />
         <div
@@ -59,28 +108,19 @@ const Login = () => {
             width="100%"
             onClick={handleRegister}
           />
-          <Link to="/dashboard">
-            <IconButton
-              title="Login"
-              rightIcon={<LoginIcon style={{ color: "white" }} />}
-              variant="contained"
-              width="100%"
-              onClick={handleLogIn}
-            />
-          </Link>
+          {/* <Link to="/dashboard"> */}
+          <IconButton
+            title="Login"
+            rightIcon={<LoginIcon style={{ color: "white" }} />}
+            variant="contained"
+            width="100%"
+            onClick={handleLogIn}
+          />
+          {/* </Link> */}
         </div>
       </CustomContainer>
     </ThemeProvider>
   );
-};
-
-const handleRegister = () => {
-  console.log("Register successful!");
-  // NotificationManager.info("Registration successful!");
-};
-
-const handleLogIn = () => {
-  console.log("Login successful!");
 };
 
 export default Login;
