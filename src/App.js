@@ -19,7 +19,6 @@ import WorkoutPlans from "./components/app/workout-plans/WorkoutPlans";
 function App() {
   return (
     <AuthContext.Provider value={{ user: null, validToken: true }}>
-      {/* <NotificationContainer> */}
       <Routes>
         <Route exact path="/" element={<Login />} />
         <Route
@@ -58,7 +57,7 @@ function App() {
           element={<SecuredRoute component={Menu} display={<Settings />} />}
         />
       </Routes>
-      {/* </NotificationContainer> */}
+      <NotificationContainer />
     </AuthContext.Provider>
   );
 }

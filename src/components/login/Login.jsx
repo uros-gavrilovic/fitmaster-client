@@ -53,7 +53,6 @@ const Login = () => {
       authContext.user = user;
       authContext.token = token;
       authContext.validToken = true;
-      console.log(authContext);
 
       navigate("/dashboard");
     }
@@ -108,7 +107,6 @@ const Login = () => {
             width="100%"
             onClick={handleRegister}
           />
-          {/* <Link to="/dashboard"> */}
           <IconButton
             title="Login"
             rightIcon={<LoginIcon style={{ color: "white" }} />}
@@ -116,7 +114,6 @@ const Login = () => {
             width="100%"
             onClick={handleLogIn}
           />
-          {/* </Link> */}
         </div>
       </CustomContainer>
     </ThemeProvider>

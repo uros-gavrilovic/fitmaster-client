@@ -1,26 +1,21 @@
-// import { NotificationManager } from "react-notifications";
+import { NotificationManager } from "react-notifications";
+import { notificationType } from "../constants/globals";
 
-// export default function createNotification(
-//   type,
-//   titleMessage,
-//   descriptionMessage
-// ) {
-//   switch (type) {
-//     case notificationType.info:
-//       NotificationManager.info(descriptionMessage, titleMessage, 3000);
-//       break;
-//     case notificationType.success:
-//       NotificationManager.success(descriptionMessage, titleMessage, 3000);
-//       break;
-//     case notificationType.warning:
-//       NotificationManager.warning(descriptionMessage, titleMessage, 3000);
-//       break;
-//     case notificationType.error:
-//       NotificationManager.error(descriptionMessage, titleMessage, 4200);
-//       break;
-//     default:
-//       break;
-//   }
-// }
-
-// TEST;
+export function createNotification(type, title, description) {
+  switch (type) {
+    case notificationType.info:
+      NotificationManager.info(description, title, 3000);
+      break;
+    case notificationType.success:
+      NotificationManager.success(description, title, 3000);
+      break;
+    case notificationType.warning:
+      NotificationManager.warning(description, title, 3000);
+      break;
+    case notificationType.error:
+      NotificationManager.error(description, title, 4200);
+      break;
+    default:
+      break;
+  }
+}

@@ -1,12 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: {
-    username: undefined,
-    password: undefined,
-    id: undefined,
-  },
+  // user: {
+  //   username: undefined,
+  //   password: undefined,
+  //   id: undefined,
+  //   // firstName: undefined,
+  //   // lastName: undefined,
+  //   // gender: undefined,
+  //   // phoneNumber: undefined,
+  //   // address: undefined,
+  //   // hireDate: undefined,
+  // },
+  user: undefined,
   token: undefined,
+
   error: undefined,
 };
 
@@ -27,24 +35,22 @@ const userSlice = createSlice({
         // address: action.payload.address,
         // hireDate: action.payload.hireDate,
       };
-
       state.token = action.payload.token;
+
       state.error = undefined;
     },
     logout(state) {
-      // TODO: Refactor to use initialState
-      state.username = undefined;
-      state.password = undefined;
+      state.user = undefined;
       state.token = undefined;
+
       state.error = undefined;
     },
 
+    actionStart(state) {
+      state.error = undefined;
+    },
     actionError(state, action) {
       state.error = action.payload;
-      state.loading = false;
-    },
-    clearError(state) {
-      state.error = undefined;
     },
   },
 });

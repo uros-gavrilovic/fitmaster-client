@@ -23,7 +23,7 @@ const membersSlice = createSlice({
     },
     deleteMember(state, action) {
       state.members.splice(
-        state.books.findIndex((member) => member.id === action.payload)
+        state.members.findIndex((member) => member.id === action.payload)
       );
       state.error = undefined;
     },
@@ -36,7 +36,6 @@ const membersSlice = createSlice({
 
     actionError(state, action) {
       state.error = action.payload;
-      state.loading = false;
     },
     clearError(state) {
       state.error = undefined;

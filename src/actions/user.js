@@ -1,47 +1,50 @@
 import apiService from "../utils/apiService";
-// import { createNotification } from "../utils/notificationService";
-// import { notificationType } from "../constants/globals";
-import { loginPath, registerPath } from "../constants/apiEndpoints";
+import { createNotification } from "../utils/notificationService";
+import { loginTrainerPath, logoutTrainerPath } from "../constants/apiEndpoints";
 import { userActions } from "../reducers/user";
+import { notificationType } from "../constants/globals";
 
 export const login = (data) => {
   return (dispatch) => {
-    // dispatch(userActions.actionStart());
+    dispatch(userActions.actionStart());
     return apiService
-      .post(loginPath(), data)
+      .post(loginTrainerPath(), data)
       .then((response) => {
+        if (response === undefined) return; // TODO refactor
         if (response.status == 200) {
           dispatch(userActions.login(response.data));
-        } else {
-          console.log("response status nije 200");
-          // errorAction(response, userActions.actionError, dispatch, messages);
+          sessionStorage.setItem("token", response.data.token);
+          createNotification(
+            notificationType.success,
+            "Success",
+            "Successfully logged back in."
+          );
         }
       })
       .catch((err) => {
-        // errorAction(err, userActions.actionError, dispatch, messages);
+        handleError(err, userActions.actionError, dispatch, undefined);
       });
   };
 };
 
-// export const logout = () => {
+// export const logout = (data) => {
 //   return (dispatch) => {
-//     dispatch(membersActions.actionStart());
+//     dispatch(userActions.actionStart());
 //     return apiService
-//       .get(membersDTOPath())
+//       .post(logoutTrainerPath(), data)
 //       .then((response) => {
-//         dispatch(membersActions.fetchDTOMembers(response.data));
+//         if (response.status == 200) {
+//           dispatch(userActions.logout());
+//           sessionStorage.removeItem("token");
+//         }
 //       })
 //       .catch((err) => {
-//         dispatch(membersActions.actionError(err?.response?.data));
+//         handleError(err, userActions.actionError, dispatch, undefined);
 //       });
 //   };
 // };
 
-// const errorAction = (error, action, dispatch, messages) => {
-//   dispatch(action(error?.response?.data));
-//   createNotification(
-//     notificationType.error,
-//     messages?.title,
-//     error?.response?.data?.error_message
-//   );
-// };
+const handleError = (error, action, dispatch, messages) => {
+  dispatch(action(error?.response?.data));
+  createNotification(notificationType.error, "Error", "An error has occured.");
+};
