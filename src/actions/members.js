@@ -22,13 +22,13 @@ export const fetchMembers = () => {
   };
 };
 
-export const fetchDTOMembers = () => {
+export const fetchMembersDTO = () => {
   return (dispatch) => {
     dispatch(membersActions.actionStart());
     return apiService
       .get(membersDTOPath())
       .then((response) => {
-        dispatch(membersActions.fetchDTOMembers(response.data));
+        dispatch(membersActions.fetchMembersDTO(response.data));
       })
       .catch((err) => {
         dispatch(membersActions.actionError(err?.response?.data));

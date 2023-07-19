@@ -1,5 +1,4 @@
 export const config = [
-  //   { type: "data", id: "id", label: "ID", minWidth: 30, input: "number" },
   {
     type: "data",
     id: "firstName",
@@ -43,6 +42,18 @@ export const config = [
     input: "text",
   },
   {
+    type: "data",
+    id: "active",
+    label: "Status",
+    input: "text",
+  },
+  {
+    type: "action",
+    id: "workoutPlan",
+    label: "Plans",
+    align: "center",
+  },
+  {
     type: "action",
     id: "edit",
     label: "Edit",
@@ -52,12 +63,6 @@ export const config = [
     type: "action",
     id: "delete",
     label: "Delete",
-    align: "center",
-  },
-  {
-    type: "action",
-    id: "workoutPlan",
-    label: "Plans",
     align: "center",
   },
 ];

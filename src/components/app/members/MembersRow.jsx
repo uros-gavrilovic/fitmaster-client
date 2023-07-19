@@ -1,11 +1,15 @@
 import { Fragment, useState } from "react";
 import * as memberActions from "../../../actions/members";
 import { useDispatch } from "react-redux";
-import config from "./membersConfig";
 import { TableCell, TableRow } from "@mui/material";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { type } from "@testing-library/user-event/dist/type";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+
+const formatDate = (arr) => {
+  return `${arr[2]}/${arr[1]}/${arr[0]}`;
+};
 
 export default function MemberRow(props) {
   const { t, member } = props || {};
@@ -19,12 +23,16 @@ export default function MemberRow(props) {
     address: member.address,
     phoneNumber: member.phoneNumber,
     birthDate: member.birthDate,
+    active: member.active,
   };
   const [state, setState] = useState(initialState);
 
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
 
+  const handlePlan = () => {
+    console.log("handlePlan");
+  };
   const handleEdit = () => {
     console.log("handleEdit");
     // setEditModalVisible(true);
@@ -72,15 +80,16 @@ export default function MemberRow(props) {
         <TableCell>{member.gender}</TableCell>
         <TableCell>{member.address}</TableCell>
         <TableCell>{member.phoneNumber}</TableCell>
-        <TableCell>{member.birthDate}</TableCell>
+        <TableCell>{formatDate(member.birthDate)}</TableCell>
+        <TableCell>{member.active ? <CheckCircleIcon /> : null}</TableCell>
         <TableCell align="center">
-          <EditIcon onClick={handleEdit} />
+          <AssignmentIcon onClick={handlePlan} />
         </TableCell>
         <TableCell align="center">
-          <DeleteForeverIcon onClick={handleDelete} />
+          <EditIcon onClick={handleDelete} />
         </TableCell>
         <TableCell align="center">
-          <DeleteForeverIcon onClick={handleDelete} />
+          <DeleteForeverIcon onClick={handleEdit} />
         </TableCell>
       </TableRow>
     </Fragment>
