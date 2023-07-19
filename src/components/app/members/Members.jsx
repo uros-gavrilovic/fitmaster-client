@@ -10,24 +10,23 @@ const rowComponentFunction = (t, row) => {
 };
 
 export default function Members(props) {
-  const { members } = useSelector((state) => state.membersReducer);
+  const { membersDTO } = useSelector((state) => state.membersReducer);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(membersActions.fetchDTOMembers());
-    console.log(members);
+    dispatch(membersActions.fetchMembersDTO());
   }, [dispatch]);
-  useEffect(() => {
-    console.log(members);
-  }, [members]);
 
   return (
     <Fragment>
-      <h1>This is Members.</h1>
-      <PaginationTable
-        config={config}
-        rows={members}
-        rowComponent={rowComponentFunction}
-      />
+      {membersDTO === undefined ? (
+        <h1>There are no available members.</h1>
+      ) : (
+        <PaginationTable
+          config={config}
+          rows={membersDTO}
+          rowComponent={rowComponentFunction}
+        />
+      )}
     </Fragment>
   );
 }

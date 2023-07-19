@@ -13,7 +13,7 @@ const membersSlice = createSlice({
       state.members = action.payload;
       state.error = undefined;
     },
-    fetchDTOMembers(state, action) {
+    fetchMembersDTO(state, action) {
       state.membersDTO = action.payload;
       state.error = undefined;
     },

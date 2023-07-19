@@ -33,7 +33,7 @@ export default function PaginationTable(props) {
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
                 >
-                  {"bla".toUpperCase()}
+                  {column.label.toUpperCase()}
                 </TableCell>
               ))}
             </TableRow>
@@ -44,7 +44,6 @@ export default function PaginationTable(props) {
               .map((row) => {
                 return (
                   <Fragment key={row.id}>
-                    {console.log(JSON.stringify(row))}
                     {rowComponent(t, row, state, setState)}
                   </Fragment>
                 );
