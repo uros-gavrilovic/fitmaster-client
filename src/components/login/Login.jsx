@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const authContext = useContext(AuthContext);
+  // const authContext = useContext(AuthContext);
   const { user, token } = useSelector((state) => state.userReducer);
 
   const [usernameState, setUsernameState] = useState("");
@@ -27,7 +27,6 @@ const Login = () => {
 
   const handleRegister = () => {
     console.log("Register successful!");
-    // NotificationManager.info("Registration successful!");
   };
   const handleLogIn = () => {
     if (usernameState === "") {
@@ -50,9 +49,9 @@ const Login = () => {
 
   useEffect(() => {
     if (token !== undefined) {
-      authContext.user = user;
-      authContext.token = token;
-      authContext.validToken = true;
+      // authContext.user = user;
+      // authContext.token = token;
+      // authContext.validToken = true;
 
       navigate("/dashboard");
     }

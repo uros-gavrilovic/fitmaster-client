@@ -10,19 +10,19 @@ export const login = (data) => {
     return apiService
       .post(loginTrainerPath(), data)
       .then((response) => {
-        if (response === undefined) return; // TODO refactor
-        if (response.status == 200) {
-          dispatch(userActions.login(response.data));
-          sessionStorage.setItem("token", response.data.token);
-          createNotification(
-            notificationType.success,
-            "Success",
-            "Successfully logged back in."
-          );
-        }
+        dispatch(userActions.login(response.data));
+        sessionStorage.setItem("token", response.data.token);
+        createNotification(
+          notificationType.success,
+          "LOG-IN SUCCESS",
+          "Successfully logged back in."
+        );
       })
       .catch((err) => {
-        handleError(err, userActions.actionError, dispatch, undefined);
+        handleError(err, userActions.actionError, dispatch, {
+          title: "LOG-IN ERROR",
+          description: "Invalid username or password.",
+        });
       });
   };
 };
@@ -46,5 +46,9 @@ export const login = (data) => {
 
 const handleError = (error, action, dispatch, messages) => {
   dispatch(action(error?.response?.data));
-  createNotification(notificationType.error, "Error", "An error has occured.");
+  createNotification(
+    notificationType.error,
+    messages.title,
+    messages.description
+  );
 };

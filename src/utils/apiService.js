@@ -3,16 +3,7 @@ import { createNotification } from "./notificationService";
 import { notificationType } from "../constants/globals";
 
 const handleErrors = async (error) => {
-  // const { response } = error || {};
-  // const { status } = response || {};
-  // console.log(error);
-
-  console.log(error);
-  createNotification(
-    notificationType.error,
-    error.name + " (" + error.code + ")",
-    error.message
-  );
+  throw error;
 };
 
 const apiService = {
