@@ -5,6 +5,7 @@ import config from "./membersConfig";
 import { TableCell, TableRow } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { type } from "@testing-library/user-event/dist/type";
 
 export default function MemberRow(props) {
   const { t, member } = props || {};
@@ -24,11 +25,13 @@ export default function MemberRow(props) {
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
 
-  const editHandler = () => {
-    setEditModalVisible(true);
+  const handleEdit = () => {
+    console.log("handleEdit");
+    // setEditModalVisible(true);
   };
-  const deleteHandler = () => {
-    setConfirmModalVisible(true);
+  const handleDelete = () => {
+    console.log("handleDelete");
+    // setConfirmModalVisible(true);
   };
 
   const deleteRow = () => {
@@ -40,7 +43,7 @@ export default function MemberRow(props) {
 
   return (
     <Fragment>
-      {editModalVisible && (
+      {/* {editModalVisible && (
         <EditModal
           t={t}
           state={state}
@@ -61,10 +64,9 @@ export default function MemberRow(props) {
           open={confirmModalVisible}
           setOpen={setConfirmModalVisible}
         />
-      )}
+      )} */}
 
       <TableRow key={member.id}>
-        {/* <TableCell>{member.id}</TableCell> */}
         <TableCell>{member.firstName}</TableCell>
         <TableCell>{member.lastName}</TableCell>
         <TableCell>{member.gender}</TableCell>
@@ -72,13 +74,13 @@ export default function MemberRow(props) {
         <TableCell>{member.phoneNumber}</TableCell>
         <TableCell>{member.birthDate}</TableCell>
         <TableCell align="center">
-          <EditIcon onClick={editHandler} />
+          <EditIcon onClick={handleEdit} />
         </TableCell>
         <TableCell align="center">
-          <DeleteForeverIcon onClick={deleteHandler} />
+          <DeleteForeverIcon onClick={handleDelete} />
         </TableCell>
         <TableCell align="center">
-          <DeleteForeverIcon onClick={deleteHandler} />
+          <DeleteForeverIcon onClick={handleDelete} />
         </TableCell>
       </TableRow>
     </Fragment>

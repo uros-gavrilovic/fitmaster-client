@@ -11,7 +11,6 @@ export const login = (data) => {
       .post(loginTrainerPath(), data)
       .then((response) => {
         dispatch(userActions.login(response.data));
-        sessionStorage.setItem("token", response.data.token);
         createNotification(
           notificationType.success,
           "LOG-IN SUCCESS",
@@ -19,30 +18,42 @@ export const login = (data) => {
         );
       })
       .catch((err) => {
-        handleError(err, userActions.actionError, dispatch, {
-          title: "LOG-IN ERROR",
-          description: "Invalid username or password.",
-        });
+        if (err.response.status == 401) {
+          createNotification(
+            notificationType.error,
+            "LOG-IN ERROR",
+            "Invalid username or password."
+          );
+        } else {
+          handleError(err, userActions.actionError, dispatch, {
+            title: "LOG-IN ERROR",
+            description: "An error has occured while signing in.",
+          });
+        }
       });
   };
 };
 
-// export const logout = (data) => {
-//   return (dispatch) => {
-//     dispatch(userActions.actionStart());
-//     return apiService
-//       .post(logoutTrainerPath(), data)
-//       .then((response) => {
-//         if (response.status == 200) {
-//           dispatch(userActions.logout());
-//           sessionStorage.removeItem("token");
-//         }
-//       })
-//       .catch((err) => {
-//         handleError(err, userActions.actionError, dispatch, undefined);
-//       });
-//   };
-// };
+export const logout = (data) => {
+  return (dispatch) => {
+    dispatch(userActions.logout());
+  };
+
+  // TODO
+  // return (dispatch) => {
+  //   dispatch(userActions.actionStart());
+  //   return apiService
+  //     .post(logoutTrainerPath(), data)
+  //     .then((response) => {
+  //       if (response.status == 200) {
+  //         dispatch(userActions.logout());
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       handleError(err, userActions.actionError, dispatch, undefined);
+  //     });
+  // };
+};
 
 const handleError = (error, action, dispatch, messages) => {
   dispatch(action(error?.response?.data));

@@ -34,6 +34,9 @@ const membersSlice = createSlice({
       state.error = undefined;
     },
 
+    actionStart(state) {
+      state.error = undefined;
+    },
     actionError(state, action) {
       state.error = action.payload;
     },

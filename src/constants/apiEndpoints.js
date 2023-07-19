@@ -9,6 +9,6 @@ export const registerMemberPath = () => `/register-member`;
 export const logoutMemberPath = () => `/logout-member`;
 
 // Members
-export const membersPath = () => `/api/members`;
-export const membersDTOPath = () => `/api/members/dto`;
-export const membersIDPath = (id) => `/api/members/${id}`;
+export const membersPath = () => `/api/member`;
+export const membersDTOPath = () => `/api/member/dto`;
+export const membersIDPath = (id) => `/api/member/${id}`;

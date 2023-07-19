@@ -1,6 +1,5 @@
 import axios from "axios";
-import { createNotification } from "./notificationService";
-import { notificationType } from "../constants/globals";
+import store from "../reducers/index";
 
 const handleErrors = async (error) => {
   throw error;
@@ -10,7 +9,7 @@ const apiService = {
   get(url) {
     return axios
       .get(url, {
-        headers: getSimpleHeaders(),
+        headers: getHeaders(),
       })
       .catch(handleErrors);
   },
@@ -18,7 +17,7 @@ const apiService = {
   post(url, body) {
     return axios
       .post(url, body, {
-        headers: getSimpleHeaders(),
+        headers: getHeaders(),
       })
       .catch(handleErrors);
   },
@@ -26,7 +25,7 @@ const apiService = {
   put(url, body) {
     return axios
       .put(url, body, {
-        headers: getSimpleHeaders(),
+        headers: getHeaders(),
       })
       .catch(handleErrors);
   },
@@ -34,18 +33,25 @@ const apiService = {
   delete(url) {
     return axios
       .delete(url, {
-        headers: getSimpleHeaders(),
+        headers: getHeaders(),
       })
       .catch(handleErrors);
   },
 };
 
-function getSimpleHeaders() {
-  return {
+function getHeaders() {
+  const jwtToken = store.getState().userReducer.token;
+
+  const headers = {
     "Content-Type": "application/json",
-    // "Content-Type": "text/plain",
-    // locale: fetchLocaleFromSessionStorage(),
+    ...(jwtToken !== undefined ? { Authorization: `Bearer ${jwtToken}` } : {}),
   };
+
+  // if (jwtToken !== undefined) {
+  //   headers["Authorization"] = jwtToken;
+  // }
+
+  return headers;
 }
 
 export default apiService;

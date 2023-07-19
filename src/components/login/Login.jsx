@@ -7,16 +7,14 @@ import theme from "../../utils/ThemeMUI";
 import LoginIcon from "@mui/icons-material/Login";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as userActions from "../../actions/user";
-import AuthContext from "../../utils/security/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const authContext = useContext(AuthContext);
   const { user, token } = useSelector((state) => state.userReducer);
 
   const [usernameState, setUsernameState] = useState("");
@@ -49,10 +47,6 @@ const Login = () => {
 
   useEffect(() => {
     if (token !== undefined) {
-      // authContext.user = user;
-      // authContext.token = token;
-      // authContext.validToken = true;
-
       navigate("/dashboard");
     }
   }, [token]);
