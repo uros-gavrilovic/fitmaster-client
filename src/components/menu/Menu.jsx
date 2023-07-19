@@ -17,9 +17,11 @@ import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import tabs from "./MenuConfig.js";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import * as userActions from "../../actions/user";
 
 const drawerWidth = 240;
 
@@ -89,7 +91,29 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Menu(props) {
   const theme = useTheme();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const [currentTab, setCurrentTab] = useState(tabs[0].name);
+  const { user, token } = useSelector((state) => state.userReducer);
+
+  useEffect(() => {
+    if (token === undefined) {
+      navigate("/");
+    }
+  }, [token]);
+
+  const handleTabChange = (name) => {
+    setCurrentTab(name);
+  };
+
+  const handleTabAction = (action) => {
+    console.log(action);
+    switch (action) {
+      case "log-out":
+        dispatch(userActions.logout({}));
+    }
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -121,6 +145,7 @@ export default function Menu(props) {
               Fit<i>Master</i>
               <sub className="subscript">v0.1</sub>
               <FitnessCenterIcon />
+              <a>/ {currentTab}</a>
             </a>
           </Typography>
         </Toolbar>
@@ -150,6 +175,10 @@ export default function Menu(props) {
                       minHeight: 48,
                       justifyContent: open ? "initial" : "center",
                       px: 2.5,
+                    }}
+                    onClick={() => {
+                      handleTabAction(tab.action);
+                      handleTabChange(tab.name);
                     }}
                   >
                     <ListItemIcon

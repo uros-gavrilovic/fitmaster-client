@@ -1,4 +1,3 @@
-import * as React from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,12 +6,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 
 export default function PaginationTable(props) {
   const { t, config, rows, rowComponent, state, setState } = props || {};
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -34,7 +33,7 @@ export default function PaginationTable(props) {
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
                 >
-                  {t.columns[column.id].toUpperCase()}
+                  {"bla".toUpperCase()}
                 </TableCell>
               ))}
             </TableRow>
@@ -45,6 +44,7 @@ export default function PaginationTable(props) {
               .map((row) => {
                 return (
                   <Fragment key={row.id}>
+                    {console.log(JSON.stringify(row))}
                     {rowComponent(t, row, state, setState)}
                   </Fragment>
                 );

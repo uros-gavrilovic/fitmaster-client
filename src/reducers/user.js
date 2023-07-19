@@ -1,17 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  // user: {
-  //   username: undefined,
-  //   password: undefined,
-  //   id: undefined,
-  //   // firstName: undefined,
-  //   // lastName: undefined,
-  //   // gender: undefined,
-  //   // phoneNumber: undefined,
-  //   // address: undefined,
-  //   // hireDate: undefined,
-  // },
   user: undefined,
   token: undefined,
 
@@ -28,12 +17,12 @@ const userSlice = createSlice({
         username: action.payload.username,
         password: action.payload.password,
         id: action.payload.id,
-        // firstName: action.payload.firstName,
-        // lastName: action.payload.lastName,
-        // gender: action.payload.gender,
-        // phoneNumber: action.payload.phoneNumber,
-        // address: action.payload.address,
-        // hireDate: action.payload.hireDate,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+        gender: action.payload.gender,
+        phoneNumber: action.payload.phoneNumber,
+        address: action.payload.address,
+        hireDate: action.payload.hireDate,
       };
       state.token = action.payload.token;
 
