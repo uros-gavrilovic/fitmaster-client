@@ -15,20 +15,10 @@ const formatDate = (arr) => {
 };
 
 export default function MemberRow(props) {
-  const { t, member } = props || {};
+  const { t, member } = props || {}; // memberDTO as member from fetchMembersDTO list
   const dispatch = useDispatch();
 
-  const initialMemberState = {
-    id: member.memberID,
-    firstName: member.firstName,
-    lastName: member.lastName,
-    gender: member.gender,
-    address: member.address,
-    phoneNumber: member.phoneNumber,
-    birthDate: member.birthDate,
-    active: member.active,
-  };
-  const [memberState, setMemberState] = useState(initialMemberState);
+  const [memberState, setMemberState] = useState(""); // to be changed inside modal
 
   const [infoModalVisible, setInfoModalVisible] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
@@ -55,8 +45,7 @@ export default function MemberRow(props) {
   return (
     <Fragment>
       <MemberModal
-        memberState={memberState}
-        setMemberState={setMemberState}
+        memberID={member.id}
         open={infoModalVisible}
         setOpen={setInfoModalVisible}
       />

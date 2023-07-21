@@ -1,0 +1,11 @@
+.leftDiv {
+  background-color: gray;
+  borderright: 2px solid #000;
+  display: flex;
+  justifycontent: center;
+  alignitems: center;
+}
+
+.rightDiv {
+  padding: 16px;
+}
