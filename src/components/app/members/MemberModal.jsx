@@ -3,12 +3,8 @@ import PropTypes from "prop-types";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import Typography from "@mui/material/Typography";
 import { useSpring, animated } from "@react-spring/web";
 import { forwardRef } from "react";
-import IconButton from "../buttons/IconButton";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 
 const Fade = forwardRef(function Fade(props, ref) {
   const {
@@ -64,16 +60,7 @@ const style = {
 };
 
 export default function ConfirmModal(props) {
-  const { title, text, yes_action, no_action, open, setOpen } = props || {};
-
-  const handlePositive = () => {
-    yes_action();
-    setOpen(false);
-  };
-  const handleNegative = () => {
-    no_action();
-    setOpen(false);
-  };
+  const { open, setOpen } = props || {};
 
   return (
     <div>
@@ -91,37 +78,7 @@ export default function ConfirmModal(props) {
         }}
       >
         <Fade in={open}>
-          <Box sx={style}>
-            <Typography id="spring-modal-title" variant="h6" component="h2">
-              {title}
-            </Typography>
-            <Typography id="spring-modal-description" sx={{ mt: 2 }}>
-              {text}
-            </Typography>
-            <div
-              style={{
-                marginTop: "5vh",
-                display: "grid",
-                width: "auto",
-                gridTemplateColumns: "1fr 1fr",
-              }}
-            >
-              <IconButton
-                title="No"
-                leftIcon={<ThumbDownIcon />}
-                variant="outlined"
-                width="100%"
-                onClick={handleNegative}
-              />
-              <IconButton
-                title="Yes"
-                rightIcon={<ThumbUpIcon />}
-                variant="contained"
-                width="100%"
-                onClick={handlePositive}
-              />
-            </div>
-          </Box>
+          <Box sx={style}>Hello</Box>
         </Fade>
       </Modal>
     </div>
