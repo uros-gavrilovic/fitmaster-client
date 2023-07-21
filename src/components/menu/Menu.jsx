@@ -90,6 +90,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function Menu(props) {
+  console.log("Ovde");
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();

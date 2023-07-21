@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, token } = useSelector((state) => state.userReducer);
+  const { token } = useSelector((state) => state.userReducer);
 
   const [usernameState, setUsernameState] = useState("");
   const [passwordState, setPasswordState] = useState("");
