@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useSpring, animated } from "@react-spring/web";
 import { forwardRef, useState } from "react";
@@ -65,30 +64,25 @@ const style = {
 };
 
 export default function ConfirmModal(props) {
-  const { title, text, appearance } = props || {};
-
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const { title, text, yes_action, no_action, open, setOpen } = props || {};
 
   const handlePositive = () => {
-    console.log("Positive");
-    handleClose();
+    yes_action();
+    setOpen(false);
   };
   const handleNegative = () => {
-    console.log("Negative");
-    handleClose();
+    no_action();
+    setOpen(false);
   };
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
       <Modal
         onBackdropClick={handleNegative}
         aria-labelledby="spring-modal-title"
         aria-describedby="spring-modal-description"
         open={open}
-        onClose={handleClose}
+        onClose={() => setOpen(false)}
         closeAfterTransition
         slots={{ backdrop: Backdrop }}
         slotProps={{

@@ -6,6 +6,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import ConfirmModal from "../../reusable/modals/ConfirmModal";
 
 const formatDate = (arr) => {
   return `${arr[2]}/${arr[1]}/${arr[0]}`;
@@ -38,12 +39,12 @@ export default function MemberRow(props) {
     // setEditModalVisible(true);
   };
   const handleDelete = () => {
-    console.log("handleDelete");
-    // setConfirmModalVisible(true);
+    setConfirmModalVisible(true);
   };
 
   const deleteRow = () => {
-    dispatch(memberActions.deleteMember(state.id, t.Delete));
+    console.log("deleting row");
+    // dispatch(memberActions.deleteMember(state.id, t.Delete));
   };
   const editRow = () => {
     dispatch(memberActions.updateMember(state, t.Edit));
@@ -61,10 +62,11 @@ export default function MemberRow(props) {
           open={editModalVisible}
           setOpen={setEditModalVisible}
         />
-      )}
+      )} */}
       {confirmModalVisible && (
         <ConfirmModal
-          t={t.Delete}
+          title="Delete Member"
+          text="Are you sure you want to delete this member?"
           yes_action={deleteRow}
           no_action={() => {
             setConfirmModalVisible(false);
@@ -72,7 +74,7 @@ export default function MemberRow(props) {
           open={confirmModalVisible}
           setOpen={setConfirmModalVisible}
         />
-      )} */}
+      )}
 
       <TableRow key={member.id}>
         <TableCell>{member.firstName}</TableCell>
@@ -86,10 +88,10 @@ export default function MemberRow(props) {
           <AssignmentIcon onClick={handlePlan} />
         </TableCell>
         <TableCell align="center">
-          <EditIcon onClick={handleDelete} />
+          <EditIcon onClick={handleEdit} />
         </TableCell>
         <TableCell align="center">
-          <DeleteForeverIcon onClick={handleEdit} />
+          <DeleteForeverIcon onClick={handleDelete} />
         </TableCell>
       </TableRow>
     </Fragment>
