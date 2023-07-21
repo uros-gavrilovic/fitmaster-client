@@ -90,7 +90,6 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function Menu(props) {
-  console.log("Ovde");
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -109,7 +108,6 @@ export default function Menu(props) {
   };
 
   const handleTabAction = (action) => {
-    console.log(action);
     switch (action) {
       case "log-out":
         dispatch(userActions.logout({}));

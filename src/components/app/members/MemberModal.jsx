@@ -4,7 +4,9 @@ import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { useSpring, animated } from "@react-spring/web";
-import { forwardRef } from "react";
+import { forwardRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as membersActions from "../../../actions/members";
 
 const Fade = forwardRef(function Fade(props, ref) {
   const {
@@ -59,8 +61,16 @@ const style = {
   p: 4,
 };
 
-export default function ConfirmModal(props) {
-  const { open, setOpen } = props || {};
+export default function MemberModal(props) {
+  const { memberState, setMemberState, open, setOpen } = props || {};
+  const { member } = useSelector((state) => state.membersReducer);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (open) {
+      dispatch(membersActions.fetchMember(memberState.id));
+    }
+  }, [open]);
 
   return (
     <div>
@@ -78,7 +88,7 @@ export default function ConfirmModal(props) {
         }}
       >
         <Fade in={open}>
-          <Box sx={style}>Hello</Box>
+          <Box sx={style}>{JSON.stringify(member)}</Box>
         </Fade>
       </Modal>
     </div>

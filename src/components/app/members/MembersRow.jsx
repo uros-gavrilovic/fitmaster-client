@@ -18,8 +18,8 @@ export default function MemberRow(props) {
   const { t, member } = props || {};
   const dispatch = useDispatch();
 
-  const initialState = {
-    id: member.id,
+  const initialMemberState = {
+    id: member.memberID,
     firstName: member.firstName,
     lastName: member.lastName,
     gender: member.gender,
@@ -28,7 +28,7 @@ export default function MemberRow(props) {
     birthDate: member.birthDate,
     active: member.active,
   };
-  const [state, setState] = useState(initialState);
+  const [memberState, setMemberState] = useState(initialMemberState);
 
   const [infoModalVisible, setInfoModalVisible] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
@@ -54,7 +54,12 @@ export default function MemberRow(props) {
 
   return (
     <Fragment>
-      <MemberModal open={infoModalVisible} setOpen={setInfoModalVisible} />
+      <MemberModal
+        memberState={memberState}
+        setMemberState={setMemberState}
+        open={infoModalVisible}
+        setOpen={setInfoModalVisible}
+      />
       <ConfirmModal
         title="Delete Member"
         text="Are you sure you want to delete this member?"

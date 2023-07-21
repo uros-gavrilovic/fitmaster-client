@@ -35,6 +35,19 @@ export const fetchMembersDTO = () => {
       });
   };
 };
+export const fetchMember = (id) => {
+  return (dispatch) => {
+    dispatch(membersActions.actionStart());
+    return apiService
+      .get(membersIDPath(id))
+      .then((response) => {
+        dispatch(membersActions.fetchMember(response.data));
+      })
+      .catch((err) => {
+        dispatch(membersActions.actionError(err?.response?.data));
+      });
+  };
+};
 
 export const addMember = (data, messages) => {
   return (dispatch) => {

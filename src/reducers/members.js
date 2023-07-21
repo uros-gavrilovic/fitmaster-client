@@ -5,6 +5,7 @@ const membersSlice = createSlice({
   initialState: {
     members: [],
     membersDTO: [],
+    member: undefined,
     error: undefined,
   },
 
@@ -15,6 +16,10 @@ const membersSlice = createSlice({
     },
     fetchMembersDTO(state, action) {
       state.membersDTO = action.payload;
+      state.error = undefined;
+    },
+    fetchMember(state, action) {
+      state.member = action.payload;
       state.error = undefined;
     },
     addMember(state, action) {
