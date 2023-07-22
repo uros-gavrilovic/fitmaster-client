@@ -17,3 +17,19 @@
   padding: 1.5vw;
   grid-template-columns: 1fr 1fr;
 }
+.rightDiv-buttons {
+  padding-right: 1.5vw;
+  padding-bottom: 0.5vw;
+  float: right;
+  display: flex;
+}
+
+/* Apply margin between buttons */
+.rightDiv-buttons button {
+  margin-right: 0.5vw; /* You can adjust this value to control the spacing */
+}
+
+/* Remove the margin from the last button to avoid extra space */
+.rightDiv-buttons button:last-child {
+  margin-right: 0;
+}

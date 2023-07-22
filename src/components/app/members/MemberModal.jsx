@@ -9,11 +9,16 @@ import { useDispatch, useSelector } from "react-redux";
 import * as membersActions from "../../../actions/members";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import styles from "../../../styles/members/memberModal.css";
-import { TextField } from "@mui/material";
+import { Button, IconButton, TextField } from "@mui/material";
 import CustomSelect from "../../reusable/input/CustomSelect";
 import { formatDate } from "../../../utils/utilFunctions";
 import BorderedSection from "../../reusable/containers/BorderedSection";
 import InfoIcon from "@mui/icons-material/Info";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+
+const handleEdit = () => {};
+const handleDelete = () => {};
 
 const Fade = forwardRef(function Fade(props, ref) {
   const {
@@ -57,7 +62,7 @@ Fade.propTypes = {
 };
 
 const style = {
-  width: "fit-content",
+  width: "auto",
   position: "absolute",
   top: "50%",
   left: "50%",
@@ -103,71 +108,75 @@ export default function MemberModal(props) {
     >
       <Fade in={open}>
         {memberState !== "" ? (
-          <Box sx={style}>
+          <Box style={{ width: "auto" }} sx={style}>
             <div className="leftDiv">
               <AccountCircleIcon sx={{ fontSize: "15vh" }} />
             </div>
-            <div className="rightDiv">
-              <BorderedSection icon={InfoIcon} title="General Information">
-                <div className="rightDiv">
-                  <div className="rightDiv-id">
-                    <TextField
-                      id="id"
-                      label="ID"
-                      readOnly
-                      variant="filled"
-                      sx={{ width: "25ch" }}
-                      value={memberState?.memberID}
-                    />
-                  </div>
-                  <div className="rightDiv-input">
-                    <TextField
-                      id="firstName"
-                      label="First name"
-                      variant="filled"
-                      sx={{ width: "25ch" }}
-                      value={memberState?.firstName}
-                    />
-                    <TextField
-                      id="lastName"
-                      label="Last name"
-                      variant="filled"
-                      sx={{ width: "25ch" }}
-                      value={memberState?.lastName}
-                    />
-                    <CustomSelect
-                      id="gender"
-                      label="Gender"
-                      variant="filled"
-                      value={memberState.gender}
-                      setValue={setMemberState}
-                      sx={{ width: "25ch" }}
-                      options={["MALE", "FEMALE", "OTHER"]}
-                    />
-                    <TextField
-                      id="address"
-                      label="Address"
-                      variant="filled"
-                      value={memberState?.address}
-                    />
-                    <TextField
-                      id="phoneNumber"
-                      label="Phone number"
-                      variant="filled"
-                      sx={{ width: "25ch" }}
-                      value={memberState?.phoneNumber}
-                    />
-                    <TextField
-                      id="birthDate"
-                      label="Birth date"
-                      variant="filled"
-                      sx={{ width: "25ch" }}
-                      value={formatDate(memberState?.birthDate)}
-                    />
-                  </div>
-                </div>
-              </BorderedSection>
-            </div>
+            <BorderedSection icon={InfoIcon} title="General Information">
+              <div className="rightDiv-id">
+                <TextField
+                  id="id"
+                  label="ID"
+                  readOnly
+                  variant="filled"
+                  sx={{ width: "25ch" }}
+                  value={memberState?.memberID}
+                />
+              </div>
+              <div className="rightDiv-input">
+                <TextField
+                  id="firstName"
+                  label="First name"
+                  variant="filled"
+                  sx={{ width: "25ch" }}
+                  value={memberState?.firstName}
+                />
+                <TextField
+                  id="lastName"
+                  label="Last name"
+                  variant="filled"
+                  sx={{ width: "25ch" }}
+                  value={memberState?.lastName}
+                />
+                <CustomSelect
+                  id="gender"
+                  label="Gender"
+                  variant="filled"
+                  value={memberState.gender}
+                  setValue={setMemberState}
+                  sx={{ width: "25ch" }}
+                  options={["MALE", "FEMALE", "OTHER"]}
+                />
+                <TextField
+                  id="address"
+                  label="Address"
+                  variant="filled"
+                  value={memberState?.address}
+                />
+                <TextField
+                  id="phoneNumber"
+                  label="Phone number"
+                  variant="filled"
+                  sx={{ width: "25ch" }}
+                  value={memberState?.phoneNumber}
+                />
+                <TextField
+                  id="birthDate"
+                  label="Birth date"
+                  variant="filled"
+                  sx={{ width: "25ch" }}
+                  value={formatDate(memberState?.birthDate)}
+                />
+              </div>
+              <div className="rightDiv-buttons">
+                <Button variant="contained" endIcon={<EditIcon />}>
+                  Edit
+                </Button>
+                <Button variant="contained" endIcon={<DeleteIcon />}>
+                  Delete
+                </Button>
+              </div>
+            </BorderedSection>
           </Box>
         ) : (
           <Box>Unable to retreive this member.</Box>

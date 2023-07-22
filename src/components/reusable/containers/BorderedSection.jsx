@@ -47,7 +47,6 @@ const headerBorderAfterStyle = {
 };
 
 function BorderedSection({ icon, title, children, childrenStyle }) {
-  console.log(childrenStyle);
   return (
     <div style={borderedSectionStyle}>
       {title && (
