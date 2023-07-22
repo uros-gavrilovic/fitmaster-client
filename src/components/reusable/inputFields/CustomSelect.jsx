@@ -6,7 +6,7 @@ import Select from "@mui/material/Select";
 import { capitalizeFirstLetter } from "../../../utils/utilFunctions";
 
 export default function CustomSelect(props) {
-  const { label, value, setValue, options, variant } = props || {};
+  const { label, value, setValue, options, variant, hasBlank } = props || {};
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -28,6 +28,7 @@ export default function CustomSelect(props) {
             </MenuItem>
           );
         })}
+        <MenuItem value={""}>‎ </MenuItem>
       </Select>
     </FormControl>
   );

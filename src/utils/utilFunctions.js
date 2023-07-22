@@ -6,6 +6,7 @@ export function capitalizeFirstLetter(str) {
 }
 
 export function formatDate(arr) {
+  if (!arr) return null;
   return `${arr[2]}/${arr[1]}/${arr[0]}`;
 }
 
@@ -17,4 +18,7 @@ export function generateIDField(arr, fieldName) {
     ...element,
     id: element[fieldName],
   }));
+}
+export function isNumber(str) {
+  return /^\d+$/.test(str);
 }

@@ -66,6 +66,7 @@ export const addMember = (data, messages) => {
         );
       })
       .catch((err) => {
+        console.log("Error: " + JSON.stringify(err));
         errorAction(err, membersActions.actionError, dispatch, messages);
       });
   };

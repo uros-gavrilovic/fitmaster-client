@@ -7,10 +7,8 @@ import { useSpring, animated } from "@react-spring/web";
 import { forwardRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as membersActions from "../../../actions/members";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import styles from "../../../styles/members/memberModal.css";
 import { Avatar, Button, IconButton, TextField } from "@mui/material";
-import CustomSelect from "../../reusable/input/CustomSelect";
+import CustomSelect from "../../reusable/inputFields/CustomSelect";
 import { formatDate } from "../../../utils/utilFunctions";
 import BorderedSection from "../../reusable/containers/BorderedSection";
 import InfoIcon from "@mui/icons-material/Info";
@@ -156,6 +154,7 @@ export default function MemberModal(props) {
                     id="address"
                     label="Address"
                     variant="filled"
+                    sx={{ width: "25ch" }}
                     value={memberState?.address}
                   />
                   <TextField
