@@ -44,6 +44,7 @@ const headerBorderAfterStyle = {
   width: "1em",
   flexGrow: "2",
   borderTopRightRadius: "5px",
+  margin: "-1em 0.5em 0em",
 };
 
 function BorderedSection({ icon, title, children, childrenStyle }) {
