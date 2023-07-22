@@ -8,10 +8,12 @@ import { forwardRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as membersActions from "../../../actions/members";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import "../../../styles/members/memberModal.css";
+import styles from "../../../styles/members/memberModal.css";
 import { TextField } from "@mui/material";
 import CustomSelect from "../../reusable/input/CustomSelect";
 import { formatDate } from "../../../utils/utilFunctions";
+import BorderedSection from "../../reusable/containers/BorderedSection";
+import InfoIcon from "@mui/icons-material/Info";
 
 const Fade = forwardRef(function Fade(props, ref) {
   const {
@@ -55,6 +57,7 @@ Fade.propTypes = {
 };
 
 const style = {
+  width: "fit-content",
   position: "absolute",
   top: "50%",
   left: "50%",
@@ -105,52 +108,65 @@ export default function MemberModal(props) {
               <AccountCircleIcon sx={{ fontSize: "15vh" }} />
             </div>
             <div className="rightDiv">
-              <TextField
-                id="id"
-                label="ID"
-                readOnly
-                variant="filled"
-                value={memberState?.memberID}
-              />
-              <TextField
-                id="firstName"
-                label="First name"
-                variant="filled"
-                value={memberState?.firstName}
-              />
-              <TextField
-                id="lastName"
-                label="Last name"
-                variant="filled"
-                value={memberState?.lastName}
-              />
-              <CustomSelect
-                id="gender"
-                label="Gender"
-                variant="filled"
-                value={memberState.gender}
-                setValue={setMemberState}
-                sx={{ width: "100%" }}
-                options={["MALE", "FEMALE", "OTHER"]}
-              />
-              <TextField
-                id="filled-basic"
-                label="Address"
-                variant="filled"
-                value={memberState?.address}
-              />
-              <TextField
-                id="filled-basic"
-                label="Phone number"
-                variant="filled"
-                value={memberState?.phoneNumber}
-              />
-              <TextField
-                id="filled-basic"
-                label="Birth date"
-                variant="filled"
-                value={formatDate(memberState?.birthDate)}
-              />
+              <BorderedSection icon={InfoIcon} title="General Information">
+                <div className="rightDiv">
+                  <div className="rightDiv-id">
+                    <TextField
+                      id="id"
+                      label="ID"
+                      readOnly
+                      variant="filled"
+                      sx={{ width: "25ch" }}
+                      value={memberState?.memberID}
+                    />
+                  </div>
+                  <div className="rightDiv-input">
+                    <TextField
+                      id="firstName"
+                      label="First name"
+                      variant="filled"
+                      sx={{ width: "25ch" }}
+                      value={memberState?.firstName}
+                    />
+                    <TextField
+                      id="lastName"
+                      label="Last name"
+                      variant="filled"
+                      sx={{ width: "25ch" }}
+                      value={memberState?.lastName}
+                    />
+                    <CustomSelect
+                      id="gender"
+                      label="Gender"
+                      variant="filled"
+                      value={memberState.gender}
+                      setValue={setMemberState}
+                      sx={{ width: "25ch" }}
+                      options={["MALE", "FEMALE", "OTHER"]}
+                    />
+                    <TextField
+                      id="address"
+                      label="Address"
+                      variant="filled"
+                      value={memberState?.address}
+                    />
+                    <TextField
+                      id="phoneNumber"
+                      label="Phone number"
+                      variant="filled"
+                      sx={{ width: "25ch" }}
+                      value={memberState?.phoneNumber}
+                    />
+                    <TextField
+                      id="birthDate"
+                      label="Birth date"
+                      variant="filled"
+                      sx={{ width: "25ch" }}
+                      value={formatDate(memberState?.birthDate)}
+                    />
+                  </div>
+                </div>
+              </BorderedSection>
             </div>
           </Box>
         ) : (

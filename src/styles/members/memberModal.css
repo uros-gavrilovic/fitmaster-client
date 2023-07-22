@@ -1,11 +1,19 @@
 .leftDiv {
   background-color: gray;
-  borderright: 2px solid #000;
+  border-right: 2px solid #000;
   display: flex;
-  justifycontent: center;
-  alignitems: center;
+  justify-content: center;
+  /* align-items: center; */
 }
 
-.rightDiv {
-  padding: 16px;
+.rightDiv-id {
+  display: grid;
+  padding: 1.5vw;
+}
+.rightDiv-input {
+  display: grid;
+  row-gap: 1vh;
+  column-gap: 1vh;
+  padding: 1.5vw;
+  grid-template-columns: 1fr 1fr;
 }
