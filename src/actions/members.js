@@ -41,6 +41,7 @@ export const fetchMember = (id) => {
     return apiService
       .get(membersIDPath(id))
       .then((response) => {
+        console.log("Fetched: " + JSON.stringify(response.data));
         dispatch(membersActions.fetchMember(response.data));
       })
       .catch((err) => {

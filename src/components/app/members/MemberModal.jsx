@@ -9,12 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as membersActions from "../../../actions/members";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import "../../../styles/members/memberModal.css";
-import {
-  InputLabel,
-  MenuItem,
-  TextField,
-  checkboxClasses,
-} from "@mui/material";
+import { TextField } from "@mui/material";
 import CustomSelect from "../../reusable/input/CustomSelect";
 
 const Fade = forwardRef(function Fade(props, ref) {
@@ -72,25 +67,21 @@ const style = {
 };
 
 export default function MemberModal(props) {
-  const { memberID, open, setOpen } = props || {};
+  const { memberState, setMemberState, open, setOpen } = props || {};
 
   const dispatch = useDispatch();
-  const [memberState, setMemberState] = useState("");
   const { member } = useSelector((state) => state.membersReducer);
 
   useEffect(() => {
     if (open) {
-      dispatch(membersActions.fetchMember(memberID));
+      dispatch(membersActions.fetchMember(memberState.memberID));
     }
   }, [open]);
   useEffect(() => {
-    console.log("check");
     if (open) {
-      console.log("check2");
-      setMemberState(member); // set state to fetched member
-      console.log(memberState); // This will log the updated memberState
+      setMemberState(member);
     }
-  }, [member]); // Run this effect whenever 'member' changes
+  }, [member]);
 
   return (
     <div>
@@ -133,14 +124,14 @@ export default function MemberModal(props) {
                   variant="filled"
                   value={memberState.lastName}
                 />
-                <CustomSelect
+                {/* <CustomSelect
                   id="age"
                   label="Gender"
                   variant="filled"
                   value={memberState.age}
                   setValue={setMemberState}
                   options={["MALE", "FEMALE", "OTHER"]}
-                />
+                /> */}
                 <TextField
                   id="filled-basic"
                   label="Address"

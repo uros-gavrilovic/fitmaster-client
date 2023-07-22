@@ -11,14 +11,16 @@ import ConfirmModal from "../../reusable/modals/ConfirmModal";
 import MemberModal from "./MemberModal";
 
 const formatDate = (arr) => {
+  console.log("formatDate: " + arr);
   return `${arr[2]}/${arr[1]}/${arr[0]}`;
 };
 
 export default function MemberRow(props) {
   const { t, member } = props || {}; // memberDTO as member from fetchMembersDTO list
   const dispatch = useDispatch();
+  // console.log(JSON.stringify(member));
 
-  const [memberState, setMemberState] = useState(""); // to be changed inside modal
+  const [memberState, setMemberState] = useState(member);
 
   const [infoModalVisible, setInfoModalVisible] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
@@ -27,6 +29,7 @@ export default function MemberRow(props) {
     console.log("handlePlan");
   };
   const handleEdit = () => {
+    console.log("current member state: " + JSON.stringify(memberState));
     setInfoModalVisible(true);
   };
   const handleDelete = () => {
@@ -45,7 +48,8 @@ export default function MemberRow(props) {
   return (
     <Fragment>
       <MemberModal
-        memberID={member.id}
+        memberState={memberState}
+        setMemberState={setMemberState}
         open={infoModalVisible}
         setOpen={setInfoModalVisible}
       />
@@ -64,14 +68,14 @@ export default function MemberRow(props) {
         <TableCell align="center">
           <AccountCircleIcon />
         </TableCell>
-        <TableCell>{member.firstName}</TableCell>
-        <TableCell>{member.lastName}</TableCell>
-        <TableCell>{member.gender}</TableCell>
-        <TableCell>{member.address}</TableCell>
-        <TableCell>{member.phoneNumber}</TableCell>
-        <TableCell>{formatDate(member.birthDate)}</TableCell>
+        <TableCell>{memberState?.firstName + memberState?.memberID}</TableCell>
+        <TableCell>{memberState?.lastName}</TableCell>
+        <TableCell>{memberState?.gender}</TableCell>
+        <TableCell>{memberState?.address}</TableCell>
+        <TableCell>{memberState?.phoneNumber}</TableCell>
+        <TableCell>{formatDate(memberState?.birthDate)}</TableCell>
         <TableCell align="center">
-          {member.active ? <CheckCircleIcon /> : null}
+          {memberState?.active ? <CheckCircleIcon /> : null}
         </TableCell>
         <TableCell align="center">
           <AssignmentIcon onClick={handlePlan} />
