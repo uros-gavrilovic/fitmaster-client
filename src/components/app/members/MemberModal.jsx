@@ -45,7 +45,7 @@ const Fade = forwardRef(function Fade(props, ref) {
 });
 
 Fade.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.element,
   in: PropTypes.bool,
   onClick: PropTypes.any,
   onEnter: PropTypes.func,
@@ -84,47 +84,46 @@ export default function MemberModal(props) {
   }, [member]);
 
   return (
-    <div>
-      <Modal
-        aria-labelledby="spring-modal-title"
-        aria-describedby="spring-modal-description"
-        open={open}
-        onClose={() => setOpen(false)}
-        closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            TransitionComponent: Fade,
-          },
-        }}
-      >
-        <Fade in={open}>
-          {memberState !== "" ? (
-            <Box sx={style}>
-              <div className="leftDiv">
-                <AccountCircleIcon />
-              </div>
-              <div className="rightDiv">
-                <TextField
-                  id="id"
-                  label="ID"
-                  readOnly
-                  variant="filled"
-                  value={memberState.id}
-                />
-                <TextField
-                  id="firstName"
-                  label="First name"
-                  variant="filled"
-                  value={memberState.firstName}
-                />
-                <TextField
-                  id="lastName"
-                  label="Last name"
-                  variant="filled"
-                  value={memberState.lastName}
-                />
-                {/* <CustomSelect
+    <Modal
+      aria-labelledby="spring-modal-title"
+      aria-describedby="spring-modal-description"
+      open={open}
+      onClose={() => setOpen(false)}
+      closeAfterTransition
+      slots={{ backdrop: Backdrop }}
+      slotProps={{
+        backdrop: {
+          TransitionComponent: Fade,
+        },
+      }}
+    >
+      <Fade in={open}>
+        {memberState !== "" ? (
+          <Box sx={style}>
+            <div className="leftDiv">
+              <AccountCircleIcon />
+            </div>
+            <div className="rightDiv">
+              <TextField
+                id="id"
+                label="ID"
+                readOnly
+                variant="filled"
+                value={memberState?.id}
+              />
+              <TextField
+                id="firstName"
+                label="First name"
+                variant="filled"
+                value={memberState?.firstName}
+              />
+              <TextField
+                id="lastName"
+                label="Last name"
+                variant="filled"
+                value={memberState?.lastName}
+              />
+              {/* <CustomSelect
                   id="age"
                   label="Gender"
                   variant="filled"
@@ -132,26 +131,25 @@ export default function MemberModal(props) {
                   setValue={setMemberState}
                   options={["MALE", "FEMALE", "OTHER"]}
                 /> */}
-                <TextField
-                  id="filled-basic"
-                  label="Address"
-                  variant="filled"
-                  value={memberState.address}
-                />
-                <TextField
-                  id="filled-basic"
-                  label="Phone number"
-                  variant="filled"
-                  value={memberState.phoneNumber}
-                />
-                <TextField id="filled-basic" label="Filled" variant="filled" />
-              </div>
-            </Box>
-          ) : (
-            <Box>Unable to retreive this member.</Box>
-          )}
-        </Fade>
-      </Modal>
-    </div>
+              <TextField
+                id="filled-basic"
+                label="Address"
+                variant="filled"
+                value={memberState?.address}
+              />
+              <TextField
+                id="filled-basic"
+                label="Phone number"
+                variant="filled"
+                value={memberState?.phoneNumber}
+              />
+              <TextField id="filled-basic" label="Filled" variant="filled" />
+            </div>
+          </Box>
+        ) : (
+          <Box>Unable to retreive this member.</Box>
+        )}
+      </Fade>
+    </Modal>
   );
 }

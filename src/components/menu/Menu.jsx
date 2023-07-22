@@ -140,12 +140,10 @@ export default function Menu(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            <a>
-              Fit<i>Master</i>
-              <sub className="subscript">v0.1</sub>
-              <FitnessCenterIcon />
-              <a>/ {currentTab}</a>
-            </a>
+            Fit<i>Master</i>
+            <sub className="subscript">v0.1</sub>
+            <FitnessCenterIcon />
+            <a>/ {currentTab}</a>
           </Typography>
         </Toolbar>
       </AppBar>

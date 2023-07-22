@@ -9,16 +9,11 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ConfirmModal from "../../reusable/modals/ConfirmModal";
 import MemberModal from "./MemberModal";
-
-const formatDate = (arr) => {
-  console.log("formatDate: " + arr);
-  return `${arr[2]}/${arr[1]}/${arr[0]}`;
-};
+import { formatDate } from "../../../utils/utilFunctions";
 
 export default function MemberRow(props) {
-  const { t, member } = props || {}; // memberDTO as member from fetchMembersDTO list
+  const { t, member } = props || {}; // memberDTO from fetchMembersDTO list
   const dispatch = useDispatch();
-  // console.log(JSON.stringify(member));
 
   const [memberState, setMemberState] = useState(member);
 
@@ -29,7 +24,6 @@ export default function MemberRow(props) {
     console.log("handlePlan");
   };
   const handleEdit = () => {
-    console.log("current member state: " + JSON.stringify(memberState));
     setInfoModalVisible(true);
   };
   const handleDelete = () => {
@@ -68,7 +62,7 @@ export default function MemberRow(props) {
         <TableCell align="center">
           <AccountCircleIcon />
         </TableCell>
-        <TableCell>{memberState?.firstName + memberState?.memberID}</TableCell>
+        <TableCell>{memberState?.firstName}</TableCell>
         <TableCell>{memberState?.lastName}</TableCell>
         <TableCell>{memberState?.gender}</TableCell>
         <TableCell>{memberState?.address}</TableCell>

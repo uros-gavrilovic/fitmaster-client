@@ -4,9 +4,10 @@ import * as membersActions from "../../../actions/members";
 import PaginationTable from "../../reusable/tables/PaginationTable";
 import config from "./membersConfig";
 import MembersRow from "./MembersRow";
+import { generateIDField } from "../../../utils/utilFunctions";
 
 const rowComponentFunction = (t, row) => {
-  return <MembersRow member={row} id={row.id} />;
+  return <MembersRow member={row} key={row.id} />;
 };
 
 export default function Members(props) {
@@ -23,7 +24,7 @@ export default function Members(props) {
       ) : (
         <PaginationTable
           config={config}
-          rows={membersDTO}
+          rows={generateIDField(membersDTO)}
           rowComponent={rowComponentFunction}
         />
       )}
