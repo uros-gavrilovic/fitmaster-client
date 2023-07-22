@@ -31,11 +31,9 @@ export default function MemberRow(props) {
   };
 
   const deleteRow = () => {
-    console.log("deleting row");
     // dispatch(memberActions.deleteMember(state.id, t.Delete));
   };
   const editRow = () => {
-    console.log("editing row");
     // dispatch(memberActions.updateMember(state, t.Edit));
   };
 

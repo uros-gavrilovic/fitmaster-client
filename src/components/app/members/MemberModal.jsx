@@ -11,6 +11,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import "../../../styles/members/memberModal.css";
 import { TextField } from "@mui/material";
 import CustomSelect from "../../reusable/input/CustomSelect";
+import { formatDate } from "../../../utils/utilFunctions";
 
 const Fade = forwardRef(function Fade(props, ref) {
   const {
@@ -101,7 +102,7 @@ export default function MemberModal(props) {
         {memberState !== "" ? (
           <Box sx={style}>
             <div className="leftDiv">
-              <AccountCircleIcon />
+              <AccountCircleIcon sx={{ fontSize: "15vh" }} />
             </div>
             <div className="rightDiv">
               <TextField
@@ -109,7 +110,7 @@ export default function MemberModal(props) {
                 label="ID"
                 readOnly
                 variant="filled"
-                value={memberState?.id}
+                value={memberState?.memberID}
               />
               <TextField
                 id="firstName"
@@ -123,14 +124,15 @@ export default function MemberModal(props) {
                 variant="filled"
                 value={memberState?.lastName}
               />
-              {/* <CustomSelect
-                  id="age"
-                  label="Gender"
-                  variant="filled"
-                  value={memberState.age}
-                  setValue={setMemberState}
-                  options={["MALE", "FEMALE", "OTHER"]}
-                /> */}
+              <CustomSelect
+                id="gender"
+                label="Gender"
+                variant="filled"
+                value={memberState.gender}
+                setValue={setMemberState}
+                sx={{ width: "100%" }}
+                options={["MALE", "FEMALE", "OTHER"]}
+              />
               <TextField
                 id="filled-basic"
                 label="Address"
@@ -143,7 +145,12 @@ export default function MemberModal(props) {
                 variant="filled"
                 value={memberState?.phoneNumber}
               />
-              <TextField id="filled-basic" label="Filled" variant="filled" />
+              <TextField
+                id="filled-basic"
+                label="Birth date"
+                variant="filled"
+                value={formatDate(memberState?.birthDate)}
+              />
             </div>
           </Box>
         ) : (

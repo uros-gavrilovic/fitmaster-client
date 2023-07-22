@@ -12,26 +12,23 @@ export default function CustomSelect(props) {
     setValue(event.target.value);
   };
 
-  console.log("Dobio sam: " + value);
   return (
-    <div>
-      <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-filled-label">{label}</InputLabel>
-        <Select
-          labelId="demo-simple-select-filled-label"
-          id="demo-simple-select-filled"
-          value={value}
-          onChange={handleChange}
-        >
-          {options.map((availableValue) => {
-            return (
-              <MenuItem key={availableValue} value={availableValue}>
-                {capitalizeFirstLetter(availableValue)}
-              </MenuItem>
-            );
-          })}
-        </Select>
-      </FormControl>
-    </div>
+    <FormControl variant="filled" sx={{ width: "25ch" }}>
+      <InputLabel id="demo-simple-select-filled-label">{label}</InputLabel>
+      <Select
+        labelId="demo-simple-select-filled-label"
+        id="demo-simple-select-filled"
+        value={value}
+        onChange={handleChange}
+      >
+        {options.map((availableValue) => {
+          return (
+            <MenuItem key={availableValue} value={availableValue}>
+              {capitalizeFirstLetter(availableValue)}
+            </MenuItem>
+          );
+        })}
+      </Select>
+    </FormControl>
   );
 }
