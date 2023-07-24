@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as membersActions from "../../../actions/members";
 import PaginationTable from "../../reusable/tables/PaginationTable";
@@ -12,11 +12,11 @@ const rowComponentFunction = (t, row) => {
 
 export default function Members(props) {
   const { membersDTO } = useSelector((state) => state.membersReducer);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(membersActions.fetchMembersDTO());
   }, [dispatch]);
-
   return (
     <Fragment>
       {membersDTO === undefined ? (

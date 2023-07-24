@@ -27,8 +27,10 @@ const membersSlice = createSlice({
       state.error = undefined;
     },
     deleteMember(state, action) {
-      state.members.splice(
-        state.members.findIndex((member) => member.id === action.payload)
+      state.membersDTO.splice(
+        state.membersDTO.findIndex(
+          (member) => member.memberID === action.payload
+        )
       );
       state.error = undefined;
     },

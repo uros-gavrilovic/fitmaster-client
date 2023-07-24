@@ -36,7 +36,7 @@ export default function MemberRow(props) {
   };
 
   const deleteRow = () => {
-    dispatch(memberActions.deleteMember(memberState.id));
+    dispatch(memberActions.deleteMember(memberState.memberID));
   };
   const editRow = () => {
     // dispatch(memberActions.editMember(memberState));
