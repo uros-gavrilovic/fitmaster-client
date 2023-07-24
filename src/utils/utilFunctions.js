@@ -22,3 +22,12 @@ export function generateIDField(arr, fieldName) {
 export function isNumber(str) {
   return /^\d+$/.test(str);
 }
+
+export function convertEmptyFieldsToNull(state) {
+  return Object.fromEntries(
+    Object.entries(state).map(([key, value]) => [
+      key,
+      typeof value === "string" && value.trim() === "" ? null : value,
+    ])
+  );
+}

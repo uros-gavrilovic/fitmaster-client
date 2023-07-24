@@ -35,8 +35,8 @@ const membersSlice = createSlice({
       state.error = undefined;
     },
     updateMember(state, action) {
-      state.members = state.members?.map((member) =>
-        member.id === action.payload.id ? action.payload : member
+      state.membersDTO = state.membersDTO?.map((member) =>
+        member.memberID === action.payload.memberID ? action.payload : member
       );
       state.error = undefined;
     },

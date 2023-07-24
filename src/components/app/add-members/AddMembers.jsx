@@ -9,6 +9,7 @@ import { isNumber } from "../../../utils/utilFunctions";
 import * as membersActions from "../../../actions/members";
 import { useDispatch } from "react-redux";
 import { useIsMount } from "../../../utils/customHooks/useIsMount";
+import { convertEmptyFieldsToNull } from "../../../utils/utilFunctions";
 
 const initialMemberState = {
   firstName: "",
@@ -29,7 +30,10 @@ export default function AddMembers(props) {
   });
 
   const handleChange = (e) => {
-    setMemberState({ ...memberState, [e.target.id]: e.target.value });
+    setMemberState({
+      ...memberState,
+      [e.target.id]: e.target.value,
+    });
   };
   const handleClear = () => {
     setMemberState(initialMemberState);
@@ -49,7 +53,8 @@ export default function AddMembers(props) {
     }
 
     if (errorState.firstName || errorState.lastName) return;
-    dispatch(membersActions.addMember(memberState));
+
+    dispatch(membersActions.addMember(convertEmptyFieldsToNull(memberState)));
     handleClear();
   };
 
