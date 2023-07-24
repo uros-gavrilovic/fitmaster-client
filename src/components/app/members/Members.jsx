@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import * as membersActions from "../../../actions/members";
 import PaginationTable from "../../reusable/tables/PaginationTable";
 import config from "./membersConfig";
-import MembersRow from "./MembersRow";
+import MemberRow from "./MemberRow";
 import { generateIDField } from "../../../utils/utilFunctions";
 
 const rowComponentFunction = (t, row) => {
-  return <MembersRow member={row} key={row.id} />;
+  return <MemberRow member={row} key={row.id} />;
 };
 
 export default function Members(props) {

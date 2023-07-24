@@ -13,9 +13,18 @@ import { formatDate } from "../../../utils/utilFunctions";
 
 export default function MemberRow(props) {
   const { t, member } = props || {}; // memberDTO from fetchMembersDTO list
+
   const dispatch = useDispatch();
 
-  const [memberState, setMemberState] = useState(member);
+  const initialMemberState = {
+    id: member?.id,
+    firstName: member?.firstName,
+    lastName: member?.lastName,
+    gender: member?.gender,
+    address: member?.address,
+    phoneNumber: member?.phoneNumber,
+  };
+  const [memberState, setMemberState] = useState(initialMemberState);
 
   const [infoModalVisible, setInfoModalVisible] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
@@ -31,10 +40,10 @@ export default function MemberRow(props) {
   };
 
   const deleteRow = () => {
-    // dispatch(memberActions.deleteMember(state.id, t.Delete));
+    dispatch(memberActions.deleteMember(memberState.id));
   };
   const editRow = () => {
-    // dispatch(memberActions.updateMember(state, t.Edit));
+    // dispatch(memberActions.editMember(memberState));
   };
 
   return (
@@ -58,16 +67,16 @@ export default function MemberRow(props) {
 
       <TableRow key={member.id}>
         <TableCell align="center">
-          <Avatar src={memberState?.image} />
+          <Avatar src={member?.image} />
         </TableCell>
-        <TableCell>{memberState?.firstName}</TableCell>
-        <TableCell>{memberState?.lastName}</TableCell>
-        <TableCell>{memberState?.gender}</TableCell>
-        <TableCell>{memberState?.address}</TableCell>
-        <TableCell>{memberState?.phoneNumber}</TableCell>
-        <TableCell>{formatDate(memberState?.birthDate)}</TableCell>
+        <TableCell>{member?.firstName}</TableCell>
+        <TableCell>{member?.lastName}</TableCell>
+        <TableCell>{member?.gender}</TableCell>
+        <TableCell>{member?.address}</TableCell>
+        <TableCell>{member?.phoneNumber}</TableCell>
+        <TableCell>{formatDate(member?.birthDate)}</TableCell>
         <TableCell align="center">
-          {memberState?.active ? <CheckCircleIcon /> : null}
+          {member?.active ? <CheckCircleIcon /> : null}
         </TableCell>
         <TableCell align="center">
           <AssignmentIcon onClick={handlePlan} />
