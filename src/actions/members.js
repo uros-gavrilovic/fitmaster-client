@@ -65,7 +65,6 @@ export const addMember = (data, messages) => {
         );
       })
       .catch((err) => {
-        console.log("Error: " + JSON.stringify(err));
         errorAction(err, membersActions.actionError, dispatch, messages);
       });
   };
@@ -87,7 +86,6 @@ export const deleteMember = (id, messages) => {
         );
       })
       .catch((err) => {
-        console.log(err);
         errorAction(err, membersActions.actionError, dispatch, messages);
       });
   };
