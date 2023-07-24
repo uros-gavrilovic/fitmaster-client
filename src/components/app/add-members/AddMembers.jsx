@@ -48,7 +48,6 @@ export default function AddMembers(props) {
       setErrorState((prevState) => ({ ...prevState, lastName: false }));
     }
 
-    console.log(errorState);
     if (errorState.firstName || errorState.lastName) return;
     dispatch(membersActions.addMember(memberState));
     handleClear();
@@ -86,7 +85,7 @@ export default function AddMembers(props) {
             setMemberState({ ...memberState, gender: e });
           }}
           sx={{ width: "25ch" }}
-          options={["MALE", "FEMALE", "OTHER"]}
+          options={["MALE", "FEMALE"]}
           hasBlank={true}
         />
         <TextField
