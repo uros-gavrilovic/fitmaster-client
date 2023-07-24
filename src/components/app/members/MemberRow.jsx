@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import * as memberActions from "../../../actions/members";
 import { useDispatch } from "react-redux";
 import { Avatar, TableCell, TableRow } from "@mui/material";
@@ -14,17 +14,13 @@ import { formatDate } from "../../../utils/utilFunctions";
 export default function MemberRow(props) {
   const { t, member } = props || {}; // memberDTO from fetchMembersDTO list
 
+  useEffect(() => {
+    setMemberState(member);
+  }, [member]);
+
   const dispatch = useDispatch();
 
-  const initialMemberState = {
-    id: member?.id,
-    firstName: member?.firstName,
-    lastName: member?.lastName,
-    gender: member?.gender,
-    address: member?.address,
-    phoneNumber: member?.phoneNumber,
-  };
-  const [memberState, setMemberState] = useState(initialMemberState);
+  const [memberState, setMemberState] = useState(member);
 
   const [infoModalVisible, setInfoModalVisible] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
@@ -67,16 +63,16 @@ export default function MemberRow(props) {
 
       <TableRow key={member.id}>
         <TableCell align="center">
-          <Avatar src={member?.image} />
+          <Avatar src={memberState?.image} />
         </TableCell>
-        <TableCell>{member?.firstName}</TableCell>
-        <TableCell>{member?.lastName}</TableCell>
-        <TableCell>{member?.gender}</TableCell>
-        <TableCell>{member?.address}</TableCell>
-        <TableCell>{member?.phoneNumber}</TableCell>
-        <TableCell>{formatDate(member?.birthDate)}</TableCell>
+        <TableCell>{memberState?.firstName}</TableCell>
+        <TableCell>{memberState?.lastName}</TableCell>
+        <TableCell>{memberState?.gender}</TableCell>
+        <TableCell>{memberState?.address}</TableCell>
+        <TableCell>{memberState?.phoneNumber}</TableCell>
+        <TableCell>{formatDate(memberState?.birthDate)}</TableCell>
         <TableCell align="center">
-          {member?.active ? <CheckCircleIcon /> : null}
+          {memberState?.active ? <CheckCircleIcon /> : null}
         </TableCell>
         <TableCell align="center">
           <AssignmentIcon onClick={handlePlan} />
