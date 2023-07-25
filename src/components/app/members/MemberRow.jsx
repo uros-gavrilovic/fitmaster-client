@@ -2,7 +2,6 @@ import { Fragment, useEffect, useState } from "react";
 import * as memberActions from "../../../actions/members";
 import { useDispatch } from "react-redux";
 import { Avatar, TableCell, TableRow } from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import InfoIcon from "@mui/icons-material/Info";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
