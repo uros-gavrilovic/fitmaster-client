@@ -1,5 +1,5 @@
 import ParticleBackground from "../backgrounds/ParticleBackground";
-import IconTextInput from "../reusable/inputFields/IconTextInput";
+import IconTextField from "../reusable/inputFields/IconTextField";
 import IconButton from "../reusable/buttons/IconButton";
 import CustomContainer from "../reusable/containers/CustomContainer";
 import { ThemeProvider, color, createTheme } from "@mui/system";
@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as userActions from "../../actions/user";
 import { useNavigate } from "react-router-dom";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import HttpsRoundedIcon from "@mui/icons-material/HttpsRounded";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -64,21 +66,27 @@ const Login = () => {
             <FitnessCenterIcon sx={{ fontSize: "10vh" }} />
           </center>
         </div>
-
-        <IconTextInput
-          id="txtUsername"
+        <IconTextField
+          id="username"
           title="Username"
-          icon="username"
+          icon={
+            <AccountCircle style={{ color: "white" }} sx={{ mr: 1, my: 0.5 }} />
+          }
           fullWidth
           required
           error={usernameError}
           onChange={(e) => setUsernameState(e.target.value)}
         />
-        <IconTextInput
-          id="txtPassword"
+        <IconTextField
+          id="password"
           title="Password"
           type="password"
-          icon="password"
+          icon={
+            <HttpsRoundedIcon
+              style={{ color: "white" }}
+              sx={{ mr: 1, my: 0.5 }}
+            />
+          }
           margin="dense"
           fullWidth
           required

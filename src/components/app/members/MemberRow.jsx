@@ -32,11 +32,7 @@ export default function MemberRow(props) {
     setInfoModalVisible(true);
   };
   const handleDelete = () => {
-    setConfirmModalVisible(true);
-  };
-
-  const deleteRow = () => {
-    dispatch(memberActions.deleteMember(memberState.memberID));
+    dispatch(memberActions.deleteMember(memberState.memberID, undefined));
   };
   const editRow = () => {
     // dispatch(memberActions.editMember(memberState));
@@ -53,7 +49,7 @@ export default function MemberRow(props) {
       <ConfirmModal
         title="Delete Member"
         text="Are you sure you want to delete this member?"
-        yes_action={deleteRow}
+        yes_action={handleDelete}
         no_action={() => {
           setConfirmModalVisible(false);
         }}
@@ -81,7 +77,11 @@ export default function MemberRow(props) {
           <InfoIcon onClick={handleEdit} />
         </TableCell>
         <TableCell align="center">
-          <DeleteForeverIcon onClick={handleDelete} />
+          <DeleteForeverIcon
+            onClick={() => {
+              setConfirmModalVisible(true);
+            }}
+          />
         </TableCell>
       </TableRow>
     </Fragment>

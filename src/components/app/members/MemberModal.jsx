@@ -17,6 +17,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
+import ConfirmModal from "../../reusable/modals/ConfirmModal";
 
 const Fade = forwardRef(function Fade(props, ref) {
   const {
@@ -75,6 +76,8 @@ export default function MemberModal(props) {
   const { memberState, setMemberState, open, setOpen } = props || {};
 
   const dispatch = useDispatch();
+  const [newMemberState, setNewMemberState] = useState(memberState);
+  const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [editEnabled, setEditEnabled] = useState(false);
   const [errorState, setErrorState] = useState({
     firstName: false,
@@ -89,7 +92,7 @@ export default function MemberModal(props) {
   }, [open]);
   useEffect(() => {
     if (open) {
-      setMemberState(member);
+      setNewMemberState(member);
     }
   }, [member]);
 
@@ -101,12 +104,13 @@ export default function MemberModal(props) {
     setEditEnabled((prevEditEnabled) =>
       param !== undefined ? param : !prevEditEnabled
     );
+    setNewMemberState(memberState);
   };
   const handleChange = (e) => {
     if (!editEnabled) return;
 
-    setMemberState({
-      ...memberState,
+    setNewMemberState({
+      ...newMemberState,
       [e.target.id]: e.target.value !== "" ? e.target.value : null,
     });
   };
@@ -126,7 +130,11 @@ export default function MemberModal(props) {
 
     if (errorState.firstName || errorState.lastName) return;
 
-    dispatch(membersActions.updateMember(memberState));
+    dispatch(membersActions.updateMember(newMemberState));
+  };
+  const handleDelete = () => {
+    dispatch(membersActions.deleteMember(memberState.memberID));
+    setOpen(false);
   };
 
   return (
@@ -149,7 +157,7 @@ export default function MemberModal(props) {
             <div className="leftDiv">
               <Avatar
                 sx={{ width: "8vw", height: "10vh", margin: "0.5vw" }}
-                src={memberState?.image}
+                src={newMemberState?.image}
               />
             </div>
             <div>
@@ -161,7 +169,7 @@ export default function MemberModal(props) {
                     readOnly
                     variant="filled"
                     sx={{ width: "25ch" }}
-                    value={memberState?.memberID}
+                    value={newMemberState?.memberID}
                     onChange={handleChange}
                   />
                 </div>
@@ -172,7 +180,7 @@ export default function MemberModal(props) {
                     label="First name"
                     variant="filled"
                     sx={{ width: "25ch" }}
-                    value={memberState?.firstName}
+                    value={newMemberState?.firstName}
                     onChange={handleChange}
                   />
                   <TextField
@@ -181,15 +189,15 @@ export default function MemberModal(props) {
                     label="Last name"
                     variant="filled"
                     sx={{ width: "25ch" }}
-                    value={memberState?.lastName}
+                    value={newMemberState?.lastName}
                     onChange={handleChange}
                   />
                   <CustomSelect
                     id="gender"
                     label="Gender"
                     variant="filled"
-                    value={memberState.gender}
-                    setValue={setMemberState}
+                    value={newMemberState?.gender}
+                    setValue={setNewMemberState}
                     sx={{ width: "25ch" }}
                     options={["MALE", "FEMALE"]}
                     onChange={handleChange}
@@ -199,7 +207,7 @@ export default function MemberModal(props) {
                     label="Address"
                     variant="filled"
                     sx={{ width: "25ch" }}
-                    value={memberState?.address}
+                    value={newMemberState?.address}
                     onChange={handleChange}
                   />
                   <TextField
@@ -207,7 +215,7 @@ export default function MemberModal(props) {
                     label="Phone number"
                     variant="filled"
                     sx={{ width: "25ch" }}
-                    value={memberState?.phoneNumber}
+                    value={newMemberState?.phoneNumber}
                     onChange={handleChange}
                   />
                   <TextField
@@ -215,7 +223,7 @@ export default function MemberModal(props) {
                     label="Birth date"
                     variant="filled"
                     sx={{ width: "25ch" }}
-                    value={formatDate(memberState?.birthDate)}
+                    value={formatDate(newMemberState?.birthDate)}
                     onChange={handleChange}
                   />
                 </div>
@@ -246,16 +254,35 @@ export default function MemberModal(props) {
                       Edit
                     </Button>
                   )}
-                  <Button variant="contained" endIcon={<DeleteIcon />}>
+                  <Button
+                    variant="contained"
+                    endIcon={<DeleteIcon />}
+                    onClick={() => {
+                      setConfirmModalVisible(true);
+                    }}
+                  >
                     Delete
                   </Button>
+                  <ConfirmModal
+                    title="Delete Member"
+                    text="Are you sure you want to delete this member?"
+                    yes_action={handleDelete}
+                    no_action={() => {
+                      setConfirmModalVisible(false);
+                    }}
+                    open={confirmModalVisible}
+                    setOpen={setConfirmModalVisible}
+                  />
                 </div>
               </BorderedSection>
               <BorderedSection
                 icon={ManageSearchIcon}
                 title="Membership History"
               >
-                {JSON.stringify(memberState?.memberships)}
+                {
+                  JSON.stringify(newMemberState?.memberships)
+                  // TODO
+                }
               </BorderedSection>
             </div>
           </Box>
