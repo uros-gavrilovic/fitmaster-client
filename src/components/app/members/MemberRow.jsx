@@ -2,7 +2,6 @@ import { Fragment, useEffect, useState } from "react";
 import * as memberActions from "../../../actions/members";
 import { useDispatch } from "react-redux";
 import { Avatar, TableCell, TableRow } from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import InfoIcon from "@mui/icons-material/Info";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -14,32 +13,20 @@ import { formatDate } from "../../../utils/utilFunctions";
 export default function MemberRow(props) {
   const { t, member } = props || {}; // memberDTO from fetchMembersDTO list
 
+  const dispatch = useDispatch();
+  const [memberState, setMemberState] = useState(member);
+  const [infoModalVisible, setInfoModalVisible] = useState(false);
+  const [confirmModalVisible, setConfirmModalVisible] = useState(false);
+
   useEffect(() => {
     setMemberState(member);
   }, [member]);
 
-  const dispatch = useDispatch();
-
-  const [memberState, setMemberState] = useState(member);
-
-  const [infoModalVisible, setInfoModalVisible] = useState(false);
-  const [confirmModalVisible, setConfirmModalVisible] = useState(false);
-
   const handlePlan = () => {
     console.log("handlePlan");
   };
-  const handleEdit = () => {
-    setInfoModalVisible(true);
-  };
   const handleDelete = () => {
-    setConfirmModalVisible(true);
-  };
-
-  const deleteRow = () => {
-    dispatch(memberActions.deleteMember(memberState.memberID));
-  };
-  const editRow = () => {
-    // dispatch(memberActions.editMember(memberState));
+    dispatch(memberActions.deleteMember(memberState.memberID, undefined));
   };
 
   return (
@@ -53,7 +40,7 @@ export default function MemberRow(props) {
       <ConfirmModal
         title="Delete Member"
         text="Are you sure you want to delete this member?"
-        yes_action={deleteRow}
+        yes_action={handleDelete}
         no_action={() => {
           setConfirmModalVisible(false);
         }}
@@ -78,10 +65,18 @@ export default function MemberRow(props) {
           <AssignmentIcon onClick={handlePlan} />
         </TableCell>
         <TableCell align="center">
-          <InfoIcon onClick={handleEdit} />
+          <InfoIcon
+            onClick={() => {
+              setInfoModalVisible(true);
+            }}
+          />
         </TableCell>
         <TableCell align="center">
-          <DeleteForeverIcon onClick={handleDelete} />
+          <DeleteForeverIcon
+            onClick={() => {
+              setConfirmModalVisible(true);
+            }}
+          />
         </TableCell>
       </TableRow>
     </Fragment>

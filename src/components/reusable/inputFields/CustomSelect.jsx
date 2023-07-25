@@ -6,11 +6,8 @@ import Select from "@mui/material/Select";
 import { capitalizeFirstLetter } from "../../../utils/utilFunctions";
 
 export default function CustomSelect(props) {
-  const { label, value, setValue, options, variant, hasBlank } = props || {};
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
+  const { label, value, setValue, onChange, options, variant, hasBlank } =
+    props || {};
 
   return (
     <FormControl variant="filled" sx={{ width: "25ch" }}>
@@ -19,7 +16,8 @@ export default function CustomSelect(props) {
         labelId="demo-simple-select-filled-label"
         id="demo-simple-select-filled"
         value={value}
-        onChange={handleChange}
+        onChange={onChange}
+        // onChange={handleChange}
       >
         {options.map((availableValue) => {
           return (
@@ -28,7 +26,7 @@ export default function CustomSelect(props) {
             </MenuItem>
           );
         })}
-        <MenuItem value={""}>‎ </MenuItem>
+        {hasBlank && <MenuItem value="">‎</MenuItem>}
       </Select>
     </FormControl>
   );

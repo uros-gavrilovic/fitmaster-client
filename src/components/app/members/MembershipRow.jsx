@@ -9,6 +9,7 @@ export default function MembershipRow(props) {
   const { membership } = props || {};
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
 
+  console.log(membership);
   const handleDelete = () => {
     setConfirmModalVisible(true);
   };
@@ -30,8 +31,7 @@ export default function MembershipRow(props) {
       />
 
       <TableRow key={membership.id}>
-        <TableCell>{membership?.id}</TableCell>
-        <TableCell>{membership?.package?.name}</TableCell>
+        <TableCell>{membership?.membershipPackage?.name}</TableCell>
         <TableCell>{formatDate(membership?.startDate)}</TableCell>
         <TableCell>{formatDate(membership?.endDate)}</TableCell>
         <TableCell>{membership?.active ? "Active" : ""}</TableCell>

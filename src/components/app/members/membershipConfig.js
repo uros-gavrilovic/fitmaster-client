@@ -1,10 +1,4 @@
-export const config = [
-  {
-    type: "data",
-    id: "membershipID",
-    label: "ID",
-    input: "text",
-  },
+export const membershipConfig = [
   {
     type: "data",
     id: "package",
@@ -40,4 +34,4 @@ export const config = [
   },
 ];
 
-export default config;
+export default membershipConfig;

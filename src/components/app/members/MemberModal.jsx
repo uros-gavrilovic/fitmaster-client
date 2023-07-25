@@ -1,4 +1,4 @@
-import { useState, cloneElement } from "react";
+import { useState, cloneElement, Fragment } from "react";
 import PropTypes from "prop-types";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
@@ -7,17 +7,21 @@ import { useSpring, animated } from "@react-spring/web";
 import { forwardRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as membersActions from "../../../actions/members";
-import { Avatar, Button, IconButton, TextField } from "@mui/material";
+import { Avatar, Button, TextField } from "@mui/material";
 import CustomSelect from "../../reusable/inputFields/CustomSelect";
-import { formatDate } from "../../../utils/utilFunctions";
 import BorderedSection from "../../reusable/containers/BorderedSection";
 import InfoIcon from "@mui/icons-material/Info";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
-
-const handleEdit = () => {};
-const handleDelete = () => {};
+import SaveIcon from "@mui/icons-material/Save";
+import CancelIcon from "@mui/icons-material/Cancel";
+import ConfirmModal from "../../reusable/modals/ConfirmModal";
+import { DayPicker } from "react-day-picker";
+import PaginationTable from "../../reusable/tables/PaginationTable";
+import membershipConfig from "../members/membershipConfig";
+import MembershipRow from "./MembershipRow";
+import { validateField } from "../../../utils/utilFunctions";
 
 const Fade = forwardRef(function Fade(props, ref) {
   const {
@@ -50,7 +54,6 @@ const Fade = forwardRef(function Fade(props, ref) {
     </animated.div>
   );
 });
-
 Fade.propTypes = {
   children: PropTypes.element,
   in: PropTypes.bool,
@@ -59,7 +62,6 @@ Fade.propTypes = {
   onExited: PropTypes.func,
   ownerState: PropTypes.any,
 };
-
 const style = {
   width: "auto",
   position: "absolute",
@@ -74,11 +76,22 @@ const style = {
   gridTemplateColumns: "1fr 3fr",
 };
 
+const rowComponentFunction = (t, row) => {
+  return <MembershipRow membership={row} />;
+};
+
 export default function MemberModal(props) {
   const { memberState, setMemberState, open, setOpen } = props || {};
 
   const dispatch = useDispatch();
   const { member } = useSelector((state) => state.membersReducer);
+  const [newMemberState, setNewMemberState] = useState("");
+  const [confirmModalVisible, setConfirmModalVisible] = useState(false);
+  const [editEnabled, setEditEnabled] = useState(false);
+  const [errorState, setErrorState] = useState({
+    firstName: false,
+    lastName: false,
+  });
 
   useEffect(() => {
     if (open) {
@@ -88,15 +101,54 @@ export default function MemberModal(props) {
   useEffect(() => {
     if (open) {
       setMemberState(member);
+      setNewMemberState(member);
     }
   }, [member]);
+
+  const handleBackgroundClick = () => {
+    setOpen(false);
+    handleToggleEdit(undefined, false);
+  };
+  const handleToggleEdit = (e, param) => {
+    setEditEnabled((prevEditEnabled) =>
+      param !== undefined ? param : !prevEditEnabled
+    );
+    setNewMemberState(memberState);
+  };
+  const handleChange = (e) => {
+    if (!editEnabled) return;
+
+    setNewMemberState({
+      ...newMemberState,
+      [e.target.id]: e.target.value !== "" ? e.target.value : null,
+    });
+  };
+  const handleSave = () => {
+    const hasFirstNameError = validateField(
+      newMemberState.firstName,
+      "firstName",
+      setErrorState
+    );
+    const hasLastNameError = validateField(
+      newMemberState.lastName,
+      "lastName",
+      setErrorState
+    );
+
+    if (hasFirstNameError || hasLastNameError) return;
+    dispatch(membersActions.updateMember(newMemberState));
+  };
+  const handleDelete = () => {
+    dispatch(membersActions.deleteMember(memberState.memberID));
+    setOpen(false);
+  };
 
   return (
     <Modal
       aria-labelledby="spring-modal-title"
       aria-describedby="spring-modal-description"
       open={open}
-      onClose={() => setOpen(false)}
+      onClose={handleBackgroundClick}
       closeAfterTransition
       slots={{ backdrop: Backdrop }}
       slotProps={{
@@ -111,81 +163,155 @@ export default function MemberModal(props) {
             <div className="leftDiv">
               <Avatar
                 sx={{ width: "8vw", height: "10vh", margin: "0.5vw" }}
-                src={memberState?.image}
+                src={newMemberState?.image}
               />
             </div>
-            <div>
+            <div className="rightDiv">
               <BorderedSection icon={InfoIcon} title="General Information">
-                <div className="rightDiv-id">
-                  <TextField
-                    id="id"
-                    label="ID"
-                    readOnly
-                    variant="filled"
-                    sx={{ width: "25ch" }}
-                    value={memberState?.memberID}
-                  />
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr",
+                  }}
+                >
+                  <div>
+                    <TextField
+                      id="id"
+                      label="Member ID"
+                      readOnly
+                      variant="filled"
+                      sx={{ width: "25ch" }}
+                      value={newMemberState?.memberID}
+                      onChange={handleChange}
+                    />
+
+                    <TextField
+                      required
+                      id="firstName"
+                      label="First name"
+                      variant="filled"
+                      sx={{ width: "25ch" }}
+                      value={newMemberState?.firstName}
+                      onChange={handleChange}
+                    />
+                    <TextField
+                      required
+                      id="lastName"
+                      label="Last name"
+                      variant="filled"
+                      sx={{ width: "25ch" }}
+                      value={newMemberState?.lastName}
+                      onChange={handleChange}
+                    />
+                    <CustomSelect
+                      id="gender"
+                      label="Gender"
+                      variant="filled"
+                      value={newMemberState?.gender}
+                      hasBlank={true}
+                      setValue={setNewMemberState}
+                      sx={{ width: "25ch" }}
+                      options={["MALE", "FEMALE"]}
+                      onChange={handleChange}
+                    />
+                    <TextField
+                      id="address"
+                      label="Address"
+                      variant="filled"
+                      sx={{ width: "25ch" }}
+                      value={newMemberState?.address}
+                      onChange={handleChange}
+                    />
+                    <TextField
+                      id="phoneNumber"
+                      label="Phone number"
+                      variant="filled"
+                      sx={{ width: "25ch" }}
+                      value={newMemberState?.phoneNumber}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                    aria-rowspan={2}
+                  >
+                    <DayPicker
+                      id="birthDate"
+                      mode="single"
+                      selected={memberState?.birthDate}
+                      onSelect={(e) => {
+                        setNewMemberState({ ...newMemberState, birthDate: e });
+                      }}
+                    />
+                  </div>
                 </div>
-                <div className="rightDiv-input">
-                  <TextField
-                    id="firstName"
-                    label="First name"
-                    variant="filled"
-                    sx={{ width: "25ch" }}
-                    value={memberState?.firstName}
-                  />
-                  <TextField
-                    id="lastName"
-                    label="Last name"
-                    variant="filled"
-                    sx={{ width: "25ch" }}
-                    value={memberState?.lastName}
-                  />
-                  <CustomSelect
-                    id="gender"
-                    label="Gender"
-                    variant="filled"
-                    value={memberState.gender}
-                    setValue={setMemberState}
-                    sx={{ width: "25ch" }}
-                    options={["MALE", "FEMALE", "OTHER"]}
-                  />
-                  <TextField
-                    id="address"
-                    label="Address"
-                    variant="filled"
-                    sx={{ width: "25ch" }}
-                    value={memberState?.address}
-                  />
-                  <TextField
-                    id="phoneNumber"
-                    label="Phone number"
-                    variant="filled"
-                    sx={{ width: "25ch" }}
-                    value={memberState?.phoneNumber}
-                  />
-                  <TextField
-                    id="birthDate"
-                    label="Birth date"
-                    variant="filled"
-                    sx={{ width: "25ch" }}
-                    value={formatDate(memberState?.birthDate)}
-                  />
-                </div>
-                <div className="rightDiv-buttons">
-                  <Button variant="contained" endIcon={<EditIcon />}>
-                    Edit
-                  </Button>
-                  <Button variant="contained" endIcon={<DeleteIcon />}>
+                <div className="rightDiv-buttons" style={{ float: "right" }}>
+                  {editEnabled ? (
+                    <Fragment>
+                      <Button
+                        variant="outlined"
+                        endIcon={<CancelIcon />}
+                        onClick={handleToggleEdit}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        variant="contained"
+                        endIcon={<SaveIcon />}
+                        onClick={handleSave}
+                      >
+                        Save
+                      </Button>
+                    </Fragment>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      endIcon={<EditIcon />}
+                      onClick={handleToggleEdit}
+                    >
+                      Edit
+                    </Button>
+                  )}
+                  <Button
+                    variant="contained"
+                    endIcon={<DeleteIcon />}
+                    onClick={() => {
+                      setConfirmModalVisible(true);
+                    }}
+                  >
                     Delete
                   </Button>
                 </div>
+                <ConfirmModal
+                  title="Delete Member"
+                  text="Are you sure you want to delete this member?"
+                  yes_action={handleDelete}
+                  no_action={() => {
+                    setConfirmModalVisible(false);
+                  }}
+                  open={confirmModalVisible}
+                  setOpen={setConfirmModalVisible}
+                />
               </BorderedSection>
               <BorderedSection
                 icon={ManageSearchIcon}
                 title="Membership History"
               >
-                {JSON.stringify(memberState?.memberships)}
+                {newMemberState?.memberships?.length ? (
+                  <PaginationTable
+                    // t={t} // Make sure to pass the "t" prop to PaginationTable
+                    config={membershipConfig} // Make sure "membershipConfig" is correctly defined
+                    rows={newMemberState?.memberships} // Pass the memberships array here
+                    rowComponent={rowComponentFunction}
+                  />
+                ) : (
+                  <Fragment>No memberships available</Fragment>
+                )}
               </BorderedSection>
             </div>
           </Box>
