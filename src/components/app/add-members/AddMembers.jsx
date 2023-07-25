@@ -60,67 +60,83 @@ export default function AddMembers(props) {
 
   return (
     <Fragment>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "1rem" }}>
-        <TextField
-          required
-          id="firstName"
-          label="First name"
-          variant="filled"
-          sx={{ width: "25ch" }}
-          value={memberState?.firstName}
-          onChange={handleChange}
-          error={errorState.firstName}
-        />
-        <TextField
-          required
-          id="lastName"
-          label="Last name"
-          variant="filled"
-          sx={{ width: "25ch" }}
-          value={memberState?.lastName}
-          onChange={handleChange}
-          error={errorState.lastName}
-        />
-        <CustomSelect
-          id="gender"
-          label="Gender"
-          variant="filled"
-          value={memberState?.gender}
-          setValue={(e) => {
-            setMemberState({ ...memberState, gender: e });
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "min-content min-content",
+          gap: "1rem",
+        }}
+      >
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr",
+            gap: "1rem",
           }}
-          sx={{ width: "25ch" }}
-          options={["MALE", "FEMALE"]}
-          hasBlank={true}
-        />
-        <TextField
-          id="address"
-          label="Address"
-          variant="filled"
-          sx={{ width: "25ch" }}
-          value={memberState?.address}
-          onChange={handleChange}
-        />
-        <TextField
-          id="phoneNumber"
-          label="Phone number"
-          variant="filled"
-          sx={{ width: "25ch" }}
-          value={memberState?.phoneNumber}
-          onChange={(e) => {
-            if (isNumber(e.target?.value)) {
-              handleChange(e);
-            }
-          }}
-        />
-        <DayPicker
-          id="birthDate"
-          mode="single"
-          selected={memberState?.birthDate}
-          onSelect={(e) => {
-            setMemberState({ ...memberState, birthDate: e });
-          }}
-        />
+        >
+          <TextField
+            required
+            id="firstName"
+            label="First name"
+            variant="filled"
+            sx={{ width: "25ch" }}
+            value={memberState?.firstName}
+            onChange={handleChange}
+            error={errorState.firstName}
+          />
+          <TextField
+            required
+            id="lastName"
+            label="Last name"
+            variant="filled"
+            sx={{ width: "25ch" }}
+            value={memberState?.lastName}
+            onChange={handleChange}
+            error={errorState.lastName}
+          />
+          <CustomSelect
+            id="gender"
+            label="Gender"
+            variant="filled"
+            value={memberState?.gender}
+            setValue={(e) => {
+              setMemberState({ ...memberState, gender: e });
+            }}
+            sx={{ width: "25ch" }}
+            options={["MALE", "FEMALE"]}
+            hasBlank={true}
+          />
+          <TextField
+            id="address"
+            label="Address"
+            variant="filled"
+            sx={{ width: "25ch" }}
+            value={memberState?.address}
+            onChange={handleChange}
+          />
+          <TextField
+            id="phoneNumber"
+            label="Phone number"
+            variant="filled"
+            sx={{ width: "25ch" }}
+            value={memberState?.phoneNumber}
+            onChange={(e) => {
+              if (isNumber(e.target?.value)) {
+                handleChange(e);
+              }
+            }}
+          />
+        </div>
+        <div>
+          <DayPicker
+            id="birthDate"
+            mode="single"
+            selected={memberState?.birthDate}
+            onSelect={(e) => {
+              setMemberState({ ...memberState, birthDate: e });
+            }}
+          />
+        </div>
       </div>
       <Button
         variant="outlined"

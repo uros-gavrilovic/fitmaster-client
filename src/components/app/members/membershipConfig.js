@@ -1,4 +1,4 @@
-export const config = [
+export const membershipConfig = [
   {
     type: "data",
     id: "membershipID",
@@ -40,4 +40,4 @@ export const config = [
   },
 ];
 
-export default config;
+export default membershipConfig;

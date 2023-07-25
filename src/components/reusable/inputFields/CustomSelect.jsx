@@ -9,10 +9,6 @@ export default function CustomSelect(props) {
   const { label, value, setValue, onChange, options, variant, hasBlank } =
     props || {};
 
-  // const handleChange = (event) => {
-  //   setValue(event.target.value);
-  // };
-
   return (
     <FormControl variant="filled" sx={{ width: "25ch" }}>
       <InputLabel id="demo-simple-select-filled-label">{label}</InputLabel>

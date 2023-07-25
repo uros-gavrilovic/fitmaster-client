@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import * as membersActions from "../../../actions/members";
 import { Avatar, Button, TextField } from "@mui/material";
 import CustomSelect from "../../reusable/inputFields/CustomSelect";
-import { formatDate } from "../../../utils/utilFunctions";
 import BorderedSection from "../../reusable/containers/BorderedSection";
 import InfoIcon from "@mui/icons-material/Info";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -18,6 +17,10 @@ import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ConfirmModal from "../../reusable/modals/ConfirmModal";
+import { DayPicker } from "react-day-picker";
+import PaginationTable from "../../reusable/tables/PaginationTable";
+import membershipConfig from "../members/membershipConfig";
+import MembershipRow from "./MembershipRow";
 
 const Fade = forwardRef(function Fade(props, ref) {
   const {
@@ -70,6 +73,10 @@ const style = {
   boxShadow: 24,
   display: "grid",
   gridTemplateColumns: "1fr 3fr",
+};
+
+const rowComponentFunction = (t, row) => {
+  return <MembershipRow membership={row} />;
 };
 
 export default function MemberModal(props) {
@@ -160,74 +167,91 @@ export default function MemberModal(props) {
                 src={newMemberState?.image}
               />
             </div>
-            <div>
+            <div className="rightDiv">
               <BorderedSection icon={InfoIcon} title="General Information">
-                <div className="rightDiv-id">
-                  <TextField
-                    id="id"
-                    label="ID"
-                    readOnly
-                    variant="filled"
-                    sx={{ width: "25ch" }}
-                    value={newMemberState?.memberID}
-                    onChange={handleChange}
-                  />
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr",
+                  }}
+                >
+                  <div>
+                    <TextField
+                      id="id"
+                      label="Member ID"
+                      readOnly
+                      variant="filled"
+                      sx={{ width: "25ch" }}
+                      value={newMemberState?.memberID}
+                      onChange={handleChange}
+                    />
+
+                    <TextField
+                      required
+                      id="firstName"
+                      label="First name"
+                      variant="filled"
+                      sx={{ width: "25ch" }}
+                      value={newMemberState?.firstName}
+                      onChange={handleChange}
+                    />
+                    <TextField
+                      required
+                      id="lastName"
+                      label="Last name"
+                      variant="filled"
+                      sx={{ width: "25ch" }}
+                      value={newMemberState?.lastName}
+                      onChange={handleChange}
+                    />
+                    <CustomSelect
+                      id="gender"
+                      label="Gender"
+                      variant="filled"
+                      value={newMemberState?.gender}
+                      hasBlank={true}
+                      setValue={setNewMemberState}
+                      sx={{ width: "25ch" }}
+                      options={["MALE", "FEMALE"]}
+                      onChange={handleChange}
+                    />
+                    <TextField
+                      id="address"
+                      label="Address"
+                      variant="filled"
+                      sx={{ width: "25ch" }}
+                      value={newMemberState?.address}
+                      onChange={handleChange}
+                    />
+                    <TextField
+                      id="phoneNumber"
+                      label="Phone number"
+                      variant="filled"
+                      sx={{ width: "25ch" }}
+                      value={newMemberState?.phoneNumber}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                    aria-rowspan={2}
+                  >
+                    <DayPicker
+                      id="birthDate"
+                      mode="single"
+                      selected={memberState?.birthDate}
+                      onSelect={(e) => {
+                        setNewMemberState({ ...newMemberState, birthDate: e });
+                      }}
+                    />
+                  </div>
                 </div>
-                <div className="rightDiv-input">
-                  <TextField
-                    required
-                    id="firstName"
-                    label="First name"
-                    variant="filled"
-                    sx={{ width: "25ch" }}
-                    value={newMemberState?.firstName}
-                    onChange={handleChange}
-                  />
-                  <TextField
-                    required
-                    id="lastName"
-                    label="Last name"
-                    variant="filled"
-                    sx={{ width: "25ch" }}
-                    value={newMemberState?.lastName}
-                    onChange={handleChange}
-                  />
-                  <CustomSelect
-                    id="gender"
-                    label="Gender"
-                    variant="filled"
-                    value={newMemberState?.gender}
-                    setValue={setNewMemberState}
-                    sx={{ width: "25ch" }}
-                    options={["MALE", "FEMALE"]}
-                    onChange={handleChange}
-                  />
-                  <TextField
-                    id="address"
-                    label="Address"
-                    variant="filled"
-                    sx={{ width: "25ch" }}
-                    value={newMemberState?.address}
-                    onChange={handleChange}
-                  />
-                  <TextField
-                    id="phoneNumber"
-                    label="Phone number"
-                    variant="filled"
-                    sx={{ width: "25ch" }}
-                    value={newMemberState?.phoneNumber}
-                    onChange={handleChange}
-                  />
-                  <TextField
-                    id="birthDate"
-                    label="Birth date"
-                    variant="filled"
-                    sx={{ width: "25ch" }}
-                    value={formatDate(newMemberState?.birthDate)}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="rightDiv-buttons">
+                <div className="rightDiv-buttons" style={{ float: "right" }}>
                   {editEnabled ? (
                     <Fragment>
                       <Button
@@ -263,26 +287,32 @@ export default function MemberModal(props) {
                   >
                     Delete
                   </Button>
-                  <ConfirmModal
-                    title="Delete Member"
-                    text="Are you sure you want to delete this member?"
-                    yes_action={handleDelete}
-                    no_action={() => {
-                      setConfirmModalVisible(false);
-                    }}
-                    open={confirmModalVisible}
-                    setOpen={setConfirmModalVisible}
-                  />
                 </div>
+                <ConfirmModal
+                  title="Delete Member"
+                  text="Are you sure you want to delete this member?"
+                  yes_action={handleDelete}
+                  no_action={() => {
+                    setConfirmModalVisible(false);
+                  }}
+                  open={confirmModalVisible}
+                  setOpen={setConfirmModalVisible}
+                />
               </BorderedSection>
               <BorderedSection
                 icon={ManageSearchIcon}
                 title="Membership History"
               >
-                {
+                {newMemberState?.memberships?.length !== 0 ? (
                   JSON.stringify(newMemberState?.memberships)
-                  // TODO
-                }
+                ) : (
+                  // <PaginationTable
+                  //   config={membershipConfig}
+                  //   rows={newMemberState?.memberships}
+                  //   rowComponent={rowComponentFunction}
+                  // />
+                  <div>No membership history available.</div>
+                )}
               </BorderedSection>
             </div>
           </Box>

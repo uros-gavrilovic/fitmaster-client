@@ -15,11 +15,20 @@ const rowComponentFunction = (t, row) => {
 
 export default function Members(props) {
   const { membersDTO } = useSelector((state) => state.membersReducer);
+  const [members, setMembers] = useState(membersDTO);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(membersActions.fetchMembersDTO());
   }, [dispatch]);
+  useEffect(() => {
+    setMembers(membersDTO);
+  }, [membersDTO]);
+
+  const handleSearch = (e) => {
+    dispatch(membersActions.searchMembersDTO(e.target.value));
+  };
+
   return (
     <Fragment>
       {membersDTO === undefined ? (
@@ -30,13 +39,13 @@ export default function Members(props) {
             id="search"
             title="Search"
             icon={<SearchIcon />}
-            // onChange={}
+            onChange={handleSearch}
             style={{ float: "right" }}
           />
           <PaginationTable
             style={{ width: "100%", height: "100%" }}
             config={config}
-            rows={generateIDField(membersDTO)}
+            rows={generateIDField(members)}
             rowComponent={rowComponentFunction}
           />
         </Fragment>

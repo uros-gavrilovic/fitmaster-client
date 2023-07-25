@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { contains } from "../utils/utilFunctions";
 
 const membersSlice = createSlice({
   name: "members",
   initialState: {
     members: [],
     membersDTO: [],
+    allMembersDTO: [],
     member: undefined,
     error: undefined,
   },
@@ -16,7 +18,16 @@ const membersSlice = createSlice({
     },
     fetchMembersDTO(state, action) {
       state.membersDTO = action.payload;
+      state.allMembersDTO = state.membersDTO;
       state.error = undefined;
+    },
+    searchMembersDTO(state, action) {
+      const searchTerm = action.payload.toLowerCase();
+      state.membersDTO = state.allMembersDTO.filter((member) =>
+        (member.firstName + " " + member.lastName)
+          .toLowerCase()
+          .includes(searchTerm)
+      );
     },
     fetchMember(state, action) {
       state.member = action.payload;

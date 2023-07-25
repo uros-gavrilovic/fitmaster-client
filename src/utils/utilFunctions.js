@@ -31,3 +31,10 @@ export function convertEmptyFieldsToNull(state) {
     ])
   );
 }
+
+export function contains(obj, string, ignoreCase = false) {
+  // const regexPattern = new RegExp(string, ignoreCase ? "i" : "");
+  // return regexPattern.test(obj);
+
+  return obj.includes(string);
+}

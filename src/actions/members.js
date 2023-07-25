@@ -35,6 +35,14 @@ export const fetchMembersDTO = () => {
       });
   };
 };
+
+export const searchMembersDTO = (string) => {
+  return (dispatch) => {
+    dispatch(membersActions.actionStart());
+    dispatch(membersActions.searchMembersDTO(string));
+  };
+};
+
 export const fetchMember = (id) => {
   return (dispatch) => {
     dispatch(membersActions.actionStart());

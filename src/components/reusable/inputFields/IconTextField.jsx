@@ -14,7 +14,7 @@ export default function IconTextField(props) {
           label={props.title}
           variant="standard"
           // color="white"
-          inputProps={{ style: { color: "white" } }}
+          // inputProps={{ style: { color: "white" } }}
         />
       </Box>
     </Box>
