@@ -1,12 +1,6 @@
 export const membershipConfig = [
   {
     type: "data",
-    id: "membershipID",
-    label: "ID",
-    input: "text",
-  },
-  {
-    type: "data",
     id: "package",
     label: "Package",
     minWidth: 100,

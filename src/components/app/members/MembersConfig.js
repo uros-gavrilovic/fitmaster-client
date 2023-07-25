@@ -1,4 +1,4 @@
-export const config = [
+export const membersConfig = [
   {
     type: "icon",
     id: "icon",
@@ -76,4 +76,4 @@ export const config = [
   },
 ];
 
-export default config;
+export default membersConfig;

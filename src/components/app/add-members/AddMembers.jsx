@@ -1,15 +1,18 @@
 import { Button, TextField } from "@mui/material";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import { DayPicker } from "react-day-picker";
 import CustomSelect from "../../reusable/inputFields/CustomSelect";
 import SaveIcon from "@mui/icons-material/Save";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "react-day-picker/dist/style.css";
-import { isNumber } from "../../../utils/utilFunctions";
+import {
+  isNumber,
+  validateField,
+  convertEmptyFieldsToNull,
+} from "../../../utils/utilFunctions";
+import { useIsMount } from "../../../utils/customHooks/useIsMount";
 import * as membersActions from "../../../actions/members";
 import { useDispatch } from "react-redux";
-import { useIsMount } from "../../../utils/customHooks/useIsMount";
-import { convertEmptyFieldsToNull } from "../../../utils/utilFunctions";
 
 const initialMemberState = {
   firstName: "",
@@ -39,21 +42,18 @@ export default function AddMembers(props) {
     setMemberState(initialMemberState);
   };
   const handleSave = () => {
-    if (memberState.firstName === "") {
-      setErrorState((prevState) => ({ ...prevState, firstName: true }));
-      return;
-    } else {
-      setErrorState((prevState) => ({ ...prevState, firstName: false }));
-    }
-    if (memberState.lastName === "") {
-      setErrorState((prevState) => ({ ...prevState, lastName: true }));
-      return;
-    } else {
-      setErrorState((prevState) => ({ ...prevState, lastName: false }));
-    }
+    const hasFirstNameError = validateField(
+      memberState.firstName,
+      "firstName",
+      setErrorState
+    );
+    const hasLastNameError = validateField(
+      memberState.lastName,
+      "lastName",
+      setErrorState
+    );
 
-    if (errorState.firstName || errorState.lastName) return;
-
+    if (hasFirstNameError || hasLastNameError) return;
     dispatch(membersActions.addMember(convertEmptyFieldsToNull(memberState)));
     handleClear();
   };

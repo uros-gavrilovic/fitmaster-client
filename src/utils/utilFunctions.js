@@ -38,3 +38,15 @@ export function contains(obj, string, ignoreCase = false) {
 
   return obj.includes(string);
 }
+
+export function validateField(field, fieldName, setErrorState) {
+  // Validates whetever field is empty or not.
+
+  if (!field) {
+    setErrorState((prevState) => ({ ...prevState, [fieldName]: true }));
+    return true; // Indicates an error
+  } else {
+    setErrorState((prevState) => ({ ...prevState, [fieldName]: false }));
+    return false; // No error
+  }
+}

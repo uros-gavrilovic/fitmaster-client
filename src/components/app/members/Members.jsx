@@ -2,12 +2,11 @@ import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as membersActions from "../../../actions/members";
 import PaginationTable from "../../reusable/tables/PaginationTable";
-import config from "./membersConfig";
+import membersConfig from "./membersConfig";
 import MemberRow from "./MemberRow";
 import { generateIDField } from "../../../utils/utilFunctions";
 import IconTextField from "../../reusable/inputFields/IconTextField";
 import SearchIcon from "@mui/icons-material/Search";
-import { TextField } from "@mui/material";
 
 const rowComponentFunction = (t, row) => {
   return <MemberRow member={row} key={row.id} />;
@@ -44,7 +43,7 @@ export default function Members(props) {
           />
           <PaginationTable
             style={{ width: "100%", height: "100%" }}
-            config={config}
+            config={membersConfig}
             rows={generateIDField(members)}
             rowComponent={rowComponentFunction}
           />

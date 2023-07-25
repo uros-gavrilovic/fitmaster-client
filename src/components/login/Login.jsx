@@ -13,37 +13,42 @@ import * as userActions from "../../actions/user";
 import { useNavigate } from "react-router-dom";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import HttpsRoundedIcon from "@mui/icons-material/HttpsRounded";
+import { validateField } from "../../utils/utilFunctions";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { token } = useSelector((state) => state.userReducer);
-
-  const [usernameState, setUsernameState] = useState("");
-  const [passwordState, setPasswordState] = useState("");
-
-  const [usernameError, setUsernameError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
+  const [loginState, setLoginState] = useState({
+    username: "",
+    password: "",
+  });
+  const [errorState, setErrorState] = useState({
+    username: false,
+    password: false,
+  });
 
   const handleRegister = () => {
     console.log("Register successful!");
   };
   const handleLogIn = () => {
-    if (usernameState === "") {
-      setUsernameError(true);
-      return;
-    } else {
-      setUsernameError(false);
-    }
-    if (passwordState === "") {
-      setPasswordError(true);
-      return;
-    } else {
-      setPasswordError(false);
-    }
+    const hasUsernameError = validateField(
+      loginState.username,
+      "username",
+      setErrorState
+    );
+    const hasPasswordError = validateField(
+      loginState.password,
+      "password",
+      setErrorState
+    );
 
+    if (hasUsernameError || hasPasswordError) return;
     dispatch(
-      userActions.login({ username: usernameState, password: passwordState })
+      userActions.login({
+        username: loginState.username,
+        password: loginState.password,
+      })
     );
   };
 
@@ -74,8 +79,10 @@ const Login = () => {
           }
           fullWidth
           required
-          error={usernameError}
-          onChange={(e) => setUsernameState(e.target.value)}
+          error={errorState.username}
+          onChange={(e) =>
+            setLoginState({ ...loginState, [e.target.id]: e.target.value })
+          }
         />
         <IconTextField
           id="password"
@@ -90,8 +97,10 @@ const Login = () => {
           margin="dense"
           fullWidth
           required
-          error={passwordError}
-          onChange={(e) => setPasswordState(e.target.value)}
+          error={errorState.password}
+          onChange={(e) =>
+            setLoginState({ ...loginState, [e.target.id]: e.target.value })
+          }
         />
         <div
           style={{

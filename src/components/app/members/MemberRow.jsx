@@ -13,28 +13,20 @@ import { formatDate } from "../../../utils/utilFunctions";
 export default function MemberRow(props) {
   const { t, member } = props || {}; // memberDTO from fetchMembersDTO list
 
+  const dispatch = useDispatch();
+  const [memberState, setMemberState] = useState(member);
+  const [infoModalVisible, setInfoModalVisible] = useState(false);
+  const [confirmModalVisible, setConfirmModalVisible] = useState(false);
+
   useEffect(() => {
     setMemberState(member);
   }, [member]);
 
-  const dispatch = useDispatch();
-
-  const [memberState, setMemberState] = useState(member);
-
-  const [infoModalVisible, setInfoModalVisible] = useState(false);
-  const [confirmModalVisible, setConfirmModalVisible] = useState(false);
-
   const handlePlan = () => {
     console.log("handlePlan");
   };
-  const handleEdit = () => {
-    setInfoModalVisible(true);
-  };
   const handleDelete = () => {
     dispatch(memberActions.deleteMember(memberState.memberID, undefined));
-  };
-  const editRow = () => {
-    // dispatch(memberActions.editMember(memberState));
   };
 
   return (
@@ -73,7 +65,11 @@ export default function MemberRow(props) {
           <AssignmentIcon onClick={handlePlan} />
         </TableCell>
         <TableCell align="center">
-          <InfoIcon onClick={handleEdit} />
+          <InfoIcon
+            onClick={() => {
+              setInfoModalVisible(true);
+            }}
+          />
         </TableCell>
         <TableCell align="center">
           <DeleteForeverIcon

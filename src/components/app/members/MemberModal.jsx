@@ -21,6 +21,7 @@ import { DayPicker } from "react-day-picker";
 import PaginationTable from "../../reusable/tables/PaginationTable";
 import membershipConfig from "../members/membershipConfig";
 import MembershipRow from "./MembershipRow";
+import { validateField } from "../../../utils/utilFunctions";
 
 const Fade = forwardRef(function Fade(props, ref) {
   const {
@@ -83,14 +84,14 @@ export default function MemberModal(props) {
   const { memberState, setMemberState, open, setOpen } = props || {};
 
   const dispatch = useDispatch();
-  const [newMemberState, setNewMemberState] = useState(memberState);
+  const { member } = useSelector((state) => state.membersReducer);
+  const [newMemberState, setNewMemberState] = useState("");
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [editEnabled, setEditEnabled] = useState(false);
   const [errorState, setErrorState] = useState({
     firstName: false,
     lastName: false,
   });
-  const { member } = useSelector((state) => state.membersReducer);
 
   useEffect(() => {
     if (open) {
@@ -99,6 +100,7 @@ export default function MemberModal(props) {
   }, [open]);
   useEffect(() => {
     if (open) {
+      setMemberState(member);
       setNewMemberState(member);
     }
   }, [member]);
@@ -122,21 +124,18 @@ export default function MemberModal(props) {
     });
   };
   const handleSave = () => {
-    if (memberState.firstName === "") {
-      setErrorState((prevState) => ({ ...prevState, firstName: true }));
-      return;
-    } else {
-      setErrorState((prevState) => ({ ...prevState, firstName: false }));
-    }
-    if (memberState.lastName === "") {
-      setErrorState((prevState) => ({ ...prevState, lastName: true }));
-      return;
-    } else {
-      setErrorState((prevState) => ({ ...prevState, lastName: false }));
-    }
+    const hasFirstNameError = validateField(
+      newMemberState.firstName,
+      "firstName",
+      setErrorState
+    );
+    const hasLastNameError = validateField(
+      newMemberState.lastName,
+      "lastName",
+      setErrorState
+    );
 
-    if (errorState.firstName || errorState.lastName) return;
-
+    if (hasFirstNameError || hasLastNameError) return;
     dispatch(membersActions.updateMember(newMemberState));
   };
   const handleDelete = () => {
@@ -303,15 +302,15 @@ export default function MemberModal(props) {
                 icon={ManageSearchIcon}
                 title="Membership History"
               >
-                {newMemberState?.memberships?.length !== 0 ? (
-                  JSON.stringify(newMemberState?.memberships)
+                {newMemberState?.memberships?.length ? (
+                  <PaginationTable
+                    // t={t} // Make sure to pass the "t" prop to PaginationTable
+                    config={membershipConfig} // Make sure "membershipConfig" is correctly defined
+                    rows={newMemberState?.memberships} // Pass the memberships array here
+                    rowComponent={rowComponentFunction}
+                  />
                 ) : (
-                  // <PaginationTable
-                  //   config={membershipConfig}
-                  //   rows={newMemberState?.memberships}
-                  //   rowComponent={rowComponentFunction}
-                  // />
-                  <div>No membership history available.</div>
+                  <Fragment>No memberships available</Fragment>
                 )}
               </BorderedSection>
             </div>
