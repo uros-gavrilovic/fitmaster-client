@@ -49,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "eslint-plugin-react": "^7.33.1",
     "react-router-dom": "^6.14.1"
   }
 }
