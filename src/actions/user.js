@@ -3,6 +3,7 @@ import { createNotification } from "../utils/notificationService";
 import { loginTrainerPath, logoutTrainerPath } from "../constants/apiEndpoints";
 import { userActions } from "../reducers/user";
 import { notificationType } from "../constants/globals";
+import { useNavigate } from "react-router-dom";
 
 export const login = (data) => {
   return (dispatch) => {

@@ -1,9 +1,153 @@
-import { Fragment } from "react";
+import { Button, TextField } from "@mui/material";
+import { Fragment, useState } from "react";
+import { DayPicker } from "react-day-picker";
+import CustomSelect from "../../reusable/inputFields/CustomSelect";
+import SaveIcon from "@mui/icons-material/Save";
+import BackspaceIcon from "@mui/icons-material/Backspace";
+import "react-day-picker/dist/style.css";
+import {
+  isNumber,
+  validateField,
+  convertEmptyFieldsToNull,
+} from "../../../utils/utilFunctions";
+import { useIsMount } from "../../../utils/customHooks/useIsMount";
+import * as membersActions from "../../../actions/members";
+import { useDispatch } from "react-redux";
+
+const initialMemberState = {
+  firstName: "",
+  lastName: "",
+  gender: "",
+  address: "",
+  phoneNumber: "",
+  birthDate: "",
+};
 
 export default function AddMembers(props) {
+  const isMount = useIsMount();
+  const dispatch = useDispatch();
+  const [memberState, setMemberState] = useState(initialMemberState);
+  const [errorState, setErrorState] = useState({
+    firstName: false,
+    lastName: false,
+  });
+
+  const handleChange = (e) => {
+    setMemberState({
+      ...memberState,
+      [e.target.id]: e.target.value,
+    });
+  };
+  const handleClear = () => {
+    setMemberState(initialMemberState);
+  };
+  const handleSave = () => {
+    const hasFirstNameError = validateField(
+      memberState.firstName,
+      "firstName",
+      setErrorState
+    );
+    const hasLastNameError = validateField(
+      memberState.lastName,
+      "lastName",
+      setErrorState
+    );
+
+    if (hasFirstNameError || hasLastNameError) return;
+    dispatch(membersActions.addMember(convertEmptyFieldsToNull(memberState)));
+    handleClear();
+  };
+
   return (
     <Fragment>
-      <h1>This is Add-Members</h1>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "min-content min-content",
+          gap: "1rem",
+        }}
+      >
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr",
+            gap: "1rem",
+          }}
+        >
+          <TextField
+            required
+            id="firstName"
+            label="First name"
+            variant="filled"
+            sx={{ width: "25ch" }}
+            value={memberState?.firstName}
+            onChange={handleChange}
+            error={errorState.firstName}
+          />
+          <TextField
+            required
+            id="lastName"
+            label="Last name"
+            variant="filled"
+            sx={{ width: "25ch" }}
+            value={memberState?.lastName}
+            onChange={handleChange}
+            error={errorState.lastName}
+          />
+          <CustomSelect
+            id="gender"
+            label="Gender"
+            variant="filled"
+            value={memberState?.gender}
+            setValue={(e) => {
+              setMemberState({ ...memberState, gender: e });
+            }}
+            sx={{ width: "25ch" }}
+            options={["MALE", "FEMALE"]}
+            hasBlank={true}
+          />
+          <TextField
+            id="address"
+            label="Address"
+            variant="filled"
+            sx={{ width: "25ch" }}
+            value={memberState?.address}
+            onChange={handleChange}
+          />
+          <TextField
+            id="phoneNumber"
+            label="Phone number"
+            variant="filled"
+            sx={{ width: "25ch" }}
+            value={memberState?.phoneNumber}
+            onChange={(e) => {
+              if (isNumber(e.target?.value)) {
+                handleChange(e);
+              }
+            }}
+          />
+        </div>
+        <div>
+          <DayPicker
+            id="birthDate"
+            mode="single"
+            selected={memberState?.birthDate}
+            onSelect={(e) => {
+              setMemberState({ ...memberState, birthDate: e });
+            }}
+          />
+        </div>
+      </div>
+      <Button
+        variant="outlined"
+        endIcon={<BackspaceIcon />}
+        onClick={handleClear}
+      >
+        Clear
+      </Button>
+      <Button variant="contained" endIcon={<SaveIcon />} onClick={handleSave}>
+        Save
+      </Button>
     </Fragment>
   );
 }

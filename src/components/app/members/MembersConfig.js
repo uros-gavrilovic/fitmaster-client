@@ -1,4 +1,12 @@
-export const config = [
+export const membersConfig = [
+  {
+    type: "icon",
+    id: "icon",
+    label: "",
+    // minWidth: 100,
+    input: "icon",
+    align: "center",
+  },
   {
     type: "data",
     id: "firstName",
@@ -46,6 +54,7 @@ export const config = [
     id: "active",
     label: "Status",
     input: "text",
+    align: "center",
   },
   {
     type: "action",
@@ -55,8 +64,8 @@ export const config = [
   },
   {
     type: "action",
-    id: "edit",
-    label: "Edit",
+    id: "info",
+    label: "Info",
     align: "center",
   },
   {
@@ -67,4 +76,4 @@ export const config = [
   },
 ];
 
-export default config;
+export default membersConfig;
