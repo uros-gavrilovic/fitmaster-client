@@ -22,6 +22,8 @@ import PaginationTable from "../../reusable/tables/PaginationTable";
 import membershipConfig from "../members/membershipConfig";
 import MembershipRow from "./MembershipRow";
 import { validateField } from "../../../utils/utilFunctions";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 const Fade = forwardRef(function Fade(props, ref) {
   const {
@@ -73,7 +75,7 @@ const style = {
   border: "2px solid #000",
   boxShadow: 24,
   display: "grid",
-  gridTemplateColumns: "1fr 3fr",
+  gridTemplateColumns: "1fr 3fr 3fr",
 };
 
 const rowComponentFunction = (t, row) => {
@@ -160,97 +162,88 @@ export default function MemberModal(props) {
       <Fade in={open}>
         {memberState !== "" ? (
           <Box style={{ width: "auto" }} sx={style}>
-            <div className="leftDiv">
+            <div className="left-div">
               <Avatar
                 sx={{ width: "8vw", height: "10vh", margin: "0.5vw" }}
                 src={newMemberState?.image}
               />
             </div>
-            <div className="rightDiv">
-              <BorderedSection icon={InfoIcon} title="General Information">
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 1fr",
-                  }}
-                >
-                  <div>
-                    <TextField
-                      id="id"
-                      label="Member ID"
-                      readOnly
-                      variant="filled"
-                      sx={{ width: "25ch" }}
-                      value={newMemberState?.memberID}
-                      onChange={handleChange}
-                    />
-
-                    <TextField
-                      required
-                      id="firstName"
-                      label="First name"
-                      variant="filled"
-                      sx={{ width: "25ch" }}
-                      value={newMemberState?.firstName}
-                      onChange={handleChange}
-                    />
-                    <TextField
-                      required
-                      id="lastName"
-                      label="Last name"
-                      variant="filled"
-                      sx={{ width: "25ch" }}
-                      value={newMemberState?.lastName}
-                      onChange={handleChange}
-                    />
-                    <CustomSelect
-                      id="gender"
-                      label="Gender"
-                      variant="filled"
-                      value={newMemberState?.gender}
-                      hasBlank={true}
-                      setValue={setNewMemberState}
-                      sx={{ width: "25ch" }}
-                      options={["MALE", "FEMALE"]}
-                      onChange={handleChange}
-                    />
-                    <TextField
-                      id="address"
-                      label="Address"
-                      variant="filled"
-                      sx={{ width: "25ch" }}
-                      value={newMemberState?.address}
-                      onChange={handleChange}
-                    />
-                    <TextField
-                      id="phoneNumber"
-                      label="Phone number"
-                      variant="filled"
-                      sx={{ width: "25ch" }}
-                      value={newMemberState?.phoneNumber}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
+            <div className="middle-div">
+              <BorderedSection
+                icon={InfoIcon}
+                title="General Information"
+                style={{ display: "grid", gridTemplateColumns: "1fr" }}
+              >
+                <TextField
+                  id="id"
+                  label="Member ID"
+                  readOnly
+                  variant="filled"
+                  sx={{ width: "25ch" }}
+                  value={newMemberState?.memberID}
+                  onChange={handleChange}
+                />
+                <TextField
+                  required
+                  id="firstName"
+                  label="First name"
+                  variant="filled"
+                  sx={{ width: "25ch" }}
+                  value={newMemberState?.firstName}
+                  onChange={handleChange}
+                />
+                <TextField
+                  required
+                  id="lastName"
+                  label="Last name"
+                  variant="filled"
+                  sx={{ width: "25ch" }}
+                  value={newMemberState?.lastName}
+                  onChange={handleChange}
+                />
+                <CustomSelect
+                  id="gender"
+                  label="Gender"
+                  variant="filled"
+                  value={newMemberState?.gender}
+                  hasBlank={true}
+                  setValue={setNewMemberState}
+                  sx={{ width: "25ch" }}
+                  options={["MALE", "FEMALE"]}
+                  onChange={handleChange}
+                />
+                <TextField
+                  id="address"
+                  label="Address"
+                  variant="filled"
+                  sx={{ width: "25ch" }}
+                  value={newMemberState?.address}
+                  onChange={handleChange}
+                />
+                <TextField
+                  id="phoneNumber"
+                  label="Phone number"
+                  variant="filled"
+                  sx={{ width: "25ch" }}
+                  value={newMemberState?.phoneNumber}
+                  onChange={handleChange}
+                />
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DatePicker
+                    disableFuture
+                    label="Birth date"
+                    variant="filled"
+                    value={new Date(newMemberState?.birthDate)}
+                    onAccept={(e) => {
+                      setNewMemberState({
+                        ...newMemberState,
+                        birthDate: e,
+                      });
                     }}
-                    aria-rowspan={2}
-                  >
-                    <DayPicker
-                      id="birthDate"
-                      mode="single"
-                      selected={memberState?.birthDate}
-                      onSelect={(e) => {
-                        setNewMemberState({ ...newMemberState, birthDate: e });
-                      }}
-                    />
-                  </div>
-                </div>
-                <div className="rightDiv-buttons" style={{ float: "right" }}>
+                  />
+                </LocalizationProvider>
+
+                <div style={{ float: "right" }}>
                   {editEnabled ? (
                     <Fragment>
                       <Button
@@ -298,15 +291,17 @@ export default function MemberModal(props) {
                   setOpen={setConfirmModalVisible}
                 />
               </BorderedSection>
+            </div>
+            <div className="right-div">
               <BorderedSection
                 icon={ManageSearchIcon}
                 title="Membership History"
               >
                 {newMemberState?.memberships?.length ? (
                   <PaginationTable
-                    // t={t} // Make sure to pass the "t" prop to PaginationTable
-                    config={membershipConfig} // Make sure "membershipConfig" is correctly defined
-                    rows={newMemberState?.memberships} // Pass the memberships array here
+                    // t={t}
+                    config={membershipConfig}
+                    rows={newMemberState?.memberships}
                     rowComponent={rowComponentFunction}
                   />
                 ) : (

@@ -22,6 +22,7 @@ import tabs from "./MenuConfig.js";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as userActions from "../../actions/user";
+import CustomAccountMenu from "../reusable/containers/CustomAccountMenu.jsx";
 
 const drawerWidth = 240;
 
@@ -126,25 +127,30 @@ export default function Menu(props) {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: "none" }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Fit<i>Master</i>
-            <sub className="subscript">v0.1</sub>
-            <FitnessCenterIcon />
-            <a>/ {currentTab}</a>
-          </Typography>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{
+                marginRight: 5,
+                ...(open && { display: "none" }),
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap component="div">
+              Fit<i>Master</i>
+              <sub className="subscript">v0.1</sub>
+              <FitnessCenterIcon />
+              <a>/ {currentTab}</a>
+            </Typography>
+          </div>
+          <div>
+            <CustomAccountMenu user={user} userActions={userActions} />
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>

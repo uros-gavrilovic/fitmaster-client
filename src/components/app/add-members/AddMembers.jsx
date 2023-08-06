@@ -1,6 +1,5 @@
 import { Button, TextField } from "@mui/material";
 import { Fragment, useState } from "react";
-import { DayPicker } from "react-day-picker";
 import CustomSelect from "../../reusable/inputFields/CustomSelect";
 import SaveIcon from "@mui/icons-material/Save";
 import BackspaceIcon from "@mui/icons-material/Backspace";
@@ -13,6 +12,8 @@ import {
 import { useIsMount } from "../../../utils/customHooks/useIsMount";
 import * as membersActions from "../../../actions/members";
 import { useDispatch } from "react-redux";
+import { LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 const initialMemberState = {
   firstName: "",
@@ -128,14 +129,14 @@ export default function AddMembers(props) {
           />
         </div>
         <div>
-          <DayPicker
-            id="birthDate"
-            mode="single"
-            selected={memberState?.birthDate}
-            onSelect={(e) => {
-              setMemberState({ ...memberState, birthDate: e });
-            }}
-          />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <StaticDatePicker
+              disableFuture
+              onAccept={(e) => {
+                setMemberState({ ...memberState, birthDate: e });
+              }}
+            />
+          </LocalizationProvider>
         </div>
       </div>
       <Button
