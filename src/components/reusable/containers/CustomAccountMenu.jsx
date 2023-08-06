@@ -16,7 +16,7 @@ import Logout from "@mui/icons-material/Logout";
 
 export default function CustomAccountMenu(props) {
   const { user, userActions } = props || {};
-  console.log(user);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
