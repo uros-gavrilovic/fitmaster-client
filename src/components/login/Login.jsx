@@ -15,8 +15,8 @@ import {
   validateField,
 } from "../../utils/utilFunctions";
 import { Box, Divider, MenuItem, TextField } from "@mui/material";
-import CustomSlide from "../app/dashboard/CustomSlide";
-import Logo from "../reusable/containers/Logo";
+import CustomSlide from "../reusable/CustomSlide";
+import Logo from "../reusable/Logo";
 import "../../styles/container.css";
 import IconTextField from "../reusable/inputFields/IconTextField";
 import AbcIcon from "@mui/icons-material/Abc";

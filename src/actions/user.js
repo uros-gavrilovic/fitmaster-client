@@ -37,30 +37,30 @@ export const login = (data) => {
 
 export const logout = (data) => {
   return (dispatch) => {
+    dispatch(userActions.actionStart());
+    // return apiService
+    //   .post(logoutTrainerPath(), data) // TODO: Implement log-out method on back-end.
+    //   .then(() => {
     dispatch(userActions.logout());
+    // })
+    // .then(() => {
+    createNotification(
+      notificationType.success,
+      "LOG-OUT SUCCESS",
+      "Successfully logged out."
+    );
+    // })
+    // .catch((err) => {
+    //   handleError(err, userActions.actionError, dispatch, undefined);
+    // });
   };
-
-  // TODO
-  // return (dispatch) => {
-  //   dispatch(userActions.actionStart());
-  //   return apiService
-  //     .post(logoutTrainerPath(), data)
-  //     .then((response) => {
-  //       if (response.status == 200) {
-  //         dispatch(userActions.logout());
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       handleError(err, userActions.actionError, dispatch, undefined);
-  //     });
-  // };
 };
 
 const handleError = (error, action, dispatch, messages) => {
   dispatch(action(error?.response?.data));
   createNotification(
     notificationType.error,
-    messages.title,
-    messages.description
+    messages?.title,
+    messages?.description
   );
 };
