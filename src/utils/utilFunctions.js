@@ -1,3 +1,6 @@
+import { createNotification } from "../utils/notificationService";
+import { notificationType } from "../constants/globals";
+
 export function capitalizeFirstLetter(str) {
   if (typeof str !== "string" || str.length === 0) {
     return str;
@@ -14,6 +17,7 @@ export function generateIDField(arr, fieldName) {
   // used to create another field called ID based on given fieldName
   // utilized in PaginationTable to keep it reusable by having every row have a same name field called ID
   // to create key attribute for each row
+
   return arr.map((element) => ({
     ...element,
     id: element[fieldName],
@@ -33,20 +37,24 @@ export function convertEmptyFieldsToNull(state) {
 }
 
 export function contains(obj, string, ignoreCase = false) {
-  // const regexPattern = new RegExp(string, ignoreCase ? "i" : "");
-  // return regexPattern.test(obj);
-
   return obj.includes(string);
 }
 
 export function validateField(field, fieldName, setErrorState) {
   // Validates whetever field is empty or not.
 
-  if (!field) {
-    setErrorState((prevState) => ({ ...prevState, [fieldName]: true }));
-    return true; // Indicates an error
-  } else {
-    setErrorState((prevState) => ({ ...prevState, [fieldName]: false }));
-    return false; // No error
-  }
+  const error = !field;
+  setErrorState((prevState) => ({ ...prevState, [fieldName]: error }));
+  return error;
 }
+
+export const errorAction = (error, action, dispatch, messages) => {
+  // creates notification and dispatches error action
+
+  dispatch(action(error?.response?.data));
+  createNotification(
+    notificationType.error,
+    messages?.title,
+    error?.response?.data?.error_message
+  );
+};

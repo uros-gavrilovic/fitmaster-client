@@ -1,3 +1,10 @@
 .container {
+  width: fit-content;
+  height: fit-content;
+  padding: 2vw;
   border-radius: 10px;
+}
+
+.dark-container {
+  background-color: rgb(28, 29, 29);
 }

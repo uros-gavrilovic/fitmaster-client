@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
 export default function IconTextField(props) {
-  const { icon, title, ...otherProps } = props || {};
+  const { icon, title, error, select, ...otherProps } = props || {};
 
   return (
     <Box {...otherProps} sx={{ "& > :not(style)": { m: 1 } }}>
@@ -11,6 +11,8 @@ export default function IconTextField(props) {
         {props?.icon}
         <TextField
           {...otherProps}
+          select={select}
+          error={error}
           label={props.title}
           variant="standard"
           // color="white"

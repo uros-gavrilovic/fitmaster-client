@@ -1,20 +1,52 @@
 import ParticleBackground from "../backgrounds/ParticleBackground";
-import IconTextField from "../reusable/inputFields/IconTextField";
 import IconButton from "../reusable/buttons/IconButton";
-import CustomContainer from "../reusable/containers/CustomContainer";
 import { ThemeProvider, color, createTheme } from "@mui/system";
 import theme from "../../utils/ThemeMUI";
 import LoginIcon from "@mui/icons-material/Login";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
-import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as userActions from "../../actions/user";
 import { useNavigate } from "react-router-dom";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import HttpsRoundedIcon from "@mui/icons-material/HttpsRounded";
-import { validateField } from "../../utils/utilFunctions";
-import { Box, FormControlLabel, Slide, TextField } from "@mui/material";
+import {
+  convertEmptyFieldsToNull,
+  validateField,
+} from "../../utils/utilFunctions";
+import { Box, Divider, MenuItem, TextField } from "@mui/material";
+import CustomSlide from "../app/dashboard/CustomSlide";
+import Logo from "../reusable/containers/Logo";
+import "../../styles/container.css";
+import IconTextField from "../reusable/inputFields/IconTextField";
+import AbcIcon from "@mui/icons-material/Abc";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import WcIcon from "@mui/icons-material/Wc";
+import "../../styles/login/login.css";
+import * as trainerActions from "../../actions/trainers";
+
+const initialRegisterState = {
+  username: "",
+  password: "",
+  firstName: "",
+  lastName: "",
+  gender: "",
+};
+const genders = [
+  {
+    value: "MALE",
+    label: "Male ♂",
+  },
+  {
+    value: "FEMALE",
+    label: "Female ♀",
+  },
+  {
+    value: "",
+    label: "Unknown",
+  },
+];
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -25,9 +57,12 @@ const Login = () => {
     username: "",
     password: "",
   });
+  const [registerState, setRegisterState] = useState(initialRegisterState);
   const [errorState, setErrorState] = useState({
     username: false,
     password: false,
+    firstName: false,
+    lastName: false,
   });
 
   const handleTabChange = () => {
@@ -54,7 +89,42 @@ const Login = () => {
     );
   };
   const handleRegister = () => {
-    console.log("Register");
+    const hasUsernameError = validateField(
+      registerState.username,
+      "username",
+      setErrorState
+    );
+    const hasPasswordError = validateField(
+      registerState.password,
+      "password",
+      setErrorState
+    );
+    const hasFirstNameError = validateField(
+      registerState.firstName,
+      "firstName",
+      setErrorState
+    );
+    const hasLastNameError = validateField(
+      registerState.lastName,
+      "lastName",
+      setErrorState
+    );
+
+    if (
+      hasUsernameError ||
+      hasPasswordError ||
+      hasFirstNameError ||
+      hasLastNameError
+    )
+      return;
+
+    dispatch(
+      trainerActions.addTrainer(convertEmptyFieldsToNull(registerState))
+    );
+    handleClear();
+  };
+  const handleClear = () => {
+    setRegisterState(initialRegisterState);
   };
 
   useEffect(() => {
@@ -67,112 +137,232 @@ const Login = () => {
     <ThemeProvider theme={theme}>
       <ParticleBackground />
 
-      <Slide
+      <CustomSlide
+        active={!openLoginContainer}
+        setActive={setOpenLoginContainer}
+        direction="right"
+        container={
+          <center>
+            <Box
+              id="register-container"
+              className="center container dark-container"
+            >
+              <Logo />
+              <h3>Create a new account</h3>
+
+              <Divider>Log-In Information</Divider>
+              <IconTextField
+                required
+                id="username"
+                title="Username"
+                icon={
+                  <AccountCircle
+                    style={{ color: "white" }}
+                    sx={{ mr: 1, my: 0.5 }}
+                  />
+                }
+                value={registerState?.username}
+                error={errorState.username}
+                onChange={(e) =>
+                  setRegisterState({
+                    ...registerState,
+                    [e.target.id]: e.target.value,
+                  })
+                }
+              />
+              <IconTextField
+                required
+                id="password"
+                title="Password"
+                type="password"
+                icon={
+                  <HttpsRoundedIcon
+                    style={{ color: "white" }}
+                    sx={{ mr: 1, my: 0.5 }}
+                  />
+                }
+                margin="dense"
+                value={registerState?.password}
+                error={errorState.password}
+                onChange={(e) =>
+                  setRegisterState({
+                    ...registerState,
+                    [e.target.id]: e.target.value,
+                  })
+                }
+              />
+
+              <Divider>General Information</Divider>
+              <IconTextField
+                required
+                id="firstName"
+                title="First Name"
+                icon={
+                  <AbcIcon style={{ color: "white" }} sx={{ mr: 1, my: 0.5 }} />
+                }
+                margin="dense"
+                value={registerState?.firstName}
+                error={errorState.firstName}
+                onChange={(e) =>
+                  setRegisterState({
+                    ...registerState,
+                    [e.target.id]: e.target.value,
+                  })
+                }
+              />
+              <IconTextField
+                required
+                id="lastName"
+                title="Last Name"
+                icon={
+                  <AbcIcon style={{ color: "white" }} sx={{ mr: 1, my: 0.5 }} />
+                }
+                margin="dense"
+                value={registerState?.lastName}
+                error={errorState.lastName}
+                onChange={(e) =>
+                  setRegisterState({
+                    ...registerState,
+                    [e.target.id]: e.target.value,
+                  })
+                }
+              />
+              <IconTextField
+                select
+                id="gender"
+                name="gender"
+                defaultValue=""
+                icon={
+                  <WcIcon style={{ color: "white" }} sx={{ mr: 1, my: 0.5 }} />
+                }
+                title="Gender"
+                value={registerState?.gender}
+                onChange={(e) => {
+                  setRegisterState({
+                    ...registerState,
+                    [e.target.name]: e.target.value,
+                  });
+                }}
+              >
+                {genders.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </IconTextField>
+
+              <div
+                style={{
+                  marginTop: "5vh",
+                  display: "grid",
+                  width: "auto",
+                  gridTemplateColumns: "1fr 1fr",
+                }}
+              >
+                <IconButton
+                  title="Register new trainer"
+                  leftIcon={<HowToRegIcon style={{ color: "white" }} />}
+                  variant="contained"
+                  width="100%"
+                  onClick={handleRegister}
+                />
+                <IconButton
+                  title="Login"
+                  rightIcon={
+                    <KeyboardDoubleArrowRightIcon style={{ color: "white" }} />
+                  }
+                  variant="outlined"
+                  width="100%"
+                  onClick={handleTabChange}
+                />
+              </div>
+            </Box>
+          </center>
+        }
+      />
+
+      {/* -------------------------------------------------------------------------------- */}
+
+      <CustomSlide
+        active={openLoginContainer}
+        setActive={setOpenLoginContainer}
         direction="left"
-        in={!openLoginContainer}
-        mountOnEnter
-        unmountOnExit
-      >
-        <Fragment id="login-container" className="vertical-center container">
-          This is register
-          <IconButton
-            title="Register new account"
-            leftIcon={<HowToRegIcon style={{ color: "white" }} />}
-            variant="contained"
-            width="100%"
-            onClick={handleRegister}
-          />
-          <IconButton
-            title="Login"
-            rightIcon={<LoginIcon style={{ color: "white" }} />}
-            variant="outlined"
-            width="100%"
-            onClick={handleTabChange}
-          />
-        </Fragment>
-      </Slide>
+        container={
+          <center>
+            <Box
+              id="login-container"
+              className="center container dark-container"
+            >
+              <Logo />
+              <h3>Sign in using an existing account</h3>
+              <IconTextField
+                id="username"
+                title="Username"
+                icon={
+                  <AccountCircle
+                    style={{ color: "white" }}
+                    sx={{ mr: 1, my: 0.5 }}
+                  />
+                }
+                required
+                error={errorState.username}
+                onChange={(e) =>
+                  setLoginState({
+                    ...loginState,
+                    [e.target.id]: e.target.value,
+                  })
+                }
+              />
+              <IconTextField
+                id="password"
+                title="Password"
+                type="password"
+                icon={
+                  <HttpsRoundedIcon
+                    style={{ color: "white" }}
+                    sx={{ mr: 1, my: 0.5 }}
+                  />
+                }
+                margin="dense"
+                required
+                error={errorState.password}
+                onChange={(e) =>
+                  setLoginState({
+                    ...loginState,
+                    [e.target.id]: e.target.value,
+                  })
+                }
+              />
 
-      {/* ---------------------------------------------------------------------------------------- */}
-
-      <Slide
-        direction="left"
-        in={openLoginContainer}
-        mountOnEnter
-        unmountOnExit
-      >
-        <Fragment id="login-container" className="vertical-center container">
-          <div style={{ color: "white", display: "inline" }}>
-            <center>
-              <h1>
-                Fit<i>Master</i>
-                <sub className="subscript">v0.1</sub>
-              </h1>
-              <FitnessCenterIcon sx={{ fontSize: "10vh" }} />
-            </center>
-          </div>
-
-          <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-            <AccountCircle
-              style={{ color: "white" }}
-              sx={{ color: "action.active", mr: 1, my: 0.5 }}
-            />
-            <TextField
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              variant="standard"
-              margin="dense"
-              error={errorState.username}
-              onChange={(e) =>
-                setLoginState({ ...loginState, [e.target.id]: e.target.value })
-              }
-            />
-          </Box>
-          <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-            <HttpsRoundedIcon
-              style={{ color: "white" }}
-              sx={{ mr: 1, my: 0.5 }}
-            />
-            <TextField
-              required
-              fullWidth
-              id="password"
-              label="Password"
-              margin="dense"
-              variant="standard"
-              error={errorState.password}
-              onChange={(e) =>
-                setLoginState({ ...loginState, [e.target.id]: e.target.value })
-              }
-            />
-          </Box>
-
-          <div
-            style={{
-              marginTop: "5vh",
-              display: "grid",
-              width: "auto",
-              gridTemplateColumns: "1fr 1fr",
-            }}
-          >
-            <IconButton
-              title="Register"
-              leftIcon={<HowToRegIcon style={{ color: "white" }} />}
-              variant="outlined"
-              width="100%"
-              onClick={handleTabChange}
-            />
-            <IconButton
-              title="Login"
-              rightIcon={<LoginIcon style={{ color: "white" }} />}
-              variant="contained"
-              width="100%"
-              onClick={handleLogIn}
-            />
-          </div>
-        </Fragment>
-      </Slide>
+              <div
+                style={{
+                  marginTop: "5vh",
+                  display: "grid",
+                  width: "auto",
+                  gridTemplateColumns: "1fr 1fr",
+                }}
+              >
+                <IconButton
+                  title="Register"
+                  leftIcon={
+                    <KeyboardDoubleArrowLeftIcon style={{ color: "white" }} />
+                  }
+                  variant="outlined"
+                  width="100%"
+                  onClick={handleTabChange}
+                />
+                <IconButton
+                  title="Login"
+                  rightIcon={<LoginIcon style={{ color: "white" }} />}
+                  variant="contained"
+                  width="100%"
+                  onClick={handleLogIn}
+                />
+              </div>
+            </Box>
+          </center>
+        }
+      />
     </ThemeProvider>
   );
 };

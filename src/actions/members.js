@@ -2,6 +2,7 @@ import apiService from "../utils/apiService";
 import { membersActions } from "../reducers/members";
 import { createNotification } from "../utils/notificationService";
 import { notificationType } from "../constants/globals";
+import { errorAction } from "../utils/utilFunctions";
 import {
   membersPath,
   membersDTOPath,
@@ -116,13 +117,4 @@ export const updateMember = (data, messages) => {
         errorAction(err, membersActions.actionError, dispatch, messages);
       });
   };
-};
-
-const errorAction = (error, action, dispatch, messages) => {
-  dispatch(action(error?.response?.data));
-  createNotification(
-    notificationType.error,
-    messages?.title,
-    error?.response?.data?.error_message
-  );
 };

@@ -25,7 +25,6 @@ const initialMemberState = {
 };
 
 export default function AddMembers(props) {
-  const isMount = useIsMount();
   const dispatch = useDispatch();
   const [memberState, setMemberState] = useState(initialMemberState);
   const [errorState, setErrorState] = useState({
