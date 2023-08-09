@@ -6,8 +6,7 @@ import Select from "@mui/material/Select";
 import { capitalizeFirstLetter } from "../../../utils/utilFunctions";
 
 export default function CustomSelect(props) {
-  const { label, value, setValue, onChange, options, variant, hasBlank } =
-    props || {};
+  const { label, options, variant, hasBlank, ...otherProps } = props || {};
 
   return (
     <FormControl variant="filled" sx={{ width: "25ch" }}>
@@ -15,9 +14,7 @@ export default function CustomSelect(props) {
       <Select
         labelId="demo-simple-select-filled-label"
         id="demo-simple-select-filled"
-        value={value}
-        onChange={onChange}
-        // onChange={handleChange}
+        {...otherProps}
       >
         {options.map((availableValue) => {
           return (
