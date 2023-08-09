@@ -42,11 +42,7 @@ export default function PaginationTable(props) {
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
-                return (
-                  <Fragment key={row.id}>
-                    {rowComponent(t, row, state, setState)}
-                  </Fragment>
-                );
+                return rowComponent(t, row, state, setState);
               })}
           </TableBody>
         </Table>

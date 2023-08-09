@@ -9,7 +9,8 @@ import IconTextField from "../../reusable/inputFields/IconTextField";
 import SearchIcon from "@mui/icons-material/Search";
 
 const rowComponentFunction = (t, row) => {
-  return <MemberRow member={row} key={row.id} />;
+  return <MemberRow member={row} key={Math.random()} />;
+  // unsure why key={row.id} is not perceived as unique
 };
 
 export default function Members(props) {
