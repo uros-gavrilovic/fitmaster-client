@@ -76,54 +76,52 @@ export default function ConfirmModal(props) {
   };
 
   return (
-    <div>
-      <Modal
-        aria-labelledby="spring-modal-title"
-        aria-describedby="spring-modal-description"
-        open={open}
-        onClose={() => setOpen(false)}
-        closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            TransitionComponent: Fade,
-          },
-        }}
-      >
-        <Fade in={open}>
-          <Box sx={style}>
-            <Typography id="spring-modal-title" variant="h6" component="h2">
-              {title}
-            </Typography>
-            <Typography id="spring-modal-description" sx={{ mt: 2 }}>
-              {text}
-            </Typography>
-            <div
-              style={{
-                marginTop: "5vh",
-                display: "grid",
-                width: "auto",
-                gridTemplateColumns: "1fr 1fr",
-              }}
-            >
-              <IconButton
-                title="No"
-                leftIcon={<ThumbDownIcon />}
-                variant="outlined"
-                width="100%"
-                onClick={handleNegative}
-              />
-              <IconButton
-                title="Yes"
-                rightIcon={<ThumbUpIcon />}
-                variant="contained"
-                width="100%"
-                onClick={handlePositive}
-              />
-            </div>
-          </Box>
-        </Fade>
-      </Modal>
-    </div>
+    <Modal
+      aria-labelledby="spring-modal-title"
+      aria-describedby="spring-modal-description"
+      open={open}
+      onClose={() => setOpen(false)}
+      closeAfterTransition
+      slots={{ backdrop: Backdrop }}
+      slotProps={{
+        backdrop: {
+          TransitionComponent: Fade,
+        },
+      }}
+    >
+      <Fade in={open}>
+        <Box sx={style}>
+          <Typography id="spring-modal-title" variant="h6" component="h2">
+            {title}
+          </Typography>
+          <Typography id="spring-modal-description" sx={{ mt: 2 }}>
+            {text}
+          </Typography>
+          <div
+            style={{
+              marginTop: "5vh",
+              display: "grid",
+              width: "auto",
+              gridTemplateColumns: "1fr 1fr",
+            }}
+          >
+            <IconButton
+              title="No"
+              leftIcon={<ThumbDownIcon />}
+              variant="outlined"
+              width="100%"
+              onClick={handleNegative}
+            />
+            <IconButton
+              title="Yes"
+              rightIcon={<ThumbUpIcon />}
+              variant="contained"
+              width="100%"
+              onClick={handlePositive}
+            />
+          </div>
+        </Box>
+      </Fade>
+    </Modal>
   );
 }
