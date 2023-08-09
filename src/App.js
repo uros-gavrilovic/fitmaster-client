@@ -15,8 +15,14 @@ import Packages from "./components/app/packages/Packages";
 import Trainers from "./components/app/trainers/Trainers";
 import Settings from "./components/app/settings/Settings";
 import WorkoutPlans from "./components/app/workout-plans/WorkoutPlans";
+import { useEffect } from "react";
+import app from "./constants/appData";
 
 function App() {
+  useEffect(() => {
+    document.title = app.fullName;
+  }, []);
+
   return (
     <AuthContext.Provider value={{ user: null, validToken: true }}>
       <Routes>

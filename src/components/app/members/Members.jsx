@@ -4,7 +4,6 @@ import * as membersActions from "../../../actions/members";
 import PaginationTable from "../../reusable/tables/PaginationTable";
 import membersConfig from "./membersConfig";
 import MemberRow from "./MemberRow";
-import { generateIDField } from "../../../utils/utilFunctions";
 import IconTextField from "../../reusable/inputFields/IconTextField";
 import SearchIcon from "@mui/icons-material/Search";
 
@@ -45,7 +44,7 @@ export default function Members(props) {
           <PaginationTable
             style={{ width: "100%", height: "100%" }}
             config={membersConfig}
-            rows={generateIDField(members)}
+            rows={members}
             rowComponent={rowComponentFunction}
           />
         </Fragment>

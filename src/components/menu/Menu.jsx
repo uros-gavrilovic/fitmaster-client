@@ -23,6 +23,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as userActions from "../../actions/user";
 import CustomAccountMenu from "../reusable/containers/CustomAccountMenu.jsx";
+import app from "../../constants/appData.js";
 
 const drawerWidth = 240;
 
@@ -104,8 +105,9 @@ export default function Menu(props) {
     }
   }, [token]);
 
-  const handleTabChange = (name) => {
-    setCurrentTab(name);
+  const handleTabChange = (tab) => {
+    navigate(tab.path);
+    setCurrentTab(tab.name);
   };
 
   const handleTabAction = (action) => {
@@ -142,8 +144,9 @@ export default function Menu(props) {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap component="div">
-              Fit<i>Master</i>
-              <sub className="subscript">v0.1</sub>
+              {app.name[0]}
+              <i>{app.name[1]}</i>
+              <sub className="subscript">v{app.version}</sub>
               <FitnessCenterIcon />
               <a>/ {currentTab}</a>
             </Typography>
@@ -167,39 +170,33 @@ export default function Menu(props) {
         <List>
           {tabs.map((tab) => {
             return (
-              <Link to={tab.path} key={tab.path}>
-                <ListItem
-                  key={tab.name}
-                  disablePadding
-                  sx={{ display: "block" }}
+              <ListItem key={tab.name} disablePadding sx={{ display: "block" }}>
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
+                  }}
+                  onClick={() => {
+                    handleTabAction(tab.action);
+                    handleTabChange(tab);
+                  }}
                 >
-                  <ListItemButton
+                  <ListItemIcon
                     sx={{
-                      minHeight: 48,
-                      justifyContent: open ? "initial" : "center",
-                      px: 2.5,
-                    }}
-                    onClick={() => {
-                      handleTabAction(tab.action);
-                      handleTabChange(tab.name);
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
                     }}
                   >
-                    <ListItemIcon
-                      sx={{
-                        minWidth: 0,
-                        mr: open ? 3 : "auto",
-                        justifyContent: "center",
-                      }}
-                    >
-                      {tab.icon}
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={tab.name}
-                      sx={{ opacity: open ? 1 : 0 }}
-                    />
-                  </ListItemButton>
-                </ListItem>
-              </Link>
+                    {tab.icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={tab.name}
+                    sx={{ opacity: open ? 1 : 0 }}
+                  />
+                </ListItemButton>
+              </ListItem>
             );
           })}
         </List>

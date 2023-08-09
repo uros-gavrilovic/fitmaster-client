@@ -17,14 +17,14 @@ import { useSelector } from "react-redux";
 export default function GeneralInfo(props) {
   const {
     memberState, // memberDTO passed as props from MemberModal
-    setMemberState,
-    dispatch,
+    // setMemberState,
     open,
     setOpen,
+    dispatch,
   } = props || {};
 
   const { member } = useSelector((state) => state.membersReducer);
-  const [newMemberState, setNewMemberState] = useState({});
+  const [newMemberState, setNewMemberState] = useState(member);
   useEffect(() => {
     setNewMemberState(member);
   }, [member]);
@@ -109,7 +109,6 @@ export default function GeneralInfo(props) {
         variant="filled"
         value={newMemberState?.gender}
         hasBlank={true}
-        setValue={setNewMemberState}
         sx={{ width: "25ch" }}
         options={["MALE", "FEMALE"]}
         onChange={handleChange}

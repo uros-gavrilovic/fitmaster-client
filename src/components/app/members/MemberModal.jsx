@@ -19,6 +19,8 @@ import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import GeneralInfo from "./modal/GeneralInfo";
 import MembershipHistory from "./modal/MembershipHistory";
 import * as membersActions from "../../../actions/members";
+import "../../../utils/customHooks/useIsMount";
+import { useIsMount } from "../../../utils/customHooks/useIsMount";
 
 const Fade = forwardRef(function Fade(props, ref) {
   const {
@@ -83,22 +85,26 @@ export default function MemberModal(props) {
       {...{
         memberState,
         setMemberState,
-        dispatch,
         open,
         setOpen,
+        dispatch,
       }}
     />
   );
 
+  const initial = useIsMount();
   useEffect(() => {
+    if (initial) return;
+
     if (open) {
+      console.log("OPEN!");
       dispatch(membersActions.fetchMember(memberState.memberID));
+    } else {
+      console.log("CLOSED!");
     }
   }, [open]);
   useEffect(() => {
-    if (open) {
-      setMemberState(member);
-    }
+    setMemberState(member);
   }, [member]);
 
   const handleBackgroundClick = () => {
@@ -151,15 +157,18 @@ export default function MemberModal(props) {
                     <ListItemText>General Information</ListItemText>
                   </MenuItem>
                   <Divider />
+                  {/* ------------------------------------------------- */}
                   <MenuItem
                     onClick={() => {
                       setActiveTab(
                         <MembershipHistory
-                          memberState
-                          setMemberState
-                          dispatch
-                          open
-                          setOpen
+                          {...{
+                            memberState,
+                            setMemberState,
+                            open,
+                            setOpen,
+                            dispatch,
+                          }}
                         />
                       );
                     }}
