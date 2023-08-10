@@ -2,7 +2,7 @@ import apiService from "../utils/apiService";
 import { membersActions } from "../reducers/members";
 import { createNotification } from "../utils/notificationService";
 import { notificationType } from "../constants/globals";
-import { errorAction } from "../utils/utilFunctions";
+import { handleError } from "../utils/utilFunctions";
 import {
   membersPath,
   membersDTOPath,
@@ -53,7 +53,10 @@ export const fetchMember = (id) => {
         dispatch(membersActions.fetchMember(response.data));
       })
       .catch((err) => {
-        dispatch(membersActions.actionError(err?.response?.data));
+        handleError(err, membersActions, dispatch, {
+          title: "ERROR FETCHING MEMBER",
+          description: "An error has occured while fetching member.",
+        });
       });
   };
 };
@@ -74,7 +77,10 @@ export const addMember = (data, messages) => {
         );
       })
       .catch((err) => {
-        errorAction(err, membersActions.actionError, dispatch, messages);
+        handleError(err, membersActions, dispatch, {
+          title: "ERROR ADDING A MEMBER",
+          description: "An error has occured while adding a new member.",
+        });
       });
   };
 };
@@ -95,7 +101,10 @@ export const deleteMember = (id, messages) => {
         );
       })
       .catch((err) => {
-        errorAction(err, membersActions.actionError, dispatch, messages);
+        handleError(err, membersActions, dispatch, {
+          title: "ERROR REMOVING A MEMBER",
+          description: "An error has occured while removing a member.",
+        });
       });
   };
 };
@@ -114,7 +123,10 @@ export const updateMember = (data, messages) => {
         );
       })
       .catch((err) => {
-        errorAction(err, membersActions.actionError, dispatch, messages);
+        handleError(err, membersActions, dispatch, {
+          title: "ERROR UPDATING A MEMBER",
+          description: "An error has occured while updating member.",
+        });
       });
   };
 };

@@ -6,39 +6,34 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-  >
-    •
-  </Box>
-);
-
 export default function CustomCard(props) {
   return (
-    <Box sx={{ minWidth: 275 }}>
-      <Card variant="outlined">
+    <Box sx={{ width: "fit-content" }}>
+      <Card variant="outlined" sx={{ borderRadius: "15px" }}>
         <Fragment>
           <CardContent>
-            <Typography
-              sx={{ fontSize: 14 }}
-              color="text.secondary"
-              gutterBottom
-            >
-              Word of the Day
-            </Typography>
             <Typography variant="h5" component="div">
-              be{bull}nev{bull}o{bull}lent
+              Total Number of Members:
             </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              adjective
-            </Typography>
-            <Typography variant="body2">
-              well meaning and kindly.
-              <br />
-              {'"a benevolent smile"'}
-            </Typography>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+              <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                active
+                <Typography variant="body2">
+                  well meaning and kindly.
+                  <br />
+                  {'"a benevolent smile"'}
+                </Typography>
+              </Typography>
+
+              <Typography color="text.secondary">
+                inactive
+                <Typography variant="body2">
+                  well meaning and kindly.
+                  <br />
+                  {'"a benevolent smile"'}
+                </Typography>
+              </Typography>
+            </div>
           </CardContent>
           <CardActions>
             <Button size="small">Learn More</Button>

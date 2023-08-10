@@ -2,7 +2,7 @@ import { registerTrainerPath } from "../constants/apiEndpoints";
 import { notificationType } from "../constants/globals";
 import { trainersActions } from "../reducers/trainers";
 import { createNotification } from "../utils/notificationService";
-import { errorAction } from "../utils/utilFunctions";
+import { handleError } from "../utils/utilFunctions";
 import apiService from "../utils/apiService";
 
 export const addTrainer = (data, messages) => {
@@ -21,14 +21,14 @@ export const addTrainer = (data, messages) => {
         );
       })
       .catch((err) => {
-        if (err.response.status == 409) {
+        if (err.response.status === 409) {
           createNotification(
             notificationType.error,
             "REGISTRATION ERROR",
             "Username already exists."
           );
         } else {
-          errorAction(err, trainersActions.actionError, dispatch, {
+          handleError(err, trainersActions, dispatch, {
             title: "REGISTRATION ERROR",
             description: "An error has occured while signing in.",
           });

@@ -3,7 +3,7 @@ import { createNotification } from "../utils/notificationService";
 import { loginTrainerPath, logoutTrainerPath } from "../constants/apiEndpoints";
 import { userActions } from "../reducers/user";
 import { notificationType } from "../constants/globals";
-import { useNavigate } from "react-router-dom";
+import { handleError } from "../utils/utilFunctions";
 
 export const login = (data) => {
   return (dispatch) => {
@@ -26,7 +26,7 @@ export const login = (data) => {
             "Invalid username or password."
           );
         } else {
-          handleError(err, userActions.actionError, dispatch, {
+          handleError(err, userActions, dispatch, {
             title: "LOG-IN ERROR",
             description: "An error has occured while signing in.",
           });
@@ -51,16 +51,7 @@ export const logout = (data) => {
     );
     // })
     // .catch((err) => {
-    //   handleError(err, userActions.actionError, dispatch, undefined);
+    //   handleError(err, userActions, dispatch, undefined);
     // });
   };
-};
-
-const handleError = (error, action, dispatch, messages) => {
-  dispatch(action(error?.response?.data));
-  createNotification(
-    notificationType.error,
-    messages?.title,
-    messages?.description
-  );
 };

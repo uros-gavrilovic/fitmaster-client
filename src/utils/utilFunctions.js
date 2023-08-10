@@ -48,13 +48,13 @@ export function validateField(field, fieldName, setErrorState) {
   return error;
 }
 
-export const errorAction = (error, action, dispatch, messages) => {
-  // creates notification and dispatches error action
+export function handleError(error, actions, dispatch, messages) {
+  // Creates notification and dispatches error action.
 
-  dispatch(action(error?.response?.data));
+  dispatch(actions.actionError(error?.response?.data));
   createNotification(
     notificationType.error,
     messages?.title,
-    error?.response?.data?.error_message
+    messages?.description
   );
-};
+}

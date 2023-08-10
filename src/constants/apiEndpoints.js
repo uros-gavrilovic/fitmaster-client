@@ -12,3 +12,6 @@ export const logoutMemberPath = () => `/logout-member`;
 export const membersPath = () => `/api/member`;
 export const membersDTOPath = () => `/api/member/dto`;
 export const membersIDPath = (id) => `/api/member/${id}`;
+
+// Statistics
+export const membersActivityPath = () => `api/statistics/members-activity`;
