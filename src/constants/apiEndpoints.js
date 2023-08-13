@@ -15,3 +15,8 @@ export const membersIDPath = (id) => `/api/member/${id}`;
 
 // Statistics
 export const membersActivityPath = () => `api/statistics/members-activity`;
+
+// Packages
+export const packagesPath = () => `/api/package`;
+export const packagesDTOPath = () => `/api/package/dto`;
+export const packagesIDPath = (id) => `/api/package/${id}`;
