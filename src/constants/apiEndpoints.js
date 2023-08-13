@@ -21,3 +21,8 @@ export const exercisesDTOPath = () => `/api/exercise/dto`;
 
 // Statistics
 export const membersActivityPath = () => `api/statistics/members-activity`;
+
+// Packages
+export const packagesPath = () => `/api/package`;
+export const packagesDTOPath = () => `/api/package/dto`;
+export const packagesIDPath = (id) => `/api/package/${id}`;

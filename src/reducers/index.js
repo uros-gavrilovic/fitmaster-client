@@ -5,6 +5,7 @@ import membersReducer from "./members";
 import trainersReducer from "./trainers";
 import exercisesReducer from "./exercises";
 import statisticsReducer from "./statistics";
+import packagesReducer from "./package";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     trainersReducer,
     exercisesReducer,
     statisticsReducer,
+    packagesReducer,
   },
 });
 
