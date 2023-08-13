@@ -60,6 +60,8 @@ export function handleError(error, actions, dispatch, messages) {
   );
 }
 export const boldTextParser = (text) => {
+  // Used to parse text and make it bold (eg. MUI label tags)
+
   let i = 0;
   let renderables = [];
   let boldText = "";
