@@ -1,3 +1,6 @@
+// App Information
+export const appInfoPath = () => `/app-info`;
+
 // User - Trainer
 export const loginTrainerPath = () => `/login-trainer`;
 export const registerTrainerPath = () => `/register-trainer`;

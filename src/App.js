@@ -17,10 +17,15 @@ import Settings from "./components/app/settings/Settings";
 import WorkoutPlans from "./components/app/workout-plans/WorkoutPlans";
 import { useEffect } from "react";
 import app from "./constants/appData";
+import { fetchAppInfo } from "./actions/user";
+import { useDispatch } from "react-redux";
 
 function App() {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     document.title = app.fullName;
+    dispatch(fetchAppInfo());
   }, []);
 
   return (

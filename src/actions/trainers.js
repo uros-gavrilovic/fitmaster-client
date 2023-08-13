@@ -5,7 +5,7 @@ import { createNotification } from "../utils/notificationService";
 import { handleError } from "../utils/utilFunctions";
 import apiService from "../utils/apiService";
 
-export const addTrainer = (data, messages) => {
+export const addTrainer = (data, msg) => {
   return (dispatch) => {
     dispatch(trainersActions.actionStart());
     return apiService
@@ -16,23 +16,12 @@ export const addTrainer = (data, messages) => {
       .then(() => {
         createNotification(
           notificationType.success,
-          "REGISTER-SUCCESS", //messages?.title,
-          "Successfully registered a new trainer. " //messages?.success_message
+          msg?.registerTitle,
+          msg?.registerSuccessMessage
         );
       })
       .catch((err) => {
-        if (err.response.status === 409) {
-          createNotification(
-            notificationType.error,
-            "REGISTRATION ERROR",
-            "Username already exists."
-          );
-        } else {
-          handleError(err, trainersActions, dispatch, {
-            title: "REGISTRATION ERROR",
-            description: "An error has occured while signing in.",
-          });
-        }
+        handleError(err, trainersActions, dispatch);
       });
   };
 };

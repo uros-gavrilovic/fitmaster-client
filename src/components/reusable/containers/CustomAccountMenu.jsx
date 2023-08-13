@@ -13,9 +13,10 @@ import Tooltip from "@mui/material/Tooltip";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
+import withTranslations from "../../../utils/HighOrderComponent";
 
-export default function CustomAccountMenu(props) {
-  const { user, userActions } = props || {};
+const CustomAccountMenu = (props) => {
+  const { user, userActions, t } = props || {};
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -99,7 +100,7 @@ export default function CustomAccountMenu(props) {
           <ListItemIcon>
             <PersonAdd fontSize="small" />
           </ListItemIcon>
-          Add another account
+          {t?.addAnotherAccount}
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -109,15 +110,17 @@ export default function CustomAccountMenu(props) {
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
-          Settings
+          {t?.settings}
         </MenuItem>
         <MenuItem onClick={handleLogOut}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          Logout
+          {t?.logout}
         </MenuItem>
       </Menu>
     </Fragment>
   );
 }
+
+export default withTranslations(CustomAccountMenu, "CustomAccountMenu");

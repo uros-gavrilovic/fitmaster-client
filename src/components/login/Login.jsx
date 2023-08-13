@@ -25,7 +25,8 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import WcIcon from "@mui/icons-material/Wc";
 import "../../styles/login/login.css";
 import * as trainerActions from "../../actions/trainers";
-
+import withTranslations from "../../utils/HighOrderComponent"
+ 
 const initialRegisterState = {
   username: "",
   password: "",
@@ -48,7 +49,9 @@ const genders = [
   },
 ];
 
-const Login = () => {
+const Login = (props) => {
+  const {t} = props || {};
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [openLoginContainer, setOpenLoginContainer] = useState(true);
@@ -85,7 +88,7 @@ const Login = () => {
       userActions.login({
         username: loginState.username,
         password: loginState.password,
-      })
+      }, t?.messages)
     );
   };
   const handleRegister = () => {
@@ -119,7 +122,7 @@ const Login = () => {
       return;
 
     dispatch(
-      trainerActions.addTrainer(convertEmptyFieldsToNull(registerState))
+      trainerActions.addTrainer(convertEmptyFieldsToNull(registerState), t?.messages)
     );
     handleClear();
   };
@@ -148,13 +151,13 @@ const Login = () => {
               className="center container dark-container"
             >
               <Logo />
-              <h3>Create a new account</h3>
+              <h3>{t?.titleRegister}</h3>
 
-              <Divider>Log-In Information</Divider>
+              <Divider>{t?.subtitles?.LoginInfo}</Divider>
               <IconTextField
                 required
                 id="username"
-                title="Username"
+                title={t?.input?.username}
                 icon={
                   <AccountCircle
                     style={{ color: "white" }}
@@ -173,7 +176,7 @@ const Login = () => {
               <IconTextField
                 required
                 id="password"
-                title="Password"
+                title={t?.input?.password}
                 type="password"
                 icon={
                   <HttpsRoundedIcon
@@ -192,11 +195,11 @@ const Login = () => {
                 }
               />
 
-              <Divider>General Information</Divider>
+              <Divider>{t?.subtitles?.generalInfo}</Divider>
               <IconTextField
                 required
                 id="firstName"
-                title="First Name"
+                title={t?.input?.firstName}
                 icon={
                   <AbcIcon style={{ color: "white" }} sx={{ mr: 1, my: 0.5 }} />
                 }
@@ -213,7 +216,7 @@ const Login = () => {
               <IconTextField
                 required
                 id="lastName"
-                title="Last Name"
+                title={t?.input?.lastName}
                 icon={
                   <AbcIcon style={{ color: "white" }} sx={{ mr: 1, my: 0.5 }} />
                 }
@@ -227,29 +230,6 @@ const Login = () => {
                   })
                 }
               />
-              <IconTextField
-                select
-                id="gender"
-                name="gender"
-                defaultValue=""
-                icon={
-                  <WcIcon style={{ color: "white" }} sx={{ mr: 1, my: 0.5 }} />
-                }
-                title="Gender"
-                value={registerState?.gender}
-                onChange={(e) => {
-                  setRegisterState({
-                    ...registerState,
-                    [e.target.name]: e.target.value,
-                  });
-                }}
-              >
-                {genders.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </IconTextField>
 
               <div
                 style={{
@@ -260,14 +240,14 @@ const Login = () => {
                 }}
               >
                 <IconButton
-                  title="Register new trainer"
+                  title={t?.buttons?.btnRegister}
                   leftIcon={<HowToRegIcon style={{ color: "white" }} />}
                   variant="contained"
                   width="100%"
                   onClick={handleRegister}
                 />
                 <IconButton
-                  title="Login"
+                  title={t?.buttons?.btnLogIn}
                   rightIcon={
                     <KeyboardDoubleArrowRightIcon style={{ color: "white" }} />
                   }
@@ -294,10 +274,10 @@ const Login = () => {
               className="center container dark-container"
             >
               <Logo />
-              <h3>Sign in using an existing account</h3>
+              <h3>{t?.titleLogIn}</h3>
               <IconTextField
                 id="username"
-                title="Username"
+                title={t?.input?.username}
                 icon={
                   <AccountCircle
                     style={{ color: "white" }}
@@ -315,7 +295,7 @@ const Login = () => {
               />
               <IconTextField
                 id="password"
-                title="Password"
+                title={t?.input?.password}
                 type="password"
                 icon={
                   <HttpsRoundedIcon
@@ -343,7 +323,7 @@ const Login = () => {
                 }}
               >
                 <IconButton
-                  title="Register"
+                  title={t?.buttons?.btnRegister}
                   leftIcon={
                     <KeyboardDoubleArrowLeftIcon style={{ color: "white" }} />
                   }
@@ -352,7 +332,7 @@ const Login = () => {
                   onClick={handleTabChange}
                 />
                 <IconButton
-                  title="Login"
+                  title={t?.buttons?.btnLogIn}
                   rightIcon={<LoginIcon style={{ color: "white" }} />}
                   variant="contained"
                   width="100%"
@@ -367,4 +347,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withTranslations(Login, 'Login');

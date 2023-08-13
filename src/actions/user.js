@@ -1,11 +1,25 @@
 import apiService from "../utils/apiService";
 import { createNotification } from "../utils/notificationService";
-import { loginTrainerPath, logoutTrainerPath } from "../constants/apiEndpoints";
+import { appInfoPath, loginTrainerPath, logoutTrainerPath } from "../constants/apiEndpoints";
 import { userActions } from "../reducers/user";
-import { notificationType } from "../constants/globals";
+import { notificationType, sessionStorageConstants } from "../constants/globals";
 import { handleError } from "../utils/utilFunctions";
 
-export const login = (data) => {
+export const fetchAppInfo = () => {
+  return (dispatch) => {
+    dispatch(userActions.actionStart());
+    return apiService
+    .get(appInfoPath())
+    .then((response) => {
+      setAppInfo(response.data, dispatch);
+    })
+    .catch((err) => {
+      dispatch(userActions.actionError(err?.response?.data))
+    })
+  }
+}
+
+export const login = (data, msg) => {
   return (dispatch) => {
     dispatch(userActions.actionStart());
     return apiService
@@ -14,28 +28,17 @@ export const login = (data) => {
         dispatch(userActions.login(response.data));
         createNotification(
           notificationType.success,
-          "LOG-IN SUCCESS",
-          "Successfully logged back in."
+          msg?.loginTitle,
+          msg?.loginSuccessMessage
         );
       })
       .catch((err) => {
-        if (err.response.status == 401) {
-          createNotification(
-            notificationType.error,
-            "LOG-IN ERROR",
-            "Invalid username or password."
-          );
-        } else {
-          handleError(err, userActions, dispatch, {
-            title: "LOG-IN ERROR",
-            description: "An error has occured while signing in.",
-          });
-        }
+          handleError(err, userActions, dispatch);
       });
   };
 };
 
-export const logout = (data) => {
+export const logout = (data, msg) => {
   return (dispatch) => {
     dispatch(userActions.actionStart());
     // return apiService
@@ -46,8 +49,8 @@ export const logout = (data) => {
     // .then(() => {
     createNotification(
       notificationType.success,
-      "LOG-OUT SUCCESS",
-      "Successfully logged out."
+      msg?.logoutTitle,
+      msg?.logoutSuccessMessage
     );
     // })
     // .catch((err) => {
@@ -55,3 +58,9 @@ export const logout = (data) => {
     // });
   };
 };
+
+function setAppInfo(data, dispatch) {
+  sessionStorage.setItem(sessionStorageConstants.APP_NAME, data?.appName);
+  sessionStorage.setItem(sessionStorageConstants.APP_VERSION, data?.appVersion);
+  sessionStorage.setItem(sessionStorageConstants.LOCALE, data?.appLocale);
+}

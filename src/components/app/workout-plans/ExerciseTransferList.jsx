@@ -163,7 +163,7 @@ export default function ExerciseTransferList(props) {
                   title={boldTextParser(
                     `${value.name}  (${value.category})${
                       side === "RIGHT-SIDE"
-                        ? `\n<<${volume.reps}>> reps x <<${volume.sets}>> sets`
+                        ? ` <<${volume.reps}>> reps x <<${volume.sets}>> sets`
                         : ""
                     }`
                   )}

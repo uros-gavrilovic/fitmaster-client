@@ -1,5 +1,6 @@
 import { createNotification } from "../utils/notificationService";
 import { notificationType } from "../constants/globals";
+import { appInfo } from "../constants/globals";
 
 export function capitalizeFirstLetter(str) {
   if (typeof str !== "string" || str.length === 0) {
@@ -49,14 +50,15 @@ export function validateField(field, fieldName, setErrorState) {
   return error;
 }
 
-export function handleError(error, actions, dispatch, messages) {
+export function handleError(error, actions, dispatch) {
   // Creates notification and dispatches error action.
 
+  const messages = error.response.data;
   dispatch(actions.actionError(error?.response?.data));
   createNotification(
     notificationType.error,
     messages?.title,
-    messages?.description
+    messages?.message
   );
 }
 export const boldTextParser = (text) => {
@@ -90,3 +92,11 @@ export const boldTextParser = (text) => {
 
   return renderables;
 };
+
+export const getTranslationFile = () => {
+  // Returns translation file name
+
+  const appName = sessionStorage.getItem("appName") || appInfo.name;
+  const language = sessionStorage.getItem("appLocale") || appInfo.default_locale;
+  return `${appName}_${language}`;
+}

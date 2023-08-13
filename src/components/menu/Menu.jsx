@@ -19,11 +19,12 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { useState, useEffect } from "react";
 import tabs from "./MenuConfig.js";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as userActions from "../../actions/user";
 import CustomAccountMenu from "../reusable/containers/CustomAccountMenu.jsx";
 import app from "../../constants/appData.js";
+import withTranslations from "../../utils/HighOrderComponent.js";
 
 const drawerWidth = 240;
 
@@ -91,12 +92,14 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function Menu(props) {
+const Menu = (props) => {
+  const {t} = props || {};
+
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const [currentTab, setCurrentTab] = useState(tabs[0].name);
+  const [currentTab, setCurrentTab] = useState(t?.tabs[tabs[0].id]);
   const { user, token } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
@@ -107,13 +110,13 @@ export default function Menu(props) {
 
   const handleTabChange = (tab) => {
     navigate(tab.path);
-    setCurrentTab(tab.name);
+    setCurrentTab(t?.tabs?.[tab.id]);
   };
 
   const handleTabAction = (action) => {
     switch (action) {
       case "log-out":
-        dispatch(userActions.logout({}));
+        dispatch(userActions.logout({}, t?.messages));
     }
   };
 
@@ -170,7 +173,7 @@ export default function Menu(props) {
         <List>
           {tabs.map((tab) => {
             return (
-              <ListItem key={tab.name} disablePadding sx={{ display: "block" }}>
+              <ListItem key={tab.id} disablePadding sx={{ display: "block" }}>
                 <ListItemButton
                   sx={{
                     minHeight: 48,
@@ -192,7 +195,7 @@ export default function Menu(props) {
                     {tab.icon}
                   </ListItemIcon>
                   <ListItemText
-                    primary={tab.name}
+                    primary={t?.tabs?.[tab.id]}
                     sx={{ opacity: open ? 1 : 0 }}
                   />
                 </ListItemButton>
@@ -208,3 +211,5 @@ export default function Menu(props) {
     </Box>
   );
 }
+
+export default withTranslations(Menu, "Menu");
