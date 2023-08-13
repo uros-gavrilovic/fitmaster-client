@@ -23,7 +23,8 @@ export function generateIDField(arr, fieldName) {
     id: element[fieldName],
   }));
 }
-export function isNumber(str) {
+export function isNumber(str, allowBlank = false) {
+  if (allowBlank && str === "") return true;
   return /^\d+$/.test(str);
 }
 
@@ -58,3 +59,32 @@ export function handleError(error, actions, dispatch, messages) {
     messages?.description
   );
 }
+export const boldTextParser = (text) => {
+  let i = 0;
+  let renderables = [];
+  let boldText = "";
+
+  while (i < text.length) {
+    if (text[i] === "<" && text[i + 1] === "<") {
+      let isBoldTextFound = false;
+      i += 2;
+      while (!isBoldTextFound) {
+        if (text[i] !== ">" || text[i + 1] !== ">") {
+          boldText = boldText.concat(text[i]);
+          i += 1;
+        } else {
+          isBoldTextFound = true;
+          i += 2;
+        }
+      }
+
+      renderables.push(<strong key={i}>{boldText}</strong>);
+      boldText = "";
+    } else {
+      renderables.push(text[i]);
+      i += 1;
+    }
+  }
+
+  return renderables;
+};

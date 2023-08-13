@@ -1,13 +1,29 @@
 import { Fragment } from "react";
-import CustomAccordion from "../../reusable/containers/CustomAccordion";
-import CustomTransferList from "../../reusable/containers/CustomTransferList";
+import ExerciseTransferList from "./ExerciseTransferList";
+import { useDispatch, useSelector } from "react-redux";
+import * as exercisesActions from "../../../actions/exercises";
+import { useEffect } from "react";
+import { useState } from "react";
 
 export default function WorkoutPlans(props) {
+  const { exercisesDTO } = useSelector((state) => state.exercisesReducer);
+  const [availableExercises, setAvailableExercises] = useState([]);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(exercisesActions.fetchExercisesDTO());
+  }, [dispatch]);
+  useEffect(() => {
+    setAvailableExercises(exercisesDTO);
+  }, [exercisesDTO]);
+
   return (
     <Fragment>
       <h1>This is WorkoutPlans.</h1>
-      <CustomAccordion />
-      <CustomTransferList />
+      <ExerciseTransferList
+        availableExercises={availableExercises}
+        setAvailableExercises={setAvailableExercises}
+      />
     </Fragment>
   );
 }
