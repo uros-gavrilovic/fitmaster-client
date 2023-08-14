@@ -88,7 +88,54 @@ export default function RegisterTab(props) {
 
 			<CustomStepper
 				components={[
-					<>
+					<Box
+						sx={{
+							display: 'flex',
+							flexDirection: 'column',
+							alignItems: 'center',
+						}}
+					>
+						<IconTextField
+							required
+							id='firstName'
+							title={t?.input?.firstName}
+							icon={
+								<AbcIcon style={{ color: 'white' }} sx={{ mr: 1, my: 0.5 }} />
+							}
+							value={registerState?.firstName}
+							error={registerErrorState.firstName}
+							onChange={(e) =>
+								setRegisterState({
+									...registerState,
+									[e.target.id]: e.target.value,
+								})
+							}
+						/>
+						<IconTextField
+							required
+							id='lastName'
+							title={t?.input?.lastName}
+							icon={
+								<AbcIcon style={{ color: 'white' }} sx={{ mr: 1, my: 0.5 }} />
+							}
+							margin='dense'
+							value={registerState?.lastName}
+							error={registerErrorState.lastName}
+							onChange={(e) =>
+								setRegisterState({
+									...registerState,
+									[e.target.id]: e.target.value,
+								})
+							}
+						/>
+					</Box>,
+					<Box
+						sx={{
+							display: 'flex',
+							flexDirection: 'column',
+							alignItems: 'center',
+						}}
+					>
 						<IconTextField
 							required
 							id='username'
@@ -129,43 +176,7 @@ export default function RegisterTab(props) {
 								})
 							}
 						/>
-					</>,
-					<>
-						<IconTextField
-							required
-							id='firstName'
-							title={t?.input?.firstName}
-							icon={
-								<AbcIcon style={{ color: 'white' }} sx={{ mr: 1, my: 0.5 }} />
-							}
-							margin='dense'
-							value={registerState?.firstName}
-							error={registerErrorState.firstName}
-							onChange={(e) =>
-								setRegisterState({
-									...registerState,
-									[e.target.id]: e.target.value,
-								})
-							}
-						/>
-						<IconTextField
-							required
-							id='lastName'
-							title={t?.input?.lastName}
-							icon={
-								<AbcIcon style={{ color: 'white' }} sx={{ mr: 1, my: 0.5 }} />
-							}
-							margin='dense'
-							value={registerState?.lastName}
-							error={registerErrorState.lastName}
-							onChange={(e) =>
-								setRegisterState({
-									...registerState,
-									[e.target.id]: e.target.value,
-								})
-							}
-						/>
-					</>,
+					</Box>,
 				]}
 				steps={steps}
 				isOptional={[false, false]}
@@ -183,25 +194,13 @@ export default function RegisterTab(props) {
 				stepsFinishedMessage={t?.messages?.registerRequestSent}
 				t={t?.buttons}
 			/>
-
-			<div
-				style={{
-					marginTop: '5vh',
-					display: 'grid',
-					width: 'auto',
-					gridTemplateColumns: '1fr 1fr',
-				}}
-			>
-				<IconButton
-					title={t?.buttons?.btnLogIn}
-					rightIcon={
-						<KeyboardDoubleArrowRightIcon style={{ color: 'white' }} />
-					}
-					variant='outlined'
-					width='100%'
-					onClick={handleTabChange}
-				/>
-			</div>
+			<IconButton
+				style={{ marginTop: '1rem', width: '100%' }}
+				title={t?.buttons?.btnLogIn}
+				rightIcon={<KeyboardDoubleArrowRightIcon style={{ color: 'white' }} />}
+				variant='outlined'
+				onClick={handleTabChange}
+			/>
 		</Box>
 	);
 }

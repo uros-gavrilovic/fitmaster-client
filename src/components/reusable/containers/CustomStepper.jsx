@@ -110,7 +110,7 @@ const CustomStepper = (props) => {
 					</Box>
 				</Fragment>
 			) : (
-				<React.Fragment>
+				<Fragment>
 					{activeStep}
 					<Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
 						{activeIndex >= 1 && (
@@ -149,7 +149,7 @@ const CustomStepper = (props) => {
 							/>
 						)}
 					</Box>
-				</React.Fragment>
+				</Fragment>
 			)}
 		</Box>
 	);

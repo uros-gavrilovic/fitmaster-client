@@ -99,14 +99,14 @@ export default function LoginTab(props) {
 					title={t?.buttons?.btnRegister}
 					leftIcon={<KeyboardDoubleArrowLeftIcon style={{ color: 'white' }} />}
 					variant='outlined'
-					width='100%'
+					style={{ width: '100%' }}
 					onClick={handleTabChange}
 				/>
 				<IconButton
 					title={t?.buttons?.btnLogIn}
 					rightIcon={<LoginIcon style={{ color: 'white' }} />}
 					variant='contained'
-					width='100%'
+					style={{ width: '100%' }}
 					onClick={handleLogIn}
 				/>
 			</div>
