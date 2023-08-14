@@ -16,7 +16,6 @@ import {
 	isNumber,
 	validateField,
 } from '../../../utils/utilFunctions';
-import { useEffect } from 'react';
 
 function not(a, b) {
 	return a.filter((value) => b.indexOf(value) === -1);
@@ -33,6 +32,18 @@ export default function ExerciseTransferList(props) {
 	const [choosenExercises, setChoosenExercises] = useState([]);
 	const [volume, setVolume] = useState({ reps: '', sets: '' });
 	const [error, setError] = useState({ reps: false, sets: false });
+
+	const getExerciseTitle = (targetID) => {
+		// Finds selected exercise in state and returns it's name with exercise volume.
+
+		const exercise = choosenExercises.find(
+			(exercise) => exercise.exerciseID === targetID
+		);
+
+		return boldTextParser(
+			`${exercise.name}  (${exercise.category}) <<${exercise.reps}>> reps x <<${exercise.sets}>> sets`
+		);
+	};
 
 	const left = availableExercises;
 	const right = choosenExercises;
@@ -161,13 +172,11 @@ export default function ExerciseTransferList(props) {
 								/>
 							</ListItemIcon>
 							<CustomAccordion
-								title={boldTextParser(
-									`${value.name}  (${value.category})${
-										side === 'RIGHT-SIDE'
-											? ` <<${volume.reps}>> reps x <<${volume.sets}>> sets`
-											: ''
-									}`
-								)}
+								title={
+									side === 'RIGHT-SIDE'
+										? getExerciseTitle(value.exerciseID)
+										: `${value.name}  (${value.category})`
+								}
 								description={value.instructions}
 							/>
 						</ListItem>
