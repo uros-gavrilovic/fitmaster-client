@@ -8,12 +8,6 @@ export function capitalizeFirstLetter(str, capitalizeEachWord = false) {
 	}
 
 	if (capitalizeEachWord) {
-		console.log(
-			str
-				.split(' ')
-				.map((word) => capitalizeFirstLetter(word))
-				.join(' ')
-		);
 		return str
 			.split(' ')
 			.map((word) => capitalizeFirstLetter(word))

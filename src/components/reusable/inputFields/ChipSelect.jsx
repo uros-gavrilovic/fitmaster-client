@@ -34,10 +34,10 @@ function getStyles(item, selectedItems, theme) {
 }
 
 export default function CustomChipSelect(props) {
-	let { title, items } = props || {};
+	let { title, items, selectedItems, setSelectedItems, ...otherProps } =
+		props || {};
 
 	const theme = useTheme();
-	const [selectedItems, setSelectedItems] = useState([]);
 
 	const handleChange = (event) => {
 		const item = event.target.value;

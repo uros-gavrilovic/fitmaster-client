@@ -28,7 +28,6 @@ export const searchExercisesDTO = (string) => {
 };
 
 export const fetchCategoriesAndBodyParts = () => {
-	console.log(filtersPath());
 	return (dispatch) => {
 		dispatch(exercisesActions.actionStart());
 		return apiService

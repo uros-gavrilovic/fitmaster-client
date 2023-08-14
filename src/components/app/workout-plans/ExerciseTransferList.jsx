@@ -18,6 +18,7 @@ import {
 import CustomChipSelect from '../../reusable/inputFields/ChipSelect';
 import { useDispatch, useSelector } from 'react-redux';
 import * as exercisesActions from '../../../actions/exercises';
+import { set } from 'date-fns';
 
 function not(a, b) {
 	return a.filter((value) => b.indexOf(value) === -1);
@@ -41,6 +42,38 @@ export default function ExerciseTransferList(props) {
 	const [error, setError] = useState({ reps: false, sets: false });
 	const [bodyPartsState, setBodyPartsState] = useState([]);
 	const [categoriesState, setCategoriesState] = useState([]);
+	const [selectedItems, setSelectedItems] = useState({
+		bodyParts: [],
+		categories: [],
+	});
+	const [filteredExercises, setFilteredExercises] =
+		useState(availableExercises);
+
+	useEffect(() => {
+		if (
+			selectedItems.categories.length === 0 &&
+			selectedItems.bodyParts.length === 0
+		) {
+			setFilteredExercises(availableExercises);
+			return;
+		}
+
+		const filteredExercises = availableExercises.filter((exercise) => {
+			const categoryMatch =
+				selectedItems.categories.length === 0 ||
+				selectedItems.categories.includes(exercise.category);
+
+			const bodyPartMatch =
+				selectedItems.bodyParts.length === 0 ||
+				selectedItems.bodyParts.some((selectedBodyPart) =>
+					exercise.body_parts.includes(selectedBodyPart)
+				);
+
+			return categoryMatch && bodyPartMatch;
+		});
+
+		setFilteredExercises(filteredExercises);
+	}, [selectedItems, availableExercises]);
 
 	const { bodyParts, categories } = useSelector(
 		(state) => state.exercisesReducer
@@ -67,7 +100,7 @@ export default function ExerciseTransferList(props) {
 		);
 	};
 
-	const left = availableExercises;
+	const left = filteredExercises;
 	const right = chosenExercises;
 
 	const [checked, setChecked] = useState([]);
@@ -119,12 +152,14 @@ export default function ExerciseTransferList(props) {
 		});
 
 		setChosenExercises(right.concat(newExercises));
-		setAvailableExercises(not(left, leftChecked));
+		setFilteredExercises(not(left, leftChecked));
+		setAvailableExercises(not(left, leftChecked)); // avoid duplicates when removing filters
 		setChecked(not(checked, leftChecked));
 		setVolume({ reps: '', sets: '' });
 	};
 	const handleCheckedLeft = () => {
-		setAvailableExercises(left.concat(rightChecked));
+		setFilteredExercises(left.concat(rightChecked));
+		setAvailableExercises(left.concat(rightChecked)); 
 		setChosenExercises(not(right, rightChecked));
 		setChecked(not(checked, rightChecked));
 	};
@@ -214,12 +249,24 @@ export default function ExerciseTransferList(props) {
 				<CustomChipSelect
 					title='CATEGORY'
 					items={categoriesState}
-					setItems={setCategoriesState}
+					selectedItems={selectedItems.categories}
+					setSelectedItems={(newSelectedItems) => {
+						setSelectedItems({
+							...selectedItems,
+							categories: newSelectedItems,
+						});
+					}}
 				/>
 				<CustomChipSelect
 					title='BODY_PART'
 					items={bodyPartsState}
-					setItems={setBodyPartsState}
+					selectedItems={selectedItems.bodyParts}
+					setSelectedItems={(newSelectedItems) => {
+						setSelectedItems({
+							...selectedItems,
+							bodyParts: newSelectedItems,
+						});
+					}}
 				/>
 			</div>
 			<Grid
