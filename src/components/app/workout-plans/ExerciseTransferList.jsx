@@ -97,7 +97,7 @@ export default function ExerciseTransferList(props) {
 		);
 
 		return boldTextParser(
-			`${exercise.name}  (${exercise.category}) <<${exercise.sets}>> sets x <<${exercise.reps}>> reps`
+			`${exercise.name}  (${exercise.category}) <<${exercise.sets}>> ${t?.sets} x <<${exercise.reps}>> ${t?.reps}`
 		);
 	};
 
