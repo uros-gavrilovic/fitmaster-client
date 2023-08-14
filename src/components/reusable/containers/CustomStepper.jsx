@@ -21,9 +21,9 @@ const CustomStepper = (props) => {
 		isOptional,
 		finishStep,
 		stepsFinishedMessage,
-		t,
 		activeIndex,
 		setActiveIndex,
+		t,
 	} = props || {};
 
 	const [activeStep, setActiveStep] = useState(components[0]);

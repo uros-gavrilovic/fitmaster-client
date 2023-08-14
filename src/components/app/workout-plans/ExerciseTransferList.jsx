@@ -36,6 +36,7 @@ export default function ExerciseTransferList(props) {
 		setAvailableExercises,
 		chosenExercises,
 		setChosenExercises,
+		t,
 	} = props || {};
 
 	const [volume, setVolume] = useState({ reps: '', sets: '' });
@@ -159,7 +160,7 @@ export default function ExerciseTransferList(props) {
 	};
 	const handleCheckedLeft = () => {
 		setFilteredExercises(left.concat(rightChecked));
-		setAvailableExercises(left.concat(rightChecked)); 
+		setAvailableExercises(left.concat(rightChecked));
 		setChosenExercises(not(right, rightChecked));
 		setChecked(not(checked, rightChecked));
 	};
@@ -172,7 +173,7 @@ export default function ExerciseTransferList(props) {
 		}));
 	};
 
-	const customList = (title, items, side) => (
+	const customList = (title, items, side, t) => (
 		<Card>
 			<CardHeader
 				sx={{ px: 2, py: 1 }}
@@ -193,7 +194,7 @@ export default function ExerciseTransferList(props) {
 					/>
 				}
 				title={title}
-				subheader={`${numberOfChecked(items)}/${items.length} selected`}
+				subheader={`${numberOfChecked(items)}/${items.length} ${t?.selected}`}
 			/>
 			<Divider />
 			<List
@@ -247,7 +248,7 @@ export default function ExerciseTransferList(props) {
 		<div style={{ display: 'flex', flexDirection: 'column' }}>
 			<div>
 				<CustomChipSelect
-					title='CATEGORY'
+					title={t?.category}
 					items={categoriesState}
 					selectedItems={selectedItems.categories}
 					setSelectedItems={(newSelectedItems) => {
@@ -258,7 +259,7 @@ export default function ExerciseTransferList(props) {
 					}}
 				/>
 				<CustomChipSelect
-					title='BODY_PART'
+					title={t?.bodyPart}
 					items={bodyPartsState}
 					selectedItems={selectedItems.bodyParts}
 					setSelectedItems={(newSelectedItems) => {
@@ -281,7 +282,7 @@ export default function ExerciseTransferList(props) {
 				}}
 			>
 				<Grid item sx={{ flexGrow: 1 }}>
-					{customList('Available Exercises', left, 'LEFT-SIDE')}
+					{customList(t?.availableExercises, left, 'LEFT-SIDE', t)}
 				</Grid>
 				<Grid item style={{ display: ' flex' }}>
 					<Grid container direction='column' alignItems='center'>
@@ -293,7 +294,7 @@ export default function ExerciseTransferList(props) {
 						>
 							<TextField
 								id='sets'
-								label='sets'
+								label={t?.sets}
 								error={error.sets}
 								sx={{ m: 1, width: '7ch' }}
 								disabled={leftChecked.length === 0}
@@ -303,7 +304,7 @@ export default function ExerciseTransferList(props) {
 							x
 							<TextField
 								id='reps'
-								label='reps'
+								label={t?.reps}
 								error={error.reps}
 								sx={{ m: 1, width: '7ch' }}
 								disabled={leftChecked.length === 0}
@@ -335,7 +336,7 @@ export default function ExerciseTransferList(props) {
 					</Grid>
 				</Grid>
 				<Grid item sx={{ flexGrow: 1 }}>
-					{customList('Workout Plan', right, 'RIGHT-SIDE')}
+					{customList(t?.workoutPlan, right, 'RIGHT-SIDE', t)}
 				</Grid>
 			</Grid>
 		</div>

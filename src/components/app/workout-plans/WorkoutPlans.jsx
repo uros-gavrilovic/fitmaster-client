@@ -6,9 +6,11 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import CustomStepper from '../../reusable/containers/CustomStepper';
 import { Box } from '@mui/material';
-import CustomChipSelect from '../../reusable/inputFields/ChipSelect';
+import withTranslations from '../../../utils/HighOrderComponent';
 
-export default function WorkoutPlans(props) {
+const WorkoutPlans = (props) => {
+	const { t } = props || {};
+
 	const { exercisesDTO } = useSelector((state) => state.exercisesReducer);
 	const [availableExercises, setAvailableExercises] = useState([]);
 	const [chosenExercises, setChosenExercises] = useState([]);
@@ -27,22 +29,24 @@ export default function WorkoutPlans(props) {
 			<CustomStepper
 				components={[
 					<Box>
-						<h2>Member and Trainer info</h2>
+						<h2>TODO Member and Trainer info</h2>
 					</Box>,
 					<ExerciseTransferList
 						availableExercises={availableExercises}
 						setAvailableExercises={setAvailableExercises}
 						chosenExercises={chosenExercises}
 						setChosenExercises={setChosenExercises}
+						t={t?.plan}
 					/>,
 				]}
-				steps={['First', 'Second']}
+				steps={[t?.steps?.participantsInfo, t?.steps?.workoutPlan]}
 				isOptional={[false, false]}
 				activeIndex={activeIndex}
 				setActiveIndex={setActiveIndex}
 				stepsFinishedMessage={'Svaka cast'}
-				// t={t?.buttons}
 			/>
 		</Fragment>
 	);
-}
+};
+
+export default withTranslations(WorkoutPlans, 'WorkoutPlans');

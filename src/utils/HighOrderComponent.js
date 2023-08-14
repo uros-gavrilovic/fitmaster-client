@@ -1,45 +1,45 @@
 import React, { useEffect, useCallback, Fragment } from 'react';
 import hoistStatics from 'hoist-non-react-statics';
 import { isEmpty } from 'lodash';
-import {translationsActions} from '../reducers/translations';
+import { translationsActions } from '../reducers/translations';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTranslationFile } from './utilFunctions';
 
- // A public higher-order component to access translations
+// A public higher-order component to access translations
 let initStart = true;
-const withTranslations = (SourceComponent, ComponentName = 'Component') => {
-  function TranslatableComponent(props) {
-    const dispatch = useDispatch();
-    const { translations } = useSelector((state) => state.translationsReducer);
-    const translationImportHandler = useCallback(async () => {
-      const fileName = getTranslationFile();
-      await import(`../constants/translations/${fileName}`).then(
-        ({ translation }) => {
-          dispatch(translationsActions.setTranslations(translation));
-        }
-      );
-    }, [dispatch]);
+const withTranslations = (SourceComponent, ComponentName) => {
+	if (ComponentName === undefined) {
+		ComponentName =
+			SourceComponent.displayName || SourceComponent.name || 'Component';
+	}
 
-    useEffect(() => {
-      if (initStart) {
-        initStart = false;
-        isEmpty(translations) && translationImportHandler();
-        return;
-      }
-    }, [translationImportHandler, translations]);
+	function TranslatableComponent(props) {
+		const dispatch = useDispatch();
+		const { translations } = useSelector((state) => state.translationsReducer);
+		const translationImportHandler = useCallback(async () => {
+			const fileName = getTranslationFile();
+			await import(`../constants/translations/${fileName}`).then(
+				({ translation }) => {
+					dispatch(translationsActions.setTranslations(translation));
+				}
+			);
+		}, [dispatch]);
 
-    // if (!translations?.Global) return <Fragment></Fragment>;
+		useEffect(() => {
+			if (initStart) {
+				initStart = false;
+				isEmpty(translations) && translationImportHandler();
+				return;
+			}
+		}, [translationImportHandler, translations]);
 
-    return (
-      <SourceComponent
-        t={translations[ComponentName]}
-        {...props}
-      />
-    );
-  }
+		// if (!translations?.Global) return <Fragment></Fragment>;
 
-  TranslatableComponent.displayName = `withTranslations(${ComponentName})`;
-  return hoistStatics(TranslatableComponent, SourceComponent);
+		return <SourceComponent t={translations[ComponentName]} {...props} />;
+	}
+
+	TranslatableComponent.displayName = `withTranslations(${ComponentName})`;
+	return hoistStatics(TranslatableComponent, SourceComponent);
 };
 
 export default withTranslations;
