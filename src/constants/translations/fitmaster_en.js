@@ -15,9 +15,13 @@ export const translation = {
         buttons: {
             btnLogIn: "Sign In",
             btnRegister: "Register",
+            btnNext: "Next",
+            btnBack: "Back",
+            btnReset: "Reset",
         },
         messages: {
             registerTitle: "Registration",
+            registerRequestSent: "Registration request sent",
             registerSuccessMessage: "Successfully registered a new trainer",
             loginTitle: "Log-In",
             loginSuccessMessage: "Successfully logged in",
@@ -39,12 +43,21 @@ export const translation = {
             logoutTitle: "Log Out",
             logoutSuccessMessage: "Successfully logged out"
         }
-        
+
     },
 
     CustomAccountMenu: {
         addAnotherAccount: "Add another account",
         settings: "Settings",
         logout: "Sign Out"
+    },
+    CustomStepper: {
+        optional: "Optional",
+        btnNext: "Next",
+        btnBack: "Back",
+        btnSkip: "Skip",
+        btnFinish: "Finish",
+        btnReset: "Reset",
     }
+
 }
