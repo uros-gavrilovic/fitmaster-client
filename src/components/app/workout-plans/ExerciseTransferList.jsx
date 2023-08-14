@@ -28,15 +28,20 @@ function union(a, b) {
 }
 
 export default function ExerciseTransferList(props) {
-	const { availableExercises, setAvailableExercises } = props || {};
-	const [choosenExercises, setChoosenExercises] = useState([]);
+	const {
+		availableExercises,
+		setAvailableExercises,
+		chosenExercises,
+		setChosenExercises,
+	} = props || {};
+
 	const [volume, setVolume] = useState({ reps: '', sets: '' });
 	const [error, setError] = useState({ reps: false, sets: false });
 
 	const getExerciseTitle = (targetID) => {
 		// Finds selected exercise in state and returns it's name with exercise volume.
 
-		const exercise = choosenExercises.find(
+		const exercise = chosenExercises.find(
 			(exercise) => exercise.exerciseID === targetID
 		);
 
@@ -46,7 +51,7 @@ export default function ExerciseTransferList(props) {
 	};
 
 	const left = availableExercises;
-	const right = choosenExercises;
+	const right = chosenExercises;
 
 	const [checked, setChecked] = useState([]);
 
@@ -96,14 +101,14 @@ export default function ExerciseTransferList(props) {
 			};
 		});
 
-		setChoosenExercises(right.concat(newExercises));
+		setChosenExercises(right.concat(newExercises));
 		setAvailableExercises(not(left, leftChecked));
 		setChecked(not(checked, leftChecked));
 		setVolume({ reps: '', sets: '' });
 	};
 	const handleCheckedLeft = () => {
 		setAvailableExercises(left.concat(rightChecked));
-		setChoosenExercises(not(right, rightChecked));
+		setChosenExercises(not(right, rightChecked));
 		setChecked(not(checked, rightChecked));
 	};
 
