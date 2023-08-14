@@ -5,6 +5,8 @@ import * as exercisesActions from '../../../actions/exercises';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import CustomStepper from '../../reusable/containers/CustomStepper';
+import { Box } from '@mui/material';
+import CustomChipSelect from '../../reusable/inputFields/ChipSelect';
 
 export default function WorkoutPlans(props) {
 	const { exercisesDTO } = useSelector((state) => state.exercisesReducer);
@@ -24,7 +26,9 @@ export default function WorkoutPlans(props) {
 		<Fragment>
 			<CustomStepper
 				components={[
-					<h1>Second</h1>,
+					<Box>
+						<h2>Member and Trainer info</h2>
+					</Box>,
 					<ExerciseTransferList
 						availableExercises={availableExercises}
 						setAvailableExercises={setAvailableExercises}

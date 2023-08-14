@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
 import Card from '@mui/material/Card';
@@ -9,13 +8,16 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import CustomAccordion from '../../reusable/containers/CustomAccordion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TextField } from '@mui/material';
 import {
 	boldTextParser,
 	isNumber,
 	validateField,
 } from '../../../utils/utilFunctions';
+import CustomChipSelect from '../../reusable/inputFields/ChipSelect';
+import { useDispatch, useSelector } from 'react-redux';
+import * as exercisesActions from '../../../actions/exercises';
 
 function not(a, b) {
 	return a.filter((value) => b.indexOf(value) === -1);
@@ -37,6 +39,21 @@ export default function ExerciseTransferList(props) {
 
 	const [volume, setVolume] = useState({ reps: '', sets: '' });
 	const [error, setError] = useState({ reps: false, sets: false });
+	const [bodyPartsState, setBodyPartsState] = useState([]);
+	const [categoriesState, setCategoriesState] = useState([]);
+
+	const { bodyParts, categories } = useSelector(
+		(state) => state.exercisesReducer
+	);
+
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(exercisesActions.fetchCategoriesAndBodyParts());
+	}, [dispatch]);
+	useEffect(() => {
+		setBodyPartsState(bodyParts);
+		setCategoriesState(categories);
+	}, [bodyParts, categories]);
 
 	const getExerciseTitle = (targetID) => {
 		// Finds selected exercise in state and returns it's name with exercise volume.
@@ -46,7 +63,7 @@ export default function ExerciseTransferList(props) {
 		);
 
 		return boldTextParser(
-			`${exercise.name}  (${exercise.category}) <<${exercise.reps}>> reps x <<${exercise.sets}>> sets`
+			`${exercise.name}  (${exercise.category}) <<${exercise.sets}>> sets x <<${exercise.reps}>> reps`
 		);
 	};
 
@@ -192,7 +209,19 @@ export default function ExerciseTransferList(props) {
 	);
 
 	return (
-		<div style={{ display: 'flex' }}>
+		<div style={{ display: 'flex', flexDirection: 'column' }}>
+			<div>
+				<CustomChipSelect
+					title='CATEGORY'
+					items={categoriesState}
+					setItems={setCategoriesState}
+				/>
+				<CustomChipSelect
+					title='BODY_PART'
+					items={bodyPartsState}
+					setItems={setBodyPartsState}
+				/>
+			</div>
 			<Grid
 				container
 				spacing={2}
@@ -216,22 +245,22 @@ export default function ExerciseTransferList(props) {
 							style={{ display: 'flex', justifyContent: 'space-around' }}
 						>
 							<TextField
-								id='reps'
-								label='reps'
-								error={error.reps}
-								sx={{ m: 1, width: '7ch' }}
-								disabled={leftChecked.length === 0}
-								value={volume.reps}
-								onChange={handleVolumeChange}
-							/>
-							x
-							<TextField
 								id='sets'
 								label='sets'
 								error={error.sets}
 								sx={{ m: 1, width: '7ch' }}
 								disabled={leftChecked.length === 0}
 								value={volume.sets}
+								onChange={handleVolumeChange}
+							/>
+							x
+							<TextField
+								id='reps'
+								label='reps'
+								error={error.reps}
+								sx={{ m: 1, width: '7ch' }}
+								disabled={leftChecked.length === 0}
+								value={volume.reps}
 								onChange={handleVolumeChange}
 							/>
 						</Grid>

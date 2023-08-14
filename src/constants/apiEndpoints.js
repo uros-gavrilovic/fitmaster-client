@@ -12,17 +12,22 @@ export const registerMemberPath = () => `/register-member`;
 export const logoutMemberPath = () => `/logout-member`;
 
 // Members
-export const membersPath = () => `/api/member`;
-export const membersDTOPath = () => `/api/member/dto`;
-export const membersIDPath = (id) => `/api/member/${id}`;
+const memberAPI = `/api/member`;
+export const membersPath = () => memberAPI;
+export const membersDTOPath = () => memberAPI + `/dto`;
+export const membersIDPath = (id) => memberAPI + `/${id}`;
 
 // Exercises
-export const exercisesDTOPath = () => `/api/exercise/dto`;
+const exerciseAPI = `/api/exercise`;
+export const exercisesDTOPath = () => exerciseAPI + `/dto`;
+export const filtersPath = () => exerciseAPI + `/filters`;
 
 // Statistics
-export const membersActivityPath = () => `api/statistics/members-activity`;
+const statisticsAPI = `/api/statistics`;
+export const membersActivityPath = () => statisticsAPI + `/members-activity`;
 
 // Packages
-export const packagesPath = () => `/api/package`;
-export const packagesDTOPath = () => `/api/package/dto`;
-export const packagesIDPath = (id) => `/api/package/${id}`;
+const packageAPI = `/api/package`;
+export const packagesPath = () => packageAPI;
+export const packagesDTOPath = () => packageAPI + `/dto`;
+export const packagesIDPath = (id) => packageAPI + `/${id}`;
