@@ -8,6 +8,26 @@ import CustomStepper from '../../reusable/containers/CustomStepper';
 import { Box } from '@mui/material';
 import withTranslations from '../../../utils/HighOrderComponent';
 
+// import {
+// 	Appointments,
+// 	DayView,
+// 	Scheduler,
+// 	ViewState,
+// } from '@devexpress/dx-react-scheduler';
+// const currentDate = '2018-11-01';
+// const schedulerData = [
+// 	{
+// 		startDate: '2018-11-01T09:45',
+// 		endDate: '2018-11-01T11:00',
+// 		title: 'Meeting',
+// 	},
+// 	{
+// 		startDate: '2018-11-01T12:00',
+// 		endDate: '2018-11-01T13:30',
+// 		title: 'Go to a gym',
+// 	},
+// ];
+
 const WorkoutPlans = (props) => {
 	const { t } = props || {};
 
@@ -29,7 +49,12 @@ const WorkoutPlans = (props) => {
 			<CustomStepper
 				components={[
 					<Box>
-						<h2>TODO Member and Trainer info</h2>
+						<h1>TODO: Implement member and scheduler</h1>
+						{/* <Scheduler data={schedulerData}>
+							<ViewState currentDate={currentDate} />
+							<DayView startDayHour={9} endDayHour={14} />
+							<Appointments />
+						</Scheduler> */}
 					</Box>,
 					<ExerciseTransferList
 						availableExercises={availableExercises}
