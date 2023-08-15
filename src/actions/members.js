@@ -18,7 +18,7 @@ export const fetchMembers = () => {
 				dispatch(membersActions.fetchMembers(response.data));
 			})
 			.catch((err) => {
-				dispatch(membersActions.actionError(err?.response?.data));
+				handleError(err, membersActions, dispatch);
 			});
 	};
 };

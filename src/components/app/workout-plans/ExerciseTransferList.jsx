@@ -8,17 +8,19 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import CustomAccordion from '../../reusable/containers/CustomAccordion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { TextField } from '@mui/material';
 import {
 	boldTextParser,
+	capitalizeFirstLetter,
 	isNumber,
 	validateField,
 } from '../../../utils/utilFunctions';
 import CustomChipSelect from '../../reusable/inputFields/ChipSelect';
 import { useDispatch, useSelector } from 'react-redux';
 import * as exercisesActions from '../../../actions/exercises';
-import { set } from 'date-fns';
+import GrayedOut from '../../reusable/text/GrayedOut';
+import Bold from '../../reusable/text/Bold';
 
 function not(a, b) {
 	return a.filter((value) => b.indexOf(value) === -1);
@@ -96,9 +98,19 @@ export default function ExerciseTransferList(props) {
 			(exercise) => exercise.exerciseID === targetID
 		);
 
-		return boldTextParser(
-			`${exercise.name}  (${exercise.category}) <<${exercise.sets}>> ${t?.sets} x <<${exercise.reps}>> ${t?.reps}`
+		return (
+			<Fragment>
+				{exercise.name}{' '}
+				<GrayedOut>({capitalizeFirstLetter(exercise.category)})</GrayedOut>
+				{' | '}
+				<Bold>{exercise.sets}</Bold> {t?.sets} x <Bold>{exercise.reps}</Bold>{' '}
+				{t?.reps}
+			</Fragment>
 		);
+
+		// return boldTextParser(
+		// 	`${exercise.name}  (${exercise.category}) <<${exercise.sets}>> ${t?.sets} x <<${exercise.reps}>> ${t?.reps}`
+		// );
 	};
 
 	const left = filteredExercises;
@@ -231,9 +243,16 @@ export default function ExerciseTransferList(props) {
 							</ListItemIcon>
 							<CustomAccordion
 								title={
-									side === 'RIGHT-SIDE'
-										? getExerciseTitle(value.exerciseID)
-										: `${value.name}  (${value.category})`
+									side === 'RIGHT-SIDE' ? (
+										getExerciseTitle(value.exerciseID)
+									) : (
+										<>
+											{value.name}{' '}
+											<GrayedOut>
+												({capitalizeFirstLetter(value.category)})
+											</GrayedOut>
+										</>
+									)
 								}
 								description={value.instructions}
 							/>
