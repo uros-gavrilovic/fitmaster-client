@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://localhost:8080",
   "dependencies": {
+    "@aldabil/react-scheduler": "^2.7.17",
     "@devexpress/dx-react-core": "^4.0.5",
     "@devexpress/dx-react-scheduler": "^4.0.5",
     "@emotion/react": "^11.11.1",

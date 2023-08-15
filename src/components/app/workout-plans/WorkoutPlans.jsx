@@ -5,28 +5,11 @@ import * as exercisesActions from '../../../actions/exercises';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import CustomStepper from '../../reusable/containers/CustomStepper';
-import { Box } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import withTranslations from '../../../utils/HighOrderComponent';
-
-// import {
-// 	Appointments,
-// 	DayView,
-// 	Scheduler,
-// 	ViewState,
-// } from '@devexpress/dx-react-scheduler';
-// const currentDate = '2018-11-01';
-// const schedulerData = [
-// 	{
-// 		startDate: '2018-11-01T09:45',
-// 		endDate: '2018-11-01T11:00',
-// 		title: 'Meeting',
-// 	},
-// 	{
-// 		startDate: '2018-11-01T12:00',
-// 		endDate: '2018-11-01T13:30',
-// 		title: 'Go to a gym',
-// 	},
-// ];
+import { Scheduler } from '@aldabil/react-scheduler';
+import { monthConfig, weekConfig } from './schedulerConfig';
+import { srLatn, enUS } from 'date-fns/locale';
 
 const WorkoutPlans = (props) => {
 	const { t } = props || {};
@@ -48,13 +31,33 @@ const WorkoutPlans = (props) => {
 		<Fragment>
 			<CustomStepper
 				components={[
-					<Box>
-						<h1>TODO: Implement member and scheduler</h1>
-						{/* <Scheduler data={schedulerData}>
-							<ViewState currentDate={currentDate} />
-							<DayView startDayHour={9} endDayHour={14} />
-							<Appointments />
-						</Scheduler> */}
+					<Box
+						sx={{
+							display: 'grid',
+							gridTemplateColumns: '1fr 1fr',
+							gridTemplateRows: '1fr',
+							gap: '1rem',
+						}}
+					>
+						<h1>TODO: Implement member selecter</h1>
+						<Scheduler
+							month={monthConfig}
+							week={weekConfig}
+							view='month'
+							height='400' // TODO: Change to dynamic sizing
+							events={[
+								{
+									event_id: 1,
+									title: 'Event TEST',
+									start: new Date('2023/4/8 10:00'),
+									end: new Date('2023/4/8 11:00'),
+								},
+							]}
+							locale={
+								sessionStorage.getItem('appLocale') === 'sr' ? srLatn : enUS // TODO: Needs to be optimized.
+							}
+							translations={t?.scheduler}
+						/>
 					</Box>,
 					<ExerciseTransferList
 						availableExercises={availableExercises}

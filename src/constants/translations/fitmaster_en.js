@@ -84,6 +84,36 @@ export const translation = {
 			btnBack: 'Back',
 			btnNext: 'Next',
 		},
+		scheduler: {
+			navigation: {
+				month: 'Month',
+				week: 'Week',
+				day: 'Day',
+				today: 'Today',
+			},
+			form: {
+				addTitle: 'Add Event',
+				editTitle: 'Edit Event',
+				confirm: 'Confirm',
+				delete: 'Delete',
+				cancel: 'Cancel',
+			},
+			event: {
+				title: 'Title',
+				start: 'Start',
+				end: 'End',
+				allDay: 'All Day',
+			},
+			validation: {
+				required: 'Required',
+				invalidEmail: 'Invalid Email',
+				onlyNumbers: 'Only Numbers Allowed',
+				min: 'Minimum {{min}} letters',
+				max: 'Maximum {{max}} letters',
+			},
+			moreEvents: 'More...',
+			loading: 'Loading...',
+		},
 	},
 
 	CustomAccountMenu: {
