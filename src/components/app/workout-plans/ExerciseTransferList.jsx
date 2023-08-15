@@ -14,6 +14,7 @@ import {
 	boldTextParser,
 	capitalizeFirstLetter,
 	isNumber,
+	removeUnderscores,
 	validateField,
 } from '../../../utils/utilFunctions';
 import CustomChipSelect from '../../reusable/inputFields/ChipSelect';
@@ -107,10 +108,6 @@ export default function ExerciseTransferList(props) {
 				{t?.reps}
 			</Fragment>
 		);
-
-		// return boldTextParser(
-		// 	`${exercise.name}  (${exercise.category}) <<${exercise.sets}>> ${t?.sets} x <<${exercise.reps}>> ${t?.reps}`
-		// );
 	};
 
 	const left = filteredExercises;
@@ -249,7 +246,12 @@ export default function ExerciseTransferList(props) {
 										<>
 											{value.name}{' '}
 											<GrayedOut>
-												({capitalizeFirstLetter(value.category)})
+												(
+												{capitalizeFirstLetter(
+													removeUnderscores(value.category),
+													true
+												)}
+												)
 											</GrayedOut>
 										</>
 									)
