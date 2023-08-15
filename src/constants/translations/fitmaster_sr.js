@@ -3,8 +3,8 @@ export const translation = {
 		titleLogIn: 'Prijavite se koristeći postojeći nalog',
 		titleRegister: 'Kreirajte novi nalog',
 		subtitles: {
-			loginInfo: 'Informacije za prijavu',
-			generalInfo: 'Opšte informacije',
+			loginInfo: 'Podaci za prijavu',
+			generalInfo: 'Opšti podaci',
 		},
 		input: {
 			username: 'Korisničko ime',
@@ -13,36 +13,38 @@ export const translation = {
 			lastName: 'Prezime',
 		},
 		buttons: {
-			btnLogIn: 'Prijavi se',
+			btnLogIn: 'Prijavite se',
 			btnRegister: 'Registrujte se',
-			btnNext: 'Dalje',
+			btnNext: 'Sledeće',
 			btnBack: 'Nazad',
-			btnReset: 'Resetuj',
+			btnReset: 'Poništi',
 		},
 		messages: {
 			registerTitle: 'Registracija',
 			registerRequestSent: 'Zahtev za registraciju poslat',
 			registerSuccessMessage: 'Uspešno registrovan novi trener',
 			loginTitle: 'Prijavljivanje',
-			loginSuccessMessage: 'Uspešno prijavljeni',
+			loginSuccessMessage: 'Uspešno ste se prijavili',
 		},
 	},
+
 	Menu: {
 		tabs: {
-			dashboard: 'Panel',
+			dashboard: 'Kontrolna tabla',
 			addMembers: 'Dodaj članove',
 			members: 'Članovi',
-			workoutPlans: 'Planovi treninga',
+			workoutPlans: 'Planovi vežbanja',
 			packages: 'Paketi',
 			trainers: 'Treneri',
 			settings: 'Podešavanja',
-			logOut: 'Odjavite se',
+			logOut: 'Odjava',
 		},
 		messages: {
-			logoutTitle: 'Odjavljivanje',
-			logoutSuccessMessage: 'Uspešno odjavljeni',
+			logoutTitle: 'Odjava',
+			logoutSuccessMessage: 'Uspešno ste se odjavili',
 		},
 	},
+
 	AddMembers: {
 		fields: {
 			firstName: 'Ime',
@@ -55,44 +57,76 @@ export const translation = {
 		buttons: {
 			btnSave: 'Sačuvaj',
 			btnClear: 'Obriši',
-			btnUploadImage: 'Učitaj sliku',
+			btnUploadImage: 'Otpremi sliku',
 		},
 		messages: {
 			title: 'Dodaj člana',
 			successMessage: 'Uspešno dodat novi član',
 		},
 	},
+
 	WorkoutPlans: {
 		steps: {
 			participantsInfo: 'Informacije o učesnicima',
-			workoutPlan: 'Dizajnirajte plan treninga',
+			workoutPlan: 'Kreirajte plan vežbanja',
 		},
 		participants: {},
 		plan: {
 			category: 'Kategorija',
 			bodyPart: 'Deo tela',
-			availableExercises: 'Dostupni vežbe',
-			workoutPlan: 'Plan treninga',
-			sets: 'setova',
+			availableExercises: 'Dostupne vežbe',
+			workoutPlan: 'Plan vežbanja',
+			sets: 'serije',
 			reps: 'ponavljanja',
 			selected: 'izabrano',
 		},
 		buttons: {
 			btnBack: 'Nazad',
-			btnNext: 'Dalje',
+			btnNext: 'Sledeće',
+		},
+		scheduler: {
+			navigation: {
+				month: 'Mesec',
+				week: 'Nedelja',
+				day: 'Dan',
+				today: 'Danas',
+			},
+			form: {
+				addTitle: 'Dodaj događaj',
+				editTitle: 'Izmeni događaj',
+				confirm: 'Potvrdi',
+				delete: 'Obriši',
+				cancel: 'Otkaži',
+			},
+			event: {
+				title: 'Naslov',
+				start: 'Početak',
+				end: 'Završetak',
+				allDay: 'Ceo dan',
+			},
+			validation: {
+				required: 'Obavezno polje',
+				invalidEmail: 'Nevažeća email adresa',
+				onlyNumbers: 'Dozvoljeni su samo brojevi',
+				min: 'Minimum {{min}} karaktera',
+				max: 'Maksimum {{max}} karaktera',
+			},
+			moreEvents: 'Više...',
+			loading: 'Učitavanje...',
 		},
 	},
+
 	CustomAccountMenu: {
-		addAnotherAccount: 'Dodajte još jedan nalog',
+		addAnotherAccount: 'Dodaj drugi nalog',
 		settings: 'Podešavanja',
-		logout: 'Odjavite se',
+		logout: 'Odjava',
 	},
 	CustomStepper: {
 		optional: 'Opciono',
-		btnNext: 'Dalje',
+		btnNext: 'Sledeće',
 		btnBack: 'Nazad',
 		btnSkip: 'Preskoči',
 		btnFinish: 'Završi',
-		btnReset: 'Resetuj',
+		btnReset: 'Poništi',
 	},
 };
