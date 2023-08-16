@@ -10,14 +10,26 @@ import withTranslations from '../../../utils/HighOrderComponent';
 import { Scheduler } from '@aldabil/react-scheduler';
 import { monthConfig, weekConfig } from './schedulerConfig';
 import { srLatn, enUS } from 'date-fns/locale';
+import TrainerDetails from './TrainerDetails';
+import MemberDetails from './MemberDetails';
 
 const WorkoutPlans = (props) => {
 	const { t } = props || {};
 
+	const { user } = useSelector((state) => state.userReducer);
+	const { membersDTO } = useSelector((state) => state.membersReducer); // TESTING
 	const { exercisesDTO } = useSelector((state) => state.exercisesReducer);
 	const [availableExercises, setAvailableExercises] = useState([]);
 	const [chosenExercises, setChosenExercises] = useState([]);
 	const [activeIndex, setActiveIndex] = useState(0);
+	const [participants, setParticipants] = useState({
+		member: membersDTO[0], // TESTING
+		// member: null,
+		trainer: user,
+	});
+	useEffect(() => {
+		console.log(participants);
+	}, [participants]);
 
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -39,7 +51,36 @@ const WorkoutPlans = (props) => {
 							gap: '1rem',
 						}}
 					>
-						<h1>TODO: Implement member selecter</h1>
+						<Box
+							sx={{
+								bgcolor: '#e0e0e0',
+								borderRadius: '1rem',
+								padding: '1rem',
+								display: 'grid',
+								gridTemplateColumns: '1fr 1fr',
+								gridTemplateRows: '1fr',
+								gap: '1rem',
+							}}
+						>
+							<MemberDetails
+								member={participants.member}
+								setMember={(newMember) => {
+									setParticipants((prevParticipants) => ({
+										...prevParticipants,
+										member: newMember,
+									}));
+								}}
+							/>
+							<TrainerDetails
+								trainer={participants.trainer}
+								setTrainer={(newTrainer) => {
+									setParticipants((prevParticipants) => ({
+										...prevParticipants,
+										trainer: newTrainer,
+									}));
+								}}
+							/>
+						</Box>
 						<Scheduler
 							month={monthConfig}
 							week={weekConfig}
