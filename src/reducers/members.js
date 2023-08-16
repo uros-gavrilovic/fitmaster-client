@@ -38,12 +38,17 @@ const membersSlice = createSlice({
       state.error = undefined;
     },
     deleteMember(state, action) {
-      state.membersDTO.splice(
-        state.membersDTO.findIndex(
-          (member) => member.memberID === action.payload
-        )
+      const memberIDToDelete = action.payload;
+
+      const updatedMembersDTO = state.membersDTO.filter(
+        (pack) => pack.memberID !== memberIDToDelete
       );
-      state.error = undefined;
+
+      return {
+        ...state,
+        membersDTO: updatedMembersDTO,
+        error: undefined,
+      };
     },
     updateMember(state, action) {
       state.membersDTO = state.membersDTO?.map((member) =>

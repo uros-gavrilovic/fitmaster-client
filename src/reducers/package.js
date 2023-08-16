@@ -29,10 +29,17 @@ const packageSlice = createSlice({
       state.error = undefined;
     },
     deletePackage(state, action) {
-      state.packagesDTO.splice(
-        state.packagesDTO.findIndex((pack) => pack.packageID === action.payload)
+      const packageIDToDelete = action.payload;
+
+      const updatedPackagesDTO = state.packagesDTO.filter(
+        (pack) => pack.packageID !== packageIDToDelete
       );
-      state.error = undefined;
+
+      return {
+        ...state,
+        packagesDTO: updatedPackagesDTO,
+        error: undefined,
+      };
     },
     updatePackage(state, action) {
       state.packages = state.packages?.map((pack) =>
