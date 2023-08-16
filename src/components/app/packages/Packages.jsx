@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import PaginationTable from "../../reusable/tables/PaginationTable";
 import packageConfig from "./PackageConfig";
+import AddPackage from "./AddPackage";
 
 const rowComponentFunction = (t, row) => {
   return <PackageRow packageItem={row} key={Math.random()}></PackageRow>;
@@ -29,12 +30,15 @@ export default function Packages(props) {
       {packagesDTO === undefined ? (
         <h1>Currently, there are no packages.</h1>
       ) : (
-        <PaginationTable
-          style={{ width: "100%", height: "100%" }}
-          config={packageConfig}
-          rows={packages}
-          rowComponent={rowComponentFunction}
-        />
+        <Fragment>
+          <PaginationTable
+            style={{ width: "100%", height: "100%" }}
+            config={packageConfig}
+            rows={packages}
+            rowComponent={rowComponentFunction}
+          />
+          <AddPackage />
+        </Fragment>
       )}
     </Fragment>
   );

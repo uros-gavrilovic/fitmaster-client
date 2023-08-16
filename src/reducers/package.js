@@ -25,7 +25,7 @@ const packageSlice = createSlice({
       state.error = undefined;
     },
     addPackage(state, action) {
-      state.package = [action.payload].concat(state.packages);
+      state.packages = [action.payload].concat(state.packages);
       state.error = undefined;
     },
     deletePackage(state, action) {
