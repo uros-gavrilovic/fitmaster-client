@@ -70,7 +70,15 @@ export const translation = {
 			participantsInfo: "Participants' Information",
 			workoutPlan: 'Design a Workout Plan',
 		},
-		participants: {},
+		fields: {
+			firstName: 'First Name',
+			lastName: 'Last Name',
+			trainerID: "Trainer's ID",
+			memberID: "Member's ID",
+		},
+		participants: {
+			noMemberSelected: 'No Member Has Been Selected',
+		},
 		plan: {
 			category: 'Category',
 			bodyPart: 'Body Part',
@@ -83,6 +91,9 @@ export const translation = {
 		buttons: {
 			btnBack: 'Back',
 			btnNext: 'Next',
+			btnChooseMember: 'Choose a Member',
+			btnChangeMember: 'Change Member',
+			btnChangeTrainer: 'Change Trainer',
 		},
 		scheduler: {
 			navigation: {

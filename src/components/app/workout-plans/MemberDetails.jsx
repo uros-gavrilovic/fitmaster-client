@@ -1,15 +1,28 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import withTranslations from '../../../utils/HighOrderComponent';
 import { Avatar, Box, TextField } from '@mui/material';
 import IconLabelButtons from '../../reusable/buttons/IconButton';
 import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import MemberChooserModal from './MemberChooserModal';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 
 const MemberDetails = (props) => {
 	const { member, setMember, t } = props;
 
+	const [modalOpen, setModalOpen] = useState(false);
+
+	const handleOpenModal = () => {
+		setModalOpen(true);
+	};
+
 	return (
 		<div>
+			<MemberChooserModal
+				open={modalOpen}
+				setOpen={setModalOpen}
+				setMember={setMember}
+			/>
 			{member === null ? (
 				<Box
 					sx={{
@@ -27,19 +40,33 @@ const MemberDetails = (props) => {
 						<QuestionMarkIcon />
 					</Avatar>
 					<center>
-						<p>NO MEMBER HAS BEEN SELECTED</p>
+						<p>{t?.participants?.noMemberSelected}</p>
 					</center>
 					<IconLabelButtons
-						title={'CHOOSE MEMBER'}
-						rightIcon={<SwitchAccountIcon style={{ color: 'white' }} />}
+						title={t?.buttons?.btnChooseMember}
+						rightIcon={<PersonSearchIcon style={{ color: 'white' }} />}
 						variant='contained'
 						style={{ width: '100%' }}
-						// onClick={handleLogIn}
+						onClick={handleOpenModal}
 					/>
 				</Box>
 			) : (
-				<Fragment>
-					<Box>
+				<Box
+					sx={{
+						height: '100%',
+						border: '2px solid #000',
+						borderRadius: '1rem',
+						padding: '0.5rem',
+					}}
+				>
+					<Box
+						sx={{
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+							padding: '1rem',
+						}}
+					>
 						<Avatar src={member?.image} sx={{ width: '5rem', height: '5rem' }}>
 							{member?.firstName[0] + member?.lastName[0]}
 						</Avatar>
@@ -47,7 +74,7 @@ const MemberDetails = (props) => {
 					<Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
 						<TextField
 							id='firstName'
-							label='FIRST NAME'
+							label={t?.fields?.firstName}
 							variant='outlined'
 							value={member?.firstName}
 							InputProps={{
@@ -56,7 +83,7 @@ const MemberDetails = (props) => {
 						/>
 						<TextField
 							id='lastName'
-							label='LAST NAME'
+							label={t?.fields?.lastName}
 							variant='outlined'
 							value={member?.lastName}
 							InputProps={{
@@ -65,7 +92,7 @@ const MemberDetails = (props) => {
 						/>
 						<TextField
 							id='memberID'
-							label='ID'
+							label={t?.fields?.memberID}
 							variant='outlined'
 							value={member?.memberID}
 							InputProps={{
@@ -73,14 +100,14 @@ const MemberDetails = (props) => {
 							}}
 						/>
 						<IconLabelButtons
-							title={'CHANGE TRAINER'}
+							title={t?.buttons?.btnChangeMember}
 							rightIcon={<SwitchAccountIcon style={{ color: 'white' }} />}
 							variant='contained'
 							style={{ width: '100%' }}
-							// onClick={handleChangeMember}
+							onClick={handleOpenModal}
 						/>
 					</Box>
-				</Fragment>
+				</Box>
 			)}
 		</div>
 	);

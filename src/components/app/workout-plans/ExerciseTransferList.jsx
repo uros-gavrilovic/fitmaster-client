@@ -39,8 +39,14 @@ export default function ExerciseTransferList(props) {
 		setAvailableExercises,
 		chosenExercises,
 		setChosenExercises,
+		plan,
+		setPlan,
 		t,
 	} = props || {};
+
+	useEffect(() => {
+		setPlan(chosenExercises);
+	}, [chosenExercises]);
 
 	const [volume, setVolume] = useState({ reps: '', sets: '' });
 	const [error, setError] = useState({ reps: false, sets: false });

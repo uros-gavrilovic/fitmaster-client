@@ -17,19 +17,20 @@ const WorkoutPlans = (props) => {
 	const { t } = props || {};
 
 	const { user } = useSelector((state) => state.userReducer);
-	const { membersDTO } = useSelector((state) => state.membersReducer); // TESTING
 	const { exercisesDTO } = useSelector((state) => state.exercisesReducer);
 	const [availableExercises, setAvailableExercises] = useState([]);
 	const [chosenExercises, setChosenExercises] = useState([]);
 	const [activeIndex, setActiveIndex] = useState(0);
-	const [participants, setParticipants] = useState({
-		member: membersDTO[0], // TESTING
-		// member: null,
+	const [eventDetails, setEventDetails] = useState({
+		member: null,
 		trainer: user,
+		dateTime: null,
+		plan: null,
 	});
+
 	useEffect(() => {
-		console.log(participants);
-	}, [participants]);
+		console.log(eventDetails);
+	}, [eventDetails]);
 
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -38,6 +39,55 @@ const WorkoutPlans = (props) => {
 	useEffect(() => {
 		setAvailableExercises(exercisesDTO);
 	}, [exercisesDTO]);
+
+	// const handleAddEvent = (event, action) => {
+	// 	if (action === 'create') {
+
+	// 	} else if (action === 'remove') {
+	// 		setEventDetails((prevDetails) => ({
+	// 			...prevDetails,
+	// 			dateTime: null,
+	// 		}));
+	// 	}
+	// };
+	const handleAddEvent = async (event, action) => {
+		/**
+		 * Make sure to return 4 mandatory fields:
+		 * event_id: string|number
+		 * title: string
+		 * start: Date|string
+		 * end: Date|string
+		 * ....extra other fields depend on your custom fields/editor properties
+		 */
+
+		return new Promise((res, rej) => {
+			if (action === 'edit') {
+				/** PUT event to remote DB */
+			} else if (action === 'create') {
+				/** POST event to remote DB */
+
+				console.log('DODAJEM');
+				setEventDetails((prevDetails) => ({
+					...prevDetails,
+					dateTime: event.start,
+				}));
+			}
+
+			res({
+				...event,
+				event_id: event.event_id || Math.random(),
+			});
+		});
+	};
+
+	const handleDeleteEvent = async (deletedId) => {
+		// Simulate http request: return the deleted id
+		return new Promise((res, rej) => {
+			setTimeout(() => {
+				res(deletedId);
+			}, 3000);
+		});
+	};
 
 	return (
 		<Fragment>
@@ -63,22 +113,24 @@ const WorkoutPlans = (props) => {
 							}}
 						>
 							<MemberDetails
-								member={participants.member}
+								member={eventDetails.member}
 								setMember={(newMember) => {
-									setParticipants((prevParticipants) => ({
+									setEventDetails((prevParticipants) => ({
 										...prevParticipants,
 										member: newMember,
 									}));
 								}}
+								t={t}
 							/>
 							<TrainerDetails
-								trainer={participants.trainer}
+								trainer={eventDetails.trainer}
 								setTrainer={(newTrainer) => {
-									setParticipants((prevParticipants) => ({
+									setEventDetails((prevParticipants) => ({
 										...prevParticipants,
 										trainer: newTrainer,
 									}));
 								}}
+								t={t}
 							/>
 						</Box>
 						<Scheduler
@@ -86,17 +138,11 @@ const WorkoutPlans = (props) => {
 							week={weekConfig}
 							view='month'
 							height='400' // TODO: Change to dynamic sizing
-							events={[
-								{
-									event_id: 1,
-									title: 'Event TEST',
-									start: new Date('2023/4/8 10:00'),
-									end: new Date('2023/4/8 11:00'),
-								},
-							]}
 							locale={
 								sessionStorage.getItem('appLocale') === 'sr' ? srLatn : enUS // TODO: Needs to be optimized.
 							}
+							onConfirm={handleAddEvent}
+							onDelete={handleDeleteEvent}
 							translations={t?.scheduler}
 						/>
 					</Box>,
@@ -105,6 +151,13 @@ const WorkoutPlans = (props) => {
 						setAvailableExercises={setAvailableExercises}
 						chosenExercises={chosenExercises}
 						setChosenExercises={setChosenExercises}
+						plan={eventDetails.plan}
+						setPlan={(newPlan) => {
+							setEventDetails((previousDetails) => ({
+								...previousDetails,
+								plan: newPlan,
+							}));
+						}}
 						t={t?.plan}
 					/>,
 				]}

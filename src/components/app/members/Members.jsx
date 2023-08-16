@@ -42,7 +42,7 @@ export default function Members(props) {
 					/>
 					<PaginationTable
 						style={{ width: '100%', height: '100%' }}
-						config={membersConfig}
+						config={membersConfig(false)}
 						rows={members}
 						rowComponent={rowComponentFunction}
 					/>
