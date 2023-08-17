@@ -131,6 +131,8 @@ const WorkoutPlans = (props) => {
 							locale={
 								sessionStorage.getItem('appLocale') === 'sr' ? srLatn : enUS // TODO: Needs to be optimized.
 							}
+							deletable={false}
+							editable={false}
 							onConfirm={handleAddEvent}
 							onDelete={handleDeleteEvent}
 							translations={t?.scheduler}
