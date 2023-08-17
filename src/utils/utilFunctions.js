@@ -131,11 +131,24 @@ export const boldTextParser = (text) => {
 	return renderables;
 };
 
-export const getTranslationFile = () => {
+export function getTranslationFile() {
 	// Returns translation file name
 
 	const appName = sessionStorage.getItem('appName') || appInfo.name;
 	const language =
 		sessionStorage.getItem('appLocale') || appInfo.default_locale;
 	return `${appName}_${language}`;
-};
+}
+
+export function calculatePixelValue(
+	percentage,
+	referenceElement = document.documentElement
+) {
+	// Calculates pixel value based on percentage and reference element
+
+	const parentHeight = referenceElement.clientHeight;
+	const pixelValue = (percentage / 100) * parentHeight;
+
+	console.log('pixelValue', pixelValue);
+	return pixelValue;
+}

@@ -34,6 +34,7 @@ export const translation = {
 			addMembers: 'Dodaj članove',
 			members: 'Članovi',
 			workoutPlans: 'Planovi treninga',
+			planner: 'Raspored',
 			packages: 'Paketi',
 			trainers: 'Treneri',
 			settings: 'Podešavanja',

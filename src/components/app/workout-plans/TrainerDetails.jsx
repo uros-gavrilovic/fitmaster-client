@@ -2,10 +2,6 @@ import withTranslations from '../../../utils/HighOrderComponent';
 import { Avatar, Box, TextField } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { StyledBadge } from '../../reusable/containers/CustomAccountMenu';
-import IconButton from '../../reusable/buttons/IconButton';
-import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
-import { useState } from 'react';
-import TrainerChooserModal from './TrainerChooserModal';
 
 const ConditionalWrap = ({ condition, wrap, children }) =>
 	condition ? wrap(children) : children;
@@ -13,12 +9,6 @@ const ConditionalWrap = ({ condition, wrap, children }) =>
 const TrainerDetails = (props) => {
 	const { trainer, t } = props || {};
 	const { user } = useSelector((state) => state.userReducer);
-
-	const [modalOpen, setModalOpen] = useState(false);
-
-	const handleChangeTrainer = () => {
-		setModalOpen(true);
-	};
 
 	return (
 		<Box
@@ -28,7 +18,6 @@ const TrainerDetails = (props) => {
 				padding: '0.5rem',
 			}}
 		>
-			<TrainerChooserModal open={modalOpen} setOpen={setModalOpen} />
 			<Box
 				sx={{
 					display: 'flex',
@@ -81,13 +70,6 @@ const TrainerDetails = (props) => {
 					InputProps={{
 						readOnly: true,
 					}}
-				/>
-				<IconButton
-					title={t?.buttons?.btnChangeTrainer}
-					rightIcon={<SwitchAccountIcon style={{ color: 'white' }} />}
-					variant='contained'
-					style={{ width: '100%' }}
-					onClick={handleChangeTrainer}
 				/>
 			</Box>
 		</Box>

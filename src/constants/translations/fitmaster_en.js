@@ -34,6 +34,7 @@ export const translation = {
 			addMembers: 'Add Members',
 			members: 'Members',
 			workoutPlans: 'Workout Plans',
+			planner: 'Scheduler',
 			packages: 'Packages',
 			trainers: 'Trainers',
 			settings: 'Settings',

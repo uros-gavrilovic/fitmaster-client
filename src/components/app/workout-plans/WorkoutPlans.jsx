@@ -121,16 +121,7 @@ const WorkoutPlans = (props) => {
 								}}
 								t={t}
 							/>
-							<TrainerDetails
-								trainer={eventDetails.trainer}
-								setTrainer={(newTrainer) => {
-									setEventDetails((prevParticipants) => ({
-										...prevParticipants,
-										trainer: newTrainer,
-									}));
-								}}
-								t={t}
-							/>
+							<TrainerDetails trainer={eventDetails.trainer} t={t} />
 						</Box>
 						<Scheduler
 							month={monthConfig}
