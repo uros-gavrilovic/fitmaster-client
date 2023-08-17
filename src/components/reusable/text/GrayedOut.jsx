@@ -1,8 +1,7 @@
-import { Fragment } from 'react';
 import '../../../styles/text.css';
 
 function GrayedOut(props) {
-	return <p className='grayed-text'>{props.children}</p>;
+	return <span className='grayed-text'>{props.children}</span>;
 }
 
 export default GrayedOut;
