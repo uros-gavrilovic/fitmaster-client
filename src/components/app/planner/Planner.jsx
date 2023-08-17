@@ -1,12 +1,20 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import withTranslations from '../../../utils/HighOrderComponent';
 import { Scheduler } from '@aldabil/react-scheduler';
 import { monthConfig, weekConfig } from '../workout-plans/schedulerConfig';
 import { enUS, srLatn } from 'date-fns/locale';
-import { DialogActions, TextField } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import * as plansActions from '../../../actions/plans';
 
 const Planner = (props) => {
 	const { t } = props || {};
+
+	const { user } = useSelector((state) => state.userReducer);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(plansActions.fetchPlansByTrainerID(user.trainerID));
+	}, [dispatch]);
+
 	const events = [
 		{
 			event_id: 1,
