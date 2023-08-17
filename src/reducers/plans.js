@@ -8,6 +8,15 @@ const plansSlice = createSlice({
 	},
 
 	reducers: {
+		addPlan(state, action) {
+			state.plans = [action.payload].concat(state.members);
+			state.error = undefined;
+		},
+		fetchPlans(state, action) {
+			state.plans = action.payload;
+			state.error = undefined;
+		},
+
 		actionStart(state) {
 			state.error = undefined;
 		},

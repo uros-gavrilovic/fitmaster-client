@@ -12,25 +12,27 @@ import { monthConfig, weekConfig } from './schedulerConfig';
 import { srLatn, enUS } from 'date-fns/locale';
 import TrainerDetails from './TrainerDetails';
 import MemberDetails from './MemberDetails';
+import SaveIcon from '@mui/icons-material/Save';
+import IconButton from '../../reusable/buttons/IconButton';
+import * as plansActions from '../../../actions/plans';
+import { validatePlan } from '../../../utils/utilFunctions';
 
 const WorkoutPlans = (props) => {
 	const { t } = props || {};
 
 	const { user } = useSelector((state) => state.userReducer);
+	const initialEventDetails = {
+		member: null,
+		trainer: user,
+		dateTime: null,
+		exercises: null,
+	};
+
 	const { exercisesDTO } = useSelector((state) => state.exercisesReducer);
 	const [availableExercises, setAvailableExercises] = useState([]);
 	const [chosenExercises, setChosenExercises] = useState([]);
 	const [activeIndex, setActiveIndex] = useState(0);
-	const [eventDetails, setEventDetails] = useState({
-		member: null,
-		trainer: user,
-		dateTime: null,
-		plan: null,
-	});
-
-	useEffect(() => {
-		console.log(eventDetails);
-	}, [eventDetails]);
+	const [eventDetails, setEventDetails] = useState(initialEventDetails);
 
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -40,16 +42,6 @@ const WorkoutPlans = (props) => {
 		setAvailableExercises(exercisesDTO);
 	}, [exercisesDTO]);
 
-	// const handleAddEvent = (event, action) => {
-	// 	if (action === 'create') {
-
-	// 	} else if (action === 'remove') {
-	// 		setEventDetails((prevDetails) => ({
-	// 			...prevDetails,
-	// 			dateTime: null,
-	// 		}));
-	// 	}
-	// };
 	const handleAddEvent = async (event, action) => {
 		/**
 		 * Make sure to return 4 mandatory fields:
@@ -65,11 +57,9 @@ const WorkoutPlans = (props) => {
 				/** PUT event to remote DB */
 			} else if (action === 'create') {
 				/** POST event to remote DB */
-
-				console.log('DODAJEM');
 				setEventDetails((prevDetails) => ({
 					...prevDetails,
-					dateTime: event.start,
+					dateTime: event.start.toISOString(),
 				}));
 			}
 
@@ -79,14 +69,23 @@ const WorkoutPlans = (props) => {
 			});
 		});
 	};
-
 	const handleDeleteEvent = async (deletedId) => {
-		// Simulate http request: return the deleted id
-		return new Promise((res, rej) => {
-			setTimeout(() => {
-				res(deletedId);
-			}, 3000);
-		});
+		// // Simulate http request: return the deleted id
+		// return new Promise((res, rej) => {
+		// 	setTimeout(() => {
+		// 		res(deletedId);
+		// 	}, 3000);
+		// });
+	};
+	const handleSavePlan = () => {
+		if (!validatePlan(eventDetails, t?.messages)) return;
+
+		dispatch(plansActions.addPlan(eventDetails, t?.messages));
+		handleClear();
+	};
+	const handleClear = () => {
+		setActiveIndex(0);
+		setEventDetails(initialEventDetails);
 	};
 
 	return (
@@ -151,11 +150,11 @@ const WorkoutPlans = (props) => {
 						setAvailableExercises={setAvailableExercises}
 						chosenExercises={chosenExercises}
 						setChosenExercises={setChosenExercises}
-						plan={eventDetails.plan}
+						plan={eventDetails.exercises}
 						setPlan={(newPlan) => {
 							setEventDetails((previousDetails) => ({
 								...previousDetails,
-								plan: newPlan,
+								exercises: newPlan,
 							}));
 						}}
 						t={t?.plan}
@@ -165,6 +164,15 @@ const WorkoutPlans = (props) => {
 				isOptional={[false, false]}
 				activeIndex={activeIndex}
 				setActiveIndex={setActiveIndex}
+				finishStep={
+					<IconButton
+						title={t?.buttons?.btnSavePlan}
+						leftIcon={<SaveIcon style={{ color: 'white' }} />}
+						variant='contained'
+						width='100%'
+						onClick={handleSavePlan}
+					/>
+				}
 				stepsFinishedMessage={'Svaka cast'}
 			/>
 		</Fragment>

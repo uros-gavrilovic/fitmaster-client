@@ -66,6 +66,28 @@ export function validateField(field, fieldName, setErrorState) {
 	return error;
 }
 
+export function validatePlan(eventDetails, messages) {
+	const requiredFields = [
+		{ field: 'member', message: 'noMemberSelected' },
+		{ field: 'trainer', message: 'noTrainerSelected' },
+		{ field: 'dateTime', message: 'noDateTimeSelected' },
+		{ field: 'exercises', message: 'noExerciseSelected' },
+	];
+
+	for (const { field, message } of requiredFields) {
+		if (!eventDetails[field] || eventDetails[field].length === 0) {
+			createNotification(
+				notificationType.error,
+				messages?.title,
+				messages?.[message]
+			);
+			return false;
+		}
+	}
+
+	return true;
+}
+
 export function handleError(error, actions, dispatch) {
 	// Creates notification and dispatches error action.
 

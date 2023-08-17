@@ -66,6 +66,14 @@ export const translation = {
 	},
 
 	WorkoutPlans: {
+		messages: {
+			title: 'Kreiranje plana treninga',
+			successMessage: 'Uspešno ste kreirali novi plan treninga',
+			noMemberSelected: 'Nijedan član nije izabran',
+			noTrainerSelected: 'Nijedan trener nije izabran',
+			noDateTimeSelected: 'Nijedan datum nije izabran',
+			noExerciseSelected: 'Nijedna vežba nije izabrana',
+		},
 		steps: {
 			participantsInfo: 'Informacije o učesnicima',
 			workoutPlan: 'Dizajnirajte plan treninga',
@@ -89,6 +97,7 @@ export const translation = {
 			selected: 'izabrano',
 		},
 		buttons: {
+			btnSavePlan: 'Sačuvaj plan',
 			btnBack: 'Nazad',
 			btnNext: 'Sledeće',
 			btnChooseMember: 'Izaberi člana',

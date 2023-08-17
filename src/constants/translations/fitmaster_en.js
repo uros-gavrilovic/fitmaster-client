@@ -66,6 +66,14 @@ export const translation = {
 	},
 
 	WorkoutPlans: {
+		messages: {
+			title: 'Create Workout Plan',
+			successMessage: 'Successfully created a new workout plan',
+			noMemberSelected: 'No Member Has Been Selected',
+			noTrainerSelected: 'No Trainer Has Been Selected',
+			noDateTimeSelected: 'No Date and Time Has Been Selected',
+			noExerciseSelected: 'No Exercise Has Been Selected',
+		},
 		steps: {
 			participantsInfo: "Participants' Information",
 			workoutPlan: 'Design a Workout Plan',
@@ -89,6 +97,7 @@ export const translation = {
 			selected: 'selected',
 		},
 		buttons: {
+			btnSavePlan: 'Save Plan',
 			btnBack: 'Back',
 			btnNext: 'Next',
 			btnChooseMember: 'Choose a Member',
