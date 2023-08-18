@@ -62,7 +62,7 @@ export const addPackage = (data, messages) => {
         createNotification(
           notificationType.success,
           messages?.title,
-          messages?.success_message
+          messages?.successMessage
         );
       })
       .then(() => {
@@ -86,7 +86,7 @@ export const deletePackage = (id, messages) => {
         createNotification(
           notificationType.success,
           messages?.title,
-          messages?.success_message
+          messages?.successDelete
         );
       })
       .catch((err) => {
