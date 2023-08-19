@@ -6,12 +6,21 @@ import { useEffect } from "react";
 import PaginationTable from "../../reusable/tables/PaginationTable";
 import packageConfig from "./PackageConfig";
 import AddPackage from "./AddPackage";
+import withTranslations from "../../../utils/HighOrderComponent";
 
 const rowComponentFunction = (t, row) => {
-  return <PackageRow packageItem={row} key={Math.random()}></PackageRow>;
+  return (
+    <EnhancedPackageRow
+      packageItem={row}
+      key={Math.random()}
+    ></EnhancedPackageRow>
+  );
 };
+const EnhancedPackageRow = withTranslations(PackageRow, "PackageRow");
+const EnhancedAddPackage = withTranslations(AddPackage, "AddPackage");
 
-export default function Packages(props) {
+const Packages = (props) => {
+  const { t } = props || {};
   const { packagesDTO } = useSelector((state) => state.packagesReducer);
   const [packages, setPackages] = useState(packagesDTO);
 
@@ -37,9 +46,11 @@ export default function Packages(props) {
             rows={packages}
             rowComponent={rowComponentFunction}
           />
-          <AddPackage />
+          <EnhancedAddPackage />
         </Fragment>
       )}
     </Fragment>
   );
-}
+};
+
+export default withTranslations(Packages);

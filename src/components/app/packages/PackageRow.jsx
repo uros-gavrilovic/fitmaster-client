@@ -4,9 +4,10 @@ import * as packagesActions from "../../../actions/package";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ConfirmModal from "../../reusable/modals/ConfirmModal";
 import { useDispatch } from "react-redux";
+import withTranslations from "../../../utils/HighOrderComponent";
 
-export default function PackageRow(props) {
-  const { packageItem } = props;
+const PackageRow = (props) => {
+  const { packageItem, t } = props;
 
   const [packageState, setPackageState] = useState(props.package);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
@@ -18,14 +19,16 @@ export default function PackageRow(props) {
   }, [packageItem]);
 
   const handleDelete = () => {
-    dispatch(packagesActions.deletePackage(packageState.packageID, undefined));
+    dispatch(
+      packagesActions.deletePackage(packageState.packageID, t?.messages)
+    );
   };
 
   return (
     <Fragment>
       <ConfirmModal
-        title="Delete Package"
-        text="Are you sure you want to delete this package?"
+        title={t?.messages.title}
+        text={t?.messages.text}
         yes_action={handleDelete}
         no_action={() => {
           setConfirmModalVisible(false);
@@ -46,4 +49,6 @@ export default function PackageRow(props) {
       </TableRow>
     </Fragment>
   );
-}
+};
+
+export default withTranslations(PackageRow);
