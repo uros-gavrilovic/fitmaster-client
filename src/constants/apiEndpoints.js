@@ -37,6 +37,7 @@ export const packagesIDPath = (id) => packageAPI + `/${id}`;
 // Trainers
 const trainersAPI = `/api/trainer`;
 export const trainersPath = () => trainersAPI;
+export const trainersDTOPath = () => trainersAPI + `/dto`;
 
 // Statistics
 const statisticsAPI = `/api/statistics`;

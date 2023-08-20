@@ -1,4 +1,8 @@
-import { registerTrainerPath, trainersPath } from "../constants/apiEndpoints";
+import {
+  registerTrainerPath,
+  trainersDTOPath,
+  trainersPath,
+} from "../constants/apiEndpoints";
 import { notificationType } from "../constants/globals";
 import { trainersActions } from "../reducers/trainers";
 import { createNotification } from "../utils/notificationService";
@@ -12,6 +16,20 @@ export const getTrainers = () => {
       .get(trainersPath())
       .then((response) => {
         dispatch(trainersActions.fetchTrainers(response.data));
+      })
+      .catch((err) => {
+        handleError(err, trainersActions, dispatch);
+      });
+  };
+};
+
+export const getTrainersDTO = () => {
+  return (dispatch) => {
+    dispatch(trainersActions.actionStart());
+    return apiService
+      .get(trainersDTOPath())
+      .then((response) => {
+        dispatch(trainersActions.fetchTrainersDTO(response.data));
       })
       .catch((err) => {
         handleError(err, trainersActions, dispatch);

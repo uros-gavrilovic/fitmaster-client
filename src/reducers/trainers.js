@@ -27,19 +27,19 @@ const trainersSlice = createSlice({
       state.trainersDTO = [action.payload].concat(state.trainers);
       state.error = undefined;
     },
-    deleteTrainer(state, action) {
-      state.trainersDTO.splice(
-        state.trainersDTO.findIndex(
-          (member) => member.memberID === action.payload
-        )
-      );
-      state.error = undefined;
-    },
     updateTrainer(state, action) {
       state.trainersDTO = state.trainersDTO?.map((trainer) =>
         trainer.trainerID === action.payload.trainerID
           ? action.payload
           : trainer
+      );
+      state.error = undefined;
+    },
+    deleteTrainer(state, action) {
+      state.trainersDTO.splice(
+        state.trainersDTO.findIndex(
+          (member) => member.memberID === action.payload
+        )
       );
       state.error = undefined;
     },

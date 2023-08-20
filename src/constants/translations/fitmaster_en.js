@@ -210,6 +210,14 @@ export const translation = {
     price: "Price",
     delete: "Izbriši",
   },
+  TrainersTable: {
+    firstName: "First Name",
+    lastName: "Last Name",
+    gender: "Gender",
+    address: "Address",
+    phoneNumber: "Phone Number",
+    hireDate: "Hired",
+  },
 
   // Components
   CustomAccountMenu: {

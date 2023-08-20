@@ -210,6 +210,16 @@ export const translation = {
     price: "Cena",
     delete: "Izbriši",
   },
+  TrainersTable: {
+    firstName: "Ime",
+    lastName: "Prezime",
+    gender: "Pol",
+    address: "Adresa",
+    phoneNumber: "Broj telefona",
+    hireDate: "Zaposlen",
+    info: "Detaljnije",
+    delete: "Obriši",
+  },
 
   // Components
   CustomAccountMenu: {
