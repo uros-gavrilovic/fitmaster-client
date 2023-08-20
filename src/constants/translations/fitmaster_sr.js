@@ -191,6 +191,19 @@ export const translation = {
     },
   },
 
+  Settings: {
+    tabs: {
+      generalSettings: "Opšta podešavanja",
+      displaySettings: "Podešavanja prikaza",
+      accountSettings: "Podešavanja naloga",
+    },
+    generalSettings: {},
+    displaySettings: {
+      language: "Jezik",
+    },
+    accountSettings: {},
+  },
+
   // Tables
   MembersTable: {
     firstName: "Ime",

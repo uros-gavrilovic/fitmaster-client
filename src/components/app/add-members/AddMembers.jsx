@@ -135,7 +135,7 @@ const AddMembers = (props) => {
         />
         <LocalizationProvider
           dateAdapter={AdapterDateFns}
-          locale={navigator.language || "en-US"}
+          locale={localStorage.getItem("appLocale") || "en"}
         >
           <DatePicker
             label={t?.fields?.birthDate}

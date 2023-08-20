@@ -1,6 +1,7 @@
 import {
   registerTrainerPath,
   trainersDTOPath,
+  trainersIDPath,
   trainersPath,
 } from "../constants/apiEndpoints";
 import { notificationType } from "../constants/globals";
@@ -30,6 +31,20 @@ export const getTrainersDTO = () => {
       .get(trainersDTOPath())
       .then((response) => {
         dispatch(trainersActions.fetchTrainersDTO(response.data));
+      })
+      .catch((err) => {
+        handleError(err, trainersActions, dispatch);
+      });
+  };
+};
+
+export const getTrainer = (id) => {
+  return (dispatch) => {
+    dispatch(trainersActions.actionStart());
+    return apiService
+      .get(trainersIDPath(id))
+      .then((response) => {
+        dispatch(trainersActions.fetchTrainer(response.data));
       })
       .catch((err) => {
         handleError(err, trainersActions, dispatch);

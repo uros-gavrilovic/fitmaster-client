@@ -1,9 +1,10 @@
-import { Fragment } from "react";
+import withTranslations from "../../../utils/HighOrderComponent";
+import VerticalTabs from "./VerticalTabs";
 
-export default function Settings(props) {
-  return (
-    <Fragment>
-      <h1>This is Settings.</h1>
-    </Fragment>
-  );
-}
+const Settings = (props) => {
+  const { t } = props || {};
+
+  return <VerticalTabs t={t} />;
+};
+
+export default withTranslations(Settings);

@@ -191,6 +191,35 @@ export const translation = {
     },
   },
 
+  Settings: {
+    tabs: {
+      generalSettings: "General Settings",
+      displaySettings: "Display Settings",
+      accountSettings: "Account Settings",
+    },
+    generalSettings: {},
+    displaySettings: {
+      language: "Language",
+    },
+    accountSettings: {
+      fields: {
+        firstName: "First Name",
+        lastName: "Last Name",
+        gender: "Gender",
+        address: "Address",
+        phoneNumber: "Phone Number",
+        hireDate: "Hired",
+        username: "Username",
+        password: "Password",
+      },
+      buttons: {
+        btnUpdate: "Update Account",
+        btnDelete: "Delete Account",
+        btnChangePassword: "Change Password",
+      },
+    },
+  },
+
   // Tables
   MembersTable: {
     firstName: "First Name",
