@@ -217,8 +217,6 @@ export const translation = {
     address: "Adresa",
     phoneNumber: "Broj telefona",
     hireDate: "Zaposlen",
-    info: "Detaljnije",
-    delete: "Obriši",
   },
 
   // Components
