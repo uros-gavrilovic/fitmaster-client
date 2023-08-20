@@ -26,12 +26,17 @@ export const filtersPath = () => exerciseAPI + `/filters`;
 const planAPI = `/api/plan`;
 export const plansPath = () => planAPI;
 export const plansTrainerIDPath = (id) => planAPI + `/trainer/${id}`;
+export const plansIDPath = (id) => planAPI + `/${id}`;
 
 // Packages
 const packageAPI = `/api/package`;
 export const packagesPath = () => packageAPI;
 export const packagesDTOPath = () => packageAPI + `/dto`;
 export const packagesIDPath = (id) => packageAPI + `/${id}`;
+
+// Trainers
+const trainersAPI = `/api/trainer`;
+export const trainersPath = () => trainersAPI;
 
 // Statistics
 const statisticsAPI = `/api/statistics`;

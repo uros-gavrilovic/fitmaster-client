@@ -22,7 +22,6 @@ import withTranslations from "../../../utils/HighOrderComponent";
 const MemberRow = (props) => {
   const { t, member, selectVersion, selectMember, setSelectModalOpen } =
     props || {}; // memberDTO from fetchMembersDTO list
-  console.log(t);
 
   const [selected, setSelected] = useState(false);
 
