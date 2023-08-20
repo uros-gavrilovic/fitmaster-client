@@ -34,9 +34,7 @@ const MemberRow = (props) => {
     setMemberState(member);
   }, [member]);
 
-  const handlePlan = () => {
-    console.log("handlePlan");
-  };
+  const handlePlan = () => {};
   const handleDelete = () => {
     dispatch(memberActions.deleteMember(memberState.memberID, t?.messages));
   };
@@ -76,29 +74,35 @@ const MemberRow = (props) => {
         <TableCell>{formatDate(memberState?.birthDate)}</TableCell>
         <TableCell align="center">
           {memberState?.active ? (
-            <GoodStatus>ACTIVE</GoodStatus>
+            <GoodStatus>{t?.fields?.active.toUpperCase()}</GoodStatus>
           ) : (
-            <BadStatus>INACTIVE</BadStatus>
+            <BadStatus>{t?.fields?.inactive.toUpperCase()}</BadStatus>
           )}
         </TableCell>
         {!selectVersion ? (
           <>
             <TableCell align="center">
-              <AssignmentIcon onClick={handlePlan} />
+              <IconButton onClick={handlePlan}>
+                <AssignmentIcon />
+              </IconButton>
             </TableCell>
             <TableCell align="center">
-              <InfoIcon
+              <IconButton
                 onClick={() => {
                   setInfoModalVisible(true);
                 }}
-              />
+              >
+                <InfoIcon />
+              </IconButton>
             </TableCell>
             <TableCell align="center">
-              <DeleteForeverIcon
+              <IconButton
                 onClick={() => {
                   setConfirmModalVisible(true);
                 }}
-              />
+              >
+                <DeleteForeverIcon />
+              </IconButton>
             </TableCell>
           </>
         ) : (

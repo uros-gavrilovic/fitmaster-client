@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as plansActions from "../../../actions/plans";
 import { useIsMount } from "../../../utils/customHooks/useIsMount";
 import { formatDateForScheduler } from "../../../utils/utilFunctions";
-import { CircularProgress } from "@mui/material";
+import Loading from "../../reusable/Loading";
 
 const Planner = (props) => {
   const { t } = props || {};
@@ -48,7 +48,7 @@ const Planner = (props) => {
   };
 
   return isLoading ? (
-    <CircularProgress />
+    <Loading />
   ) : (
     <Fragment>
       <Scheduler

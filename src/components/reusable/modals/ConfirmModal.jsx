@@ -9,6 +9,7 @@ import { forwardRef } from "react";
 import IconButton from "../buttons/IconButton";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
+import withTranslations from "../../../utils/HighOrderComponent";
 
 const Fade = forwardRef(function Fade(props, ref) {
   const {
@@ -63,8 +64,8 @@ const style = {
   p: 4,
 };
 
-export default function ConfirmModal(props) {
-  const { title, text, yes_action, no_action, open, setOpen } = props || {};
+const ConfirmModal = (props) => {
+  const { title, text, yes_action, no_action, open, setOpen, t } = props || {};
 
   const handlePositive = () => {
     yes_action();
@@ -106,22 +107,25 @@ export default function ConfirmModal(props) {
             }}
           >
             <IconButton
-              title="No"
+              title={t?.btnNo}
               leftIcon={<ThumbDownIcon />}
               variant="outlined"
-              width="100%"
               onClick={handleNegative}
+              fullWidth
             />
             <IconButton
-              title="Yes"
+              title={t?.btnYes}
               rightIcon={<ThumbUpIcon />}
               variant="contained"
               width="100%"
               onClick={handlePositive}
+              fullWidth
             />
           </div>
         </Box>
       </Fade>
     </Modal>
   );
-}
+};
+
+export default withTranslations(ConfirmModal);

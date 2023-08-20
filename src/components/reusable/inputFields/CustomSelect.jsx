@@ -23,7 +23,7 @@ export default function CustomSelect(props) {
             </MenuItem>
           );
         })}
-        {hasBlank && <MenuItem value={undefined}>‎</MenuItem>}
+        {hasBlank && <MenuItem value={""}>‎</MenuItem>}
       </Select>
     </FormControl>
   );

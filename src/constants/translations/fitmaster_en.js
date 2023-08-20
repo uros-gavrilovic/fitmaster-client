@@ -1,4 +1,5 @@
 export const translation = {
+  // General
   Login: {
     titleLogIn: "Sign in using an existing account",
     titleRegister: "Create a New Account",
@@ -66,6 +67,13 @@ export const translation = {
     },
   },
 
+  Members: {
+    search: "Search",
+    messages: {
+      noMembers: "No Members Found",
+    },
+  },
+
   AddPackage: {
     fields: {
       name: "Package Name",
@@ -84,6 +92,10 @@ export const translation = {
   },
 
   MemberRow: {
+    fields: {
+      active: "Active",
+      inactive: "Inactive",
+    },
     messages: {
       title: "Delete Member",
       successMessage: "Successfully deleted a member",
@@ -93,6 +105,7 @@ export const translation = {
 
   Packages: {
     messages: {
+      noPackages: "There are no packages available",
       title: "Delete Package",
       successMessage: "Successfully added a new package",
       successDelete: "Successfully deleted a package",
@@ -178,11 +191,33 @@ export const translation = {
     },
   },
 
+  // Tables
+  MembersTable: {
+    firstName: "First Name",
+    lastName: "Last Name",
+    gender: "Gender",
+    address: "Address",
+    phoneNumber: "Phone Number",
+    birthDate: "Birth Date",
+    active: "Status",
+    select: "Select",
+    workoutPlan: "Plans",
+    info: "Info",
+    delete: "Delete",
+  },
+  PackagesTable: {
+    name: "Name",
+    price: "Price",
+    delete: "Izbriši",
+  },
+
+  // Components
   CustomAccountMenu: {
     addAnotherAccount: "Add another account",
     settings: "Settings",
     logout: "Sign Out",
   },
+
   CustomStepper: {
     optional: "Optional",
     btnNext: "Next",
@@ -190,5 +225,10 @@ export const translation = {
     btnSkip: "Skip",
     btnFinish: "Finish",
     btnReset: "Reset",
+  },
+
+  ConfirmModal: {
+    btnYes: "Yes",
+    btnNo: "No",
   },
 };

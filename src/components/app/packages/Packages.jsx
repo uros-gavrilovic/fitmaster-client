@@ -7,17 +7,11 @@ import PaginationTable from "../../reusable/tables/PaginationTable";
 import packageConfig from "./PackageConfig";
 import AddPackage from "./AddPackage";
 import withTranslations from "../../../utils/HighOrderComponent";
+import PackagesTable from "./PackagesTable";
 
-const rowComponentFunction = (t, row) => {
-  return (
-    <EnhancedPackageRow
-      packageItem={row}
-      key={Math.random()}
-    ></EnhancedPackageRow>
-  );
+const rowComponentFunction = (row) => {
+  return <PackageRow packageItem={row} key={Math.random()} />;
 };
-const EnhancedPackageRow = withTranslations(PackageRow, "PackageRow");
-const EnhancedAddPackage = withTranslations(AddPackage, "AddPackage");
 
 const Packages = (props) => {
   const { t } = props || {};
@@ -34,21 +28,17 @@ const Packages = (props) => {
     setPackages(packagesDTO);
   }, [packagesDTO]);
 
-  return (
+  return packagesDTO === undefined ? (
+    <h1>{t?.messages?.noPackages}</h1>
+  ) : (
     <Fragment>
-      {packagesDTO === undefined ? (
-        <h1>Currently, there are no packages.</h1>
-      ) : (
-        <Fragment>
-          <PaginationTable
-            style={{ width: "100%", height: "100%" }}
-            config={packageConfig}
-            rows={packages}
-            rowComponent={rowComponentFunction}
-          />
-          <EnhancedAddPackage />
-        </Fragment>
-      )}
+      <PackagesTable
+        style={{ width: "100%", height: "100%" }}
+        config={packageConfig}
+        rows={packages}
+        rowComponent={rowComponentFunction}
+      />
+      <AddPackage />
     </Fragment>
   );
 };

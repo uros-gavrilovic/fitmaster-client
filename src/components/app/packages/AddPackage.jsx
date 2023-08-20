@@ -9,7 +9,6 @@ import withTranslations from "../../../utils/HighOrderComponent";
 
 const AddPackage = (props) => {
   const { t } = props || {};
-  console.log(t);
   const startingState = {
     name: "",
     price: "",

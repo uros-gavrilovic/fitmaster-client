@@ -152,7 +152,6 @@ export function calculatePixelValue(
   const parentHeight = referenceElement.clientHeight;
   const pixelValue = (percentage / 100) * parentHeight;
 
-  console.log("pixelValue", pixelValue);
   return pixelValue;
 }
 

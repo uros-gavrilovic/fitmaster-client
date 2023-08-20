@@ -5,7 +5,7 @@ import * as exercisesActions from "../../../actions/exercises";
 import { useEffect } from "react";
 import { useState } from "react";
 import CustomStepper from "../../reusable/containers/CustomStepper";
-import { Box, CircularProgress, Divider } from "@mui/material";
+import { Box } from "@mui/material";
 import withTranslations from "../../../utils/HighOrderComponent";
 import { Scheduler } from "@aldabil/react-scheduler";
 import { monthConfig, weekConfig } from "./schedulerConfig";
@@ -19,8 +19,8 @@ import {
   formatDateForScheduler,
   validatePlan,
 } from "../../../utils/utilFunctions";
-import { set } from "date-fns";
 import { useIsMount } from "../../../utils/customHooks/useIsMount";
+import Loading from "../../reusable/Loading";
 
 const WorkoutPlans = (props) => {
   const { t } = props || {};
@@ -136,7 +136,7 @@ const WorkoutPlans = (props) => {
               <TrainerDetails trainer={eventDetails.trainer} t={t} />
             </Box>
             {schedulerLoading ? (
-              <CircularProgress />
+              <Loading />
             ) : (
               <Scheduler
                 month={monthConfig}

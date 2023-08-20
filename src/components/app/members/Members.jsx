@@ -1,53 +1,59 @@
-import { Fragment, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import * as membersActions from '../../../actions/members';
-import PaginationTable from '../../reusable/tables/PaginationTable';
-import membersConfig from './membersConfig';
-import MemberRow from './MemberRow';
-import IconTextField from '../../reusable/inputFields/IconTextField';
-import SearchIcon from '@mui/icons-material/Search';
+import { Fragment, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as membersActions from "../../../actions/members";
+import PaginationTable from "../../reusable/tables/PaginationTable";
+import membersConfig from "./membersConfig";
+import MemberRow from "./MemberRow";
+import IconTextField from "../../reusable/inputFields/IconTextField";
+import SearchIcon from "@mui/icons-material/Search";
+import withTranslations from "../../../utils/HighOrderComponent";
+import MembersTable from "./MembersTable";
 
-const rowComponentFunction = (t, row) => {
-	return <MemberRow member={row} key={row.memberID} />;
+const rowComponentFunction = (row) => {
+  return <MemberRow member={row} key={row.memberID} />;
 };
 
-export default function Members(props) {
-	const { membersDTO } = useSelector((state) => state.membersReducer);
-	const [members, setMembers] = useState(membersDTO);
+const Members = (props) => {
+  const { t } = props || {};
 
-	const dispatch = useDispatch();
-	useEffect(() => {
-		dispatch(membersActions.fetchMembersDTO());
-	}, [dispatch]);
-	useEffect(() => {
-		setMembers(membersDTO);
-	}, [membersDTO]);
+  const { membersDTO } = useSelector((state) => state.membersReducer);
+  const [members, setMembers] = useState(membersDTO);
 
-	const handleSearch = (e) => {
-		dispatch(membersActions.searchMembersDTO(e.target.value));
-	};
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(membersActions.fetchMembersDTO());
+  }, [dispatch]);
+  useEffect(() => {
+    setMembers(membersDTO);
+  }, [membersDTO]);
 
-	return (
-		<Fragment>
-			{membersDTO === undefined ? (
-				<h1>There are no available members.</h1>
-			) : (
-				<Fragment>
-					<IconTextField
-						id='search'
-						title='Search'
-						icon={<SearchIcon />}
-						onChange={handleSearch}
-						style={{ float: 'right' }}
-					/>
-					<PaginationTable
-						style={{ width: '100%', height: '100%' }}
-						config={membersConfig(false)}
-						rows={members}
-						rowComponent={rowComponentFunction}
-					/>
-				</Fragment>
-			)}
-		</Fragment>
-	);
-}
+  const handleSearch = (e) => {
+    dispatch(membersActions.searchMembersDTO(e.target.value));
+  };
+
+  return (
+    <Fragment>
+      {membersDTO.length === undefined ? (
+        <h1>{t?.messages?.noMembers}</h1>
+      ) : (
+        <Fragment>
+          <IconTextField
+            id="search"
+            title={t?.search}
+            icon={<SearchIcon />}
+            onChange={handleSearch}
+            style={{ float: "right" }}
+          />
+          <MembersTable
+            style={{ width: "100%", height: "100%" }}
+            config={membersConfig()}
+            rows={members}
+            rowComponent={rowComponentFunction}
+          />
+        </Fragment>
+      )}
+    </Fragment>
+  );
+};
+
+export default withTranslations(Members);

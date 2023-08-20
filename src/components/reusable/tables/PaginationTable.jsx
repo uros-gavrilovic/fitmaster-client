@@ -10,6 +10,7 @@ import { Fragment, useState } from "react";
 
 export default function PaginationTable(props) {
   const { t, config, rows, rowComponent, state, setState } = props || {};
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -33,7 +34,7 @@ export default function PaginationTable(props) {
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
                 >
-                  {column.label.toUpperCase()}
+                  {t?.[column.id]?.toUpperCase()}
                 </TableCell>
               ))}
             </TableRow>
@@ -42,7 +43,7 @@ export default function PaginationTable(props) {
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
-                return rowComponent(t, row, state, setState);
+                return rowComponent(row, state, setState);
               })}
           </TableBody>
         </Table>
