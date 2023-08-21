@@ -9,20 +9,17 @@ import TextField from "@mui/material/TextField";
 import CustomSelect from "../../reusable/inputFields/CustomSelect";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import Avatar from "@mui/material/Avatar";
 import {
   convertEmptyFieldsToNull,
   convertNullToEmptyString,
   formatDate,
-  formatDateForScheduler,
   isNumber,
   validateField,
 } from "../../../utils/utilFunctions";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LockIcon from "@mui/icons-material/Lock";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
-// import IconButton from "@mui/material/IconButton";
 import CustomIconButton from "../../reusable/buttons/IconButton";
 import IconButton from "@mui/material/IconButton";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
@@ -31,6 +28,7 @@ import ConfirmModal from "../../reusable/modals/ConfirmModal";
 import { useIsMount } from "../../../utils/customHooks/useIsMount";
 import CustomModal from "../../reusable/modals/CustomModal";
 import ChangePasswordModal from "./ChangePasswordModal";
+import * as userActions from "../../../actions/user";
 
 export default function AccountSettings(props) {
   const { t } = props || {};
@@ -87,7 +85,10 @@ export default function AccountSettings(props) {
     setUserState(initialUserState);
     setChangesMade(initialChangesMade);
   };
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    dispatch(trainersActions.deleteTrainer(userState.trainerID));
+    dispatch(userActions.logout());
+  };
   const handleUpdate = () => {
     const hasFirstNameError = validateField(
       userState.firstName,

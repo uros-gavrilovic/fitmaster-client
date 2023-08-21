@@ -95,3 +95,24 @@ export const updateTrainer = (data, messages) => {
       });
   };
 };
+
+export const deleteTrainer = (id, messages) => {
+  return (dispatch) => {
+    dispatch(trainersActions.actionStart());
+    return apiService
+      .delete(trainersIDPath(id))
+      .then(() => {
+        dispatch(trainersActions.deleteTrainer(id));
+      })
+      .then(() => {
+        createNotification(
+          notificationType.success,
+          messages?.deleteTitle,
+          messages?.deleteSuccessMessage
+        );
+      })
+      .catch((err) => {
+        handleError(err, trainersActions, dispatch);
+      });
+  };
+};
