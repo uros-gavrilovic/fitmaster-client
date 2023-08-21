@@ -29,6 +29,8 @@ import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import BackspaceRoundedIcon from "@mui/icons-material/BackspaceRounded";
 import ConfirmModal from "../../reusable/modals/ConfirmModal";
 import { useIsMount } from "../../../utils/customHooks/useIsMount";
+import CustomModal from "../../reusable/modals/CustomModal";
+import ChangePasswordModal from "./ChangePasswordModal";
 
 export default function AccountSettings(props) {
   const { t } = props || {};
@@ -104,7 +106,6 @@ export default function AccountSettings(props) {
     );
     handleClear();
   };
-  const handleChangePassword = () => {};
   const handleImageUpload = () => {};
   const handleCloseModal = (modalName) => {
     setActiveModals({
@@ -131,7 +132,15 @@ export default function AccountSettings(props) {
         open={activeModals.confirmUpdate}
         setOpen={() => handleCloseModal("confirmUpdate")}
       />
-      {/* TODO: Change password modal */}
+      <CustomModal
+        open={activeModals.updatePassword}
+        setOpen={() => handleCloseModal("updatePassword")}
+      >
+        <ChangePasswordModal
+          t={t?.accountSettings}
+          close={() => handleCloseModal("updatePassword")}
+        />
+      </CustomModal>
 
       <CustomBox sx={{ width: "100%" }}>
         <h2>
@@ -177,6 +186,9 @@ export default function AccountSettings(props) {
               <CustomIconButton
                 title={t?.accountSettings?.buttons?.btnChangePassword}
                 leftIcon={<LockIcon />}
+                onClick={() => {
+                  setActiveModals({ ...activeModals, updatePassword: true });
+                }}
               />
               <CustomIconButton
                 title={t?.accountSettings?.buttons?.btnDelete}
@@ -319,4 +331,5 @@ const initialChangesMade = {
 const initialActiveModals = {
   confirmDelete: false,
   confirmUpdate: false,
+  updatePassword: false,
 };

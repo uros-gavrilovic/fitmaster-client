@@ -20,10 +20,6 @@ const Trainers = (props) => {
     setTrainersDTOState(trainersDTO);
   }, [trainersDTO]);
 
-  useEffect(() => {
-    console.log(trainersDTOState);
-  }, [trainersDTOState]);
-
   return (
     <Fragment>
       <TrainersTable

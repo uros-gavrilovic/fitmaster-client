@@ -39,6 +39,8 @@ const trainersAPI = `/api/trainer`;
 export const trainersPath = () => trainersAPI;
 export const trainersDTOPath = () => trainersAPI + `/dto`;
 export const trainersIDPath = (id) => trainersAPI + `/${id}`;
+export const trainersChangePasswordPath = () =>
+  trainersAPI + `/change-password`;
 
 // Statistics
 const statisticsAPI = `/api/statistics`;
