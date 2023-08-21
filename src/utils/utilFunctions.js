@@ -25,9 +25,14 @@ export function removeUnderscores(str) {
   return str.split("_").join(" ");
 }
 
-export function formatDate(arr) {
+export function formatDate(arr, asString = true) {
   if (!arr) return null;
-  return `${arr[2]}/${arr[1]}/${arr[0]}`;
+
+  if (asString) {
+    return `${arr[2]}/${arr[1]}/${arr[0]}`;
+  } else {
+    return new Date(arr[0], arr[1] - 1, arr[2]);
+  }
 }
 
 export function generateIDField(arr, fieldName) {
@@ -52,6 +57,20 @@ export function convertEmptyFieldsToNull(state) {
       typeof value === "string" && value.trim() === "" ? null : value,
     ])
   );
+}
+
+export function convertNullToEmptyString(obj) {
+  // Utility function to convert null values to empty string
+
+  const result = {};
+  for (const key in obj) {
+    if (obj[key] === null) {
+      result[key] = "";
+    } else {
+      result[key] = obj[key];
+    }
+  }
+  return result;
 }
 
 export function contains(obj, string, ignoreCase = false) {
@@ -100,7 +119,7 @@ export function handleError(error, actions, dispatch) {
     messages?.message
   );
 
-  if (error.response.status === 401) return window.location.reload();
+  // if (error.response.status === 401) return window.location.reload();
 }
 export const boldTextParser = (text) => {
   // Used to parse text and make it bold (eg. MUI label tags)

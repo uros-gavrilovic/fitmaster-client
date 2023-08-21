@@ -202,7 +202,15 @@ export const translation = {
       language: "Language",
     },
     accountSettings: {
+      messages: {
+        titleDelete: "Delete Account",
+        textDelete:
+          "Are you sure you want to delete your account? This action cannot be undone and deleting your account will permanently remove all data associated with it.",
+        titleUpdate: "Update Account",
+        textUpdate: "Are you sure you want to update your account?",
+      },
       fields: {
+        trainerID: "Trainer's ID",
         firstName: "First Name",
         lastName: "Last Name",
         gender: "Gender",
@@ -215,6 +223,7 @@ export const translation = {
       buttons: {
         btnUpdate: "Update Account",
         btnDelete: "Delete Account",
+        btnClear: "Clear",
         btnChangePassword: "Change Password",
       },
     },

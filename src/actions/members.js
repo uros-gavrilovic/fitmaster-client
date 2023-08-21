@@ -82,6 +82,28 @@ export const addMember = (data, msg) => {
   };
 };
 
+export const updateMember = (data, messages) => {
+  return (dispatch) => {
+    dispatch(membersActions.actionStart());
+    return apiService
+      .put(membersPath(), data)
+      .then((response) => {
+        dispatch(membersActions.updateMember(response.data));
+        createNotification(
+          notificationType.success,
+          messages?.title,
+          messages?.success_message
+        );
+      })
+      .catch((err) => {
+        handleError(err, membersActions, dispatch, {
+          title: "ERROR UPDATING A MEMBER",
+          description: "An error has occured while updating member.",
+        });
+      });
+  };
+};
+
 export const deleteMember = (id, messages) => {
   return (dispatch) => {
     dispatch(membersActions.actionStart());
@@ -101,28 +123,6 @@ export const deleteMember = (id, messages) => {
         handleError(err, membersActions, dispatch, {
           title: "ERROR REMOVING A MEMBER",
           description: "An error has occured while removing a member.",
-        });
-      });
-  };
-};
-
-export const updateMember = (data, messages) => {
-  return (dispatch) => {
-    dispatch(membersActions.actionStart());
-    return apiService
-      .put(membersPath(), data)
-      .then((response) => {
-        dispatch(membersActions.updateMember(response.data));
-        createNotification(
-          notificationType.success,
-          messages?.title,
-          messages?.success_message
-        );
-      })
-      .catch((err) => {
-        handleError(err, membersActions, dispatch, {
-          title: "ERROR UPDATING A MEMBER",
-          description: "An error has occured while updating member.",
         });
       });
   };

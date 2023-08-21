@@ -10,12 +10,8 @@ export default function CustomSelect(props) {
 
   return (
     <FormControl variant={variant} sx={sx}>
-      <InputLabel id="demo-simple-select-filled-label">{label}</InputLabel>
-      <Select
-        labelId="demo-simple-select-filled-label"
-        id="demo-simple-select-filled"
-        {...otherProps}
-      >
+      <InputLabel>{label}</InputLabel>
+      <Select id="demo-simple-select-filled" {...otherProps}>
         {options.map((availableValue) => {
           return (
             <MenuItem key={availableValue} value={availableValue}>
