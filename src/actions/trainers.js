@@ -86,7 +86,7 @@ export const updateTrainer = (data, messages) => {
       .then(() => {
         createNotification(
           notificationType.success,
-          messages?.updateTitle,
+          messages?.titleUpdate,
           messages?.updateSuccessMessage
         );
       })

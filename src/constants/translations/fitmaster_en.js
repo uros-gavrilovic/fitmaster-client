@@ -208,6 +208,7 @@ export const translation = {
           "Are you sure you want to delete your account? This action cannot be undone and deleting your account will permanently remove all data associated with it.",
         titleUpdate: "Update Account",
         textUpdate: "Are you sure you want to update your account?",
+        updateSuccessMessage: "Successfully updated your account",
         titleChangePassword: "Change Password",
         textPasswordsMismatch: "New passwords do not match",
         textPasswordChanged: "Password successfully changed",

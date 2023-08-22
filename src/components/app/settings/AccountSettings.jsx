@@ -103,7 +103,10 @@ export default function AccountSettings(props) {
 
     if (hasFirstNameError || hasLastNameError) return;
     dispatch(
-      trainersActions.updateTrainer(convertEmptyFieldsToNull(userState))
+      trainersActions.updateTrainer(
+        convertEmptyFieldsToNull(userState),
+        t?.accountSettings?.messages
+      )
     );
     handleClear();
   };
@@ -235,7 +238,7 @@ export default function AccountSettings(props) {
               variant="outlined"
               value={userState?.phoneNumber}
               onChange={(e) => {
-                if (isNumber(e.target?.value)) {
+                if (isNumber(e.target?.value, true)) {
                   handleChange(e);
                 }
               }}

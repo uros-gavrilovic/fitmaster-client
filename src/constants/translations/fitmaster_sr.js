@@ -208,6 +208,7 @@ export const translation = {
           "Da li ste sigurni da želite da obrišete svoj nalog? Ova akcija se ne može poništiti i trajno će ukloniti sve podatke koji su s njim povezani.",
         titleUpdate: "Ažuriraj nalog",
         textUpdate: "Da li ste sigurni da želite da ažurirate svoj nalog?",
+        updateSuccessMessage: "Successfully updated your account",
         titleChangePassword: "Promeni lozinku",
         textPasswordsMismatch: "Nove lozinke se ne podudaraju",
         textPasswordChanged: "Lozinka uspešno promenjena",
