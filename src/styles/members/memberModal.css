@@ -1,0 +1,35 @@
+.leftDiv {
+  background-color: gray;
+  border-right: 2px solid #000;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+}
+
+.rightDiv-id {
+  display: grid;
+  padding-left: 1.5vw;
+}
+.rightDiv-input {
+  display: grid;
+  row-gap: 1vh;
+  column-gap: 1vh;
+  padding: 1.5vw;
+  grid-template-columns: 1fr 1fr;
+}
+.rightDiv-buttons {
+  padding-right: 1.5vw;
+  padding-bottom: 0.5vw;
+  float: right;
+  display: flex;
+}
+
+/* Apply margin between buttons */
+.rightDiv-buttons button {
+  margin-right: 0.5vw; /* You can adjust this value to control the spacing */
+}
+
+/* Remove the margin from the last button to avoid extra space */
+.rightDiv-buttons button:last-child {
+  margin-right: 0;
+}
