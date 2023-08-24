@@ -24,7 +24,7 @@ export default function LoginTab(props) {
     password: false,
   });
 
-  const handleLogIn = () => {
+  const handleLogIn = (e) => {
     const hasUsernameError = validateField(
       loginState.username,
       "username",
@@ -36,15 +36,27 @@ export default function LoginTab(props) {
       setLoginErrorState
     );
     if (hasUsernameError || hasPasswordError) return;
-    dispatch(
-      userActions.login(
-        {
-          username: loginState.username,
-          password: loginState.password,
-        },
-        t?.messages
-      )
-    );
+    if (e === "trainer") {
+      dispatch(
+        userActions.login(
+          {
+            username: loginState.username,
+            password: loginState.password,
+          },
+          t?.messages
+        )
+      );
+    } else {
+      dispatch(
+        userActions.loginMember(
+          {
+            username: loginState.username,
+            password: loginState.password,
+          },
+          t?.messages
+        )
+      );
+    }
   };
 
   return (
@@ -92,7 +104,7 @@ export default function LoginTab(props) {
           marginTop: "5vh",
           display: "grid",
           width: "auto",
-          gridTemplateColumns: "1fr 1fr",
+          gridTemplateColumns: "1fr",
         }}
       >
         <IconButton
@@ -102,13 +114,29 @@ export default function LoginTab(props) {
           style={{ width: "100%" }}
           onClick={handleTabChange}
         />
-        <IconButton
-          title={t?.buttons?.btnLogIn}
-          rightIcon={<LoginIcon style={{ color: "white" }} />}
-          variant="contained"
-          style={{ width: "100%" }}
-          onClick={handleLogIn}
-        />
+        <div
+          style={{
+            marginTop: "5vh",
+            display: "grid",
+            width: "auto",
+            gridTemplateColumns: "1fr 1fr",
+            gridColumnGap: "10px",
+          }}
+        >
+          <IconButton
+            variant="contained"
+            title="Member sign in"
+            rightIcon={<LoginIcon style={{ color: "white" }} />}
+            onClick={() => handleLogIn("member")}
+          />
+          <IconButton
+            title={t?.buttons?.btnLogIn}
+            rightIcon={<LoginIcon style={{ color: "white" }} />}
+            variant="contained"
+            style={{ width: "100%" }}
+            onClick={() => handleLogIn("trainer")}
+          />
+        </div>
       </div>
     </Box>
   );

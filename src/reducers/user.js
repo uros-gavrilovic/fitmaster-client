@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: undefined,
+  member: undefined,
   token: undefined,
 
   error: undefined,
@@ -23,6 +24,7 @@ const userSlice = createSlice({
         phoneNumber: action.payload.phoneNumber,
         address: action.payload.address,
         hireDate: action.payload.hireDate,
+        active: action.payload.active,
       };
       state.token = action.payload.token;
 
@@ -37,6 +39,31 @@ const userSlice = createSlice({
 
     updateUser(state, action) {
       state.user = action.payload;
+
+      state.error = undefined;
+    },
+
+    loginMember(state, action) {
+      state.member = {
+        username: action.payload.username,
+        password: action.payload.password,
+        memberID: action.payload.memberID,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+        gender: action.payload.gender,
+        phoneNumber: action.payload.phoneNumber,
+        address: action.payload.address,
+        birthDate: action.payload.birthDate,
+        active: action.payload.active,
+      };
+      state.token = action.payload.token;
+
+      state.error = undefined;
+    },
+
+    logoutMember(state) {
+      state.member = undefined;
+      state.token = undefined;
 
       state.error = undefined;
     },

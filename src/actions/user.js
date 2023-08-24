@@ -2,6 +2,7 @@ import apiService from "../utils/apiService";
 import { createNotification } from "../utils/notificationService";
 import {
   appInfoPath,
+  loginMemberPath,
   loginTrainerPath,
   logoutTrainerPath,
   trainersChangePasswordPath,
@@ -46,6 +47,25 @@ export const login = (data, msg) => {
   };
 };
 
+export const loginMember = (data, msg) => {
+  return (dispatch) => {
+    dispatch(userActions.actionStart());
+    return apiService
+      .post(loginMemberPath(), data)
+      .then((response) => {
+        dispatch(userActions.loginMember(response.data));
+        createNotification(
+          notificationType.success,
+          msg?.loginTitle,
+          msg?.loginSuccessMessage
+        );
+      })
+      .catch((err) => {
+        handleError(err, userActions, dispatch);
+      });
+  };
+};
+
 export const logout = (data, msg) => {
   return (dispatch) => {
     dispatch(userActions.actionStart());
@@ -64,6 +84,14 @@ export const logout = (data, msg) => {
     // .catch((err) => {
     //   handleError(err, userActions, dispatch, undefined);
     // });
+  };
+};
+
+export const logoutMember = (msg) => {
+  return (dispatch) => {
+    dispatch(userActions.actionStart());
+    dispatch(userActions.logoutMember());
+    createNotification(notificationType.success, "Logout", msg);
   };
 };
 
