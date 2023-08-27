@@ -13,7 +13,7 @@ const plansSlice = createSlice({
       state.error = undefined;
     },
     addPlan(state, action) {
-      state.plans = [action.payload].concat(state.members);
+      state.plans = [action.payload].concat(state.plans);
       state.error = undefined;
     },
     deletePlan(state, action) {
