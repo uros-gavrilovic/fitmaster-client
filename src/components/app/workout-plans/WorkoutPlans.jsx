@@ -81,14 +81,6 @@ const WorkoutPlans = (props) => {
       });
     });
   };
-  const handleDeleteEvent = async (deletedId) => {
-    // // Simulate http request: return the deleted id
-    // return new Promise((res, rej) => {
-    // 	setTimeout(() => {
-    // 		res(deletedId);
-    // 	}, 3000);
-    // });
-  };
   const handleSavePlan = () => {
     if (!validatePlan(eventDetails, t?.messages)) return;
 
@@ -150,7 +142,6 @@ const WorkoutPlans = (props) => {
                 deletable={false}
                 editable={false}
                 onConfirm={handleAddEvent}
-                onDelete={handleDeleteEvent}
                 translations={t?.scheduler}
               />
             )}

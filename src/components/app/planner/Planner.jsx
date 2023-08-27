@@ -43,7 +43,7 @@ const Planner = (props) => {
     return new Promise((res, rej) => {
       setTimeout(() => {
         res(deletedId);
-      }, 3000);
+      }, 500);
     });
   };
 
