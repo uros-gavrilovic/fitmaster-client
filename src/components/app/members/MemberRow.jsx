@@ -16,8 +16,9 @@ import ConfirmModal from "../../reusable/modals/ConfirmModal";
 import MemberModal from "./MemberModal";
 import { formatDate } from "../../../utils/utilFunctions";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import { BadStatus, GoodStatus } from "./StatusBars";
+import { BadStatus, GoodStatus, NeutralStatus } from "./StatusBars";
 import withTranslations from "../../../utils/HighOrderComponent";
+import { memberStatus } from "../../../constants/globals";
 
 const MemberRow = (props) => {
   const { t, member, selectVersion, selectMember, setSelectModalOpen } =
@@ -73,10 +74,14 @@ const MemberRow = (props) => {
         <TableCell>{memberState?.phoneNumber}</TableCell>
         <TableCell>{formatDate(memberState?.birthDate)}</TableCell>
         <TableCell align="center">
-          {memberState?.active ? (
-            <GoodStatus>{t?.fields?.active.toUpperCase()}</GoodStatus>
+          {memberState?.status === memberStatus.ACTIVE ? (
+            <GoodStatus>{t?.fields?.active?.toUpperCase()}</GoodStatus>
+          ) : memberState?.status === memberStatus.INACTIVE ? (
+            <NeutralStatus>{t?.fields?.inactive?.toUpperCase()}</NeutralStatus>
+          ) : memberState?.status === memberStatus.BANNED ? (
+            <BadStatus>{t?.fields?.bad?.toUpperCase()}</BadStatus>
           ) : (
-            <BadStatus>{t?.fields?.inactive.toUpperCase()}</BadStatus>
+            <NeutralStatus>{t?.fields?.pending?.toUpperCase()}</NeutralStatus>
           )}
         </TableCell>
         {!selectVersion ? (

@@ -95,6 +95,8 @@ export const translation = {
     fields: {
       active: "Aktivan",
       inactive: "Neaktivan",
+      banned: "Zabranjen",
+      pending: "Na čekanju",
     },
     messages: {
       title: "Obriši člana",
