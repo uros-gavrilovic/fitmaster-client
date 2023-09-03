@@ -1,15 +1,10 @@
 // App Information
 export const appInfoPath = () => `/app-info`;
 
-// User - Trainer
-export const loginTrainerPath = () => `/login-trainer`;
-export const registerTrainerPath = () => `/register-trainer`;
+// User
+export const loginPath = () => `/login`;
+export const registerPath = () => `/register`;
 export const logoutTrainerPath = () => `/logout-trainer`;
-
-// User - Member
-export const loginMemberPath = () => `/login-member`;
-export const registerMemberPath = () => `/register-member`;
-export const logoutMemberPath = () => `/logout-member`;
 
 // Members
 const memberAPI = `/api/member`;

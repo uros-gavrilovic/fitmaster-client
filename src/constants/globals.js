@@ -16,6 +16,10 @@ export const sessionStorageConstants = {
   LOCALE: "appLocale",
 };
 
+export const userRoles = {
+  TRAINER: "TRAINER",
+};
+
 export const memberStatus = {
   ACTIVE: "ACTIVE",
   INACTIVE: "INACTIVE",

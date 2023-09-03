@@ -2,16 +2,18 @@ import apiService from "../utils/apiService";
 import { createNotification } from "../utils/notificationService";
 import {
   appInfoPath,
-  loginTrainerPath,
-  logoutTrainerPath,
+  loginPath,
+  registerPath,
   trainersChangePasswordPath,
 } from "../constants/apiEndpoints";
 import { userActions } from "../reducers/user";
 import {
   notificationType,
   sessionStorageConstants,
+  userRoles,
 } from "../constants/globals";
 import { handleError } from "../utils/utilFunctions";
+import { trainersActions } from "../reducers/trainers";
 
 export const fetchAppInfo = () => {
   return (dispatch) => {
@@ -31,7 +33,7 @@ export const login = (data, msg) => {
   return (dispatch) => {
     dispatch(userActions.actionStart());
     return apiService
-      .post(loginTrainerPath(), data)
+      .post(loginPath(), { ...data, role: userRoles.TRAINER })
       .then((response) => {
         dispatch(userActions.login(response.data));
         createNotification(
@@ -64,6 +66,27 @@ export const logout = (data, msg) => {
     // .catch((err) => {
     //   handleError(err, userActions, dispatch, undefined);
     // });
+  };
+};
+
+export const register = (data, msg) => {
+  return (dispatch) => {
+    dispatch(trainersActions.actionStart());
+    return apiService
+      .post(registerPath(), { ...data, role: userRoles.TRAINER })
+      .then((response) => {
+        dispatch(trainersActions.addTrainer(response.data));
+      })
+      .then(() => {
+        createNotification(
+          notificationType.success,
+          msg?.registerTitle,
+          msg?.registerSuccessMessage
+        );
+      })
+      .catch((err) => {
+        handleError(err, trainersActions, dispatch);
+      });
   };
 };
 

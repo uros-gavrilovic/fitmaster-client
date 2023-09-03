@@ -11,12 +11,11 @@ import {
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import InfoIcon from "@mui/icons-material/Info";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ConfirmModal from "../../reusable/modals/ConfirmModal";
 import MemberModal from "./MemberModal";
 import { formatDate } from "../../../utils/utilFunctions";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import { BadStatus, GoodStatus, NeutralStatus } from "./StatusBars";
+import { BadStatus, GoodStatus, NeutralStatus, OkayStatus } from "./StatusBars";
 import withTranslations from "../../../utils/HighOrderComponent";
 import { memberStatus } from "../../../constants/globals";
 
@@ -77,7 +76,7 @@ const MemberRow = (props) => {
           {memberState?.status === memberStatus.ACTIVE ? (
             <GoodStatus>{t?.fields?.active?.toUpperCase()}</GoodStatus>
           ) : memberState?.status === memberStatus.INACTIVE ? (
-            <NeutralStatus>{t?.fields?.inactive?.toUpperCase()}</NeutralStatus>
+            <OkayStatus>{t?.fields?.inactive?.toUpperCase()}</OkayStatus>
           ) : memberState?.status === memberStatus.BANNED ? (
             <BadStatus>{t?.fields?.bad?.toUpperCase()}</BadStatus>
           ) : (
