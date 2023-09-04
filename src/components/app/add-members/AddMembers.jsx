@@ -86,15 +86,6 @@ const AddMembers = (props) => {
           gap: "1rem",
         }}
       >
-        <CustomFormattedTextField
-          id="phoneNumber"
-          label={t?.fields?.phoneNumber}
-          value={memberState?.phoneNumber}
-          sx={{ width: "25ch" }}
-          onChange={(e) => {
-            setMemberState({ ...memberState, phoneNumber: e });
-          }}
-        />
         <TextField
           required
           id="firstName"
@@ -114,6 +105,15 @@ const AddMembers = (props) => {
           value={memberState?.lastName}
           onChange={handleChange}
           error={errorState.lastName}
+        />
+        <CustomFormattedTextField
+          id="phoneNumber"
+          label={t?.fields?.phoneNumber}
+          value={memberState?.phoneNumber}
+          sx={{ width: "25ch" }}
+          onChange={(e) => {
+            setMemberState({ ...memberState, phoneNumber: e });
+          }}
         />
         <CustomSelect
           id="gender"
@@ -135,18 +135,6 @@ const AddMembers = (props) => {
           value={memberState?.address}
           onChange={handleChange}
         />
-        {/* <TextField
-          id="phoneNumber"
-          label={t?.fields?.phoneNumber}
-          variant="filled"
-          sx={{ width: "25ch" }}
-          value={memberState?.phoneNumber}
-          onChange={(e) => {
-            if (isNumber(e.target?.value)) {
-              handleChange(e);
-            }
-          }}
-        /> */}
         <LocalizationProvider
           dateAdapter={AdapterDateFns}
           locale={localStorage.getItem("appLocale") || "en"}
