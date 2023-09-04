@@ -12,7 +12,8 @@ import * as membersActions from "../../../actions/members";
 import { useDispatch } from "react-redux";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import IconButton from "../../reusable/buttons/IconButton";
+// import IconButton from "../../reusable/buttons/IconButton";
+import IconButton from "@mui/material/IconButton";
 import withTranslations from "../../../utils/HighOrderComponent";
 import CustomFormattedTextField from "../../reusable/inputFields/CustomFormattedTextField";
 import Box from "@mui/material/Box";
@@ -109,11 +110,6 @@ const AddMembers = (props) => {
             alignItems: "center",
           }}
         >
-          <Box sx={{ display: "flex" }}>
-            <BadgeIcon />
-            {t?.fields?.avatar}
-          </Box>
-
           <input
             style={{ display: "none" }}
             accept="image/*"
@@ -126,6 +122,7 @@ const AddMembers = (props) => {
               <PhotoCameraIcon sx={{ fontSize: "10vw" }} />
             </IconButton>
           </label>
+          {t?.fields?.avatar}
         </CustomBox>
         <CustomBox
           sx={{

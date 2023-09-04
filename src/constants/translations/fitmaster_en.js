@@ -49,7 +49,7 @@ export const translation = {
 
   AddMembers: {
     fields: {
-      avatar: "Avatar",
+      avatar: "Profile Picture",
       firstName: "First Name",
       lastName: "Last Name",
       gender: "Gender",
