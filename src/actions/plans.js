@@ -1,6 +1,6 @@
 import apiService from "../utils/apiService";
 import { createNotification } from "../utils/notificationService";
-import { notificationType } from "../constants/globals";
+import { notificationType, userRoles } from "../constants/globals";
 import { handleError } from "../utils/utilFunctions";
 import {
   plansPath,
@@ -27,7 +27,11 @@ export const addPlan = (data, msg) => {
   return (dispatch) => {
     dispatch(plansActions.actionStart());
     return apiService
-      .post(plansPath(), data)
+      .post(plansPath(), {
+        ...data,
+        trainer: { ...data.trainer, role: userRoles.TRAINER },
+        member: { ...data.member, role: userRoles.MEMBER },
+      })
       .then((response) => {
         dispatch(plansActions.addPlan(response.data));
       })
