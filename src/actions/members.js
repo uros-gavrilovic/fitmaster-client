@@ -1,7 +1,7 @@
 import apiService from "../utils/apiService";
 import { membersActions } from "../reducers/members";
 import { createNotification } from "../utils/notificationService";
-import { notificationType } from "../constants/globals";
+import { notificationType, userRoles } from "../constants/globals";
 import { handleError } from "../utils/utilFunctions";
 import {
   membersPath,
@@ -65,7 +65,7 @@ export const addMember = (data, msg) => {
   return (dispatch) => {
     dispatch(membersActions.actionStart());
     return apiService
-      .post(membersPath(), data)
+      .post(membersPath(), { ...data, role: userRoles.MEMBER })
       .then((response) => {
         dispatch(membersActions.addMember(response.data));
       })

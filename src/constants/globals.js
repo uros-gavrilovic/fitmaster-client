@@ -17,6 +17,7 @@ export const sessionStorageConstants = {
 };
 
 export const userRoles = {
+  MEMBER: "MEMBER",
   TRAINER: "TRAINER",
 };
 

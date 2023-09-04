@@ -16,6 +16,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import IconButton from "../../reusable/buttons/IconButton";
 import withTranslations from "../../../utils/HighOrderComponent";
+import CustomFormattedTextField from "../../reusable/inputFields/CustomFormattedTextField";
 
 const initialMemberState = {
   image: null,
@@ -36,6 +37,10 @@ const AddMembers = (props) => {
     firstName: false,
     lastName: false,
   });
+
+  useEffect(() => {
+    console.log("memberState", memberState);
+  }, [memberState]);
 
   const handleChange = (e) => {
     setMemberState({
@@ -81,11 +86,20 @@ const AddMembers = (props) => {
           gap: "1rem",
         }}
       >
+        <CustomFormattedTextField
+          id="phoneNumber"
+          label={t?.fields?.phoneNumber}
+          value={memberState?.phoneNumber}
+          sx={{ width: "25ch" }}
+          onChange={(e) => {
+            setMemberState({ ...memberState, phoneNumber: e });
+          }}
+        />
         <TextField
           required
           id="firstName"
           label={t?.fields?.firstName}
-          variant="filled"
+          variant="standard"
           sx={{ width: "25ch" }}
           value={memberState?.firstName}
           onChange={handleChange}
@@ -95,7 +109,7 @@ const AddMembers = (props) => {
           required
           id="lastName"
           label={t?.fields?.lastName}
-          variant="filled"
+          variant="standard"
           sx={{ width: "25ch" }}
           value={memberState?.lastName}
           onChange={handleChange}
@@ -104,7 +118,7 @@ const AddMembers = (props) => {
         <CustomSelect
           id="gender"
           label={t?.fields?.gender}
-          variant="filled"
+          variant="standard"
           value={memberState?.gender}
           onChange={(e) => {
             setMemberState({ ...memberState, gender: e.target.value });
@@ -116,12 +130,12 @@ const AddMembers = (props) => {
         <TextField
           id="address"
           label={t?.fields?.address}
-          variant="filled"
+          variant="standard"
           sx={{ width: "25ch" }}
           value={memberState?.address}
           onChange={handleChange}
         />
-        <TextField
+        {/* <TextField
           id="phoneNumber"
           label={t?.fields?.phoneNumber}
           variant="filled"
@@ -132,7 +146,7 @@ const AddMembers = (props) => {
               handleChange(e);
             }
           }}
-        />
+        /> */}
         <LocalizationProvider
           dateAdapter={AdapterDateFns}
           locale={localStorage.getItem("appLocale") || "en"}
