@@ -1,7 +1,6 @@
 import { Button, TextField } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
 import CustomSelect from "../../reusable/inputFields/CustomSelect";
-import SaveIcon from "@mui/icons-material/Save";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "react-day-picker/dist/style.css";
 import {
@@ -13,39 +12,47 @@ import * as membersActions from "../../../actions/members";
 import { useDispatch } from "react-redux";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import IconButton from "../../reusable/buttons/IconButton";
 import withTranslations from "../../../utils/HighOrderComponent";
 import CustomFormattedTextField from "../../reusable/inputFields/CustomFormattedTextField";
-
-const initialMemberState = {
-  image: null,
-  firstName: "",
-  lastName: "",
-  gender: "",
-  address: "",
-  phoneNumber: "",
-  birthDate: null,
-};
+import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
+import BackspaceRoundedIcon from "@mui/icons-material/BackspaceRounded";
+import CustomIconButton from "../../reusable/buttons/IconButton";
+import CustomBox from "../../reusable/containers/CustomBox";
+import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import SaveIcon from "@mui/icons-material/Save";
+import validateEmail from "../../../utils/validator";
+import BadgeIcon from "@mui/icons-material/Badge";
 
 const AddMembers = (props) => {
   const { t } = props || {};
 
   const dispatch = useDispatch();
   const [memberState, setMemberState] = useState(initialMemberState);
-  const [errorState, setErrorState] = useState({
-    firstName: false,
-    lastName: false,
-  });
-
-  useEffect(() => {
-    console.log("memberState", memberState);
-  }, [memberState]);
+  const [changesMade, setChangesMade] = useState(initialChangesMade);
+  const [errorState, setErrorState] = useState(initialErrorState);
 
   const handleChange = (e) => {
+    const fieldId = e.target.id || e.target.name;
+    const newValue = e.target.value;
+
+    if (newValue !== initialMemberState[fieldId]) {
+      setChangesMade({
+        ...changesMade,
+        [fieldId]: true,
+      });
+    } else {
+      setChangesMade({
+        ...changesMade,
+        [fieldId]: false,
+      });
+    }
+
     setMemberState({
       ...memberState,
-      [e.target.id]: e.target.value,
+      [fieldId]: newValue,
     });
   };
   const handleClear = () => {
@@ -62,8 +69,11 @@ const AddMembers = (props) => {
       "lastName",
       setErrorState
     );
+    const hasEmailError =
+      validateField(memberState.email, "email", setErrorState) ||
+      validateEmail(memberState.email, "email", setErrorState);
 
-    if (hasFirstNameError || hasLastNameError) return;
+    if (hasFirstNameError || hasLastNameError || hasEmailError) return;
     dispatch(
       membersActions.addMember(
         convertEmptyFieldsToNull(memberState),
@@ -78,105 +88,174 @@ const AddMembers = (props) => {
   };
 
   return (
-    <Fragment>
-      <div
-        style={{
+    <CustomBox sx={{ width: "100%" }}>
+      <h2>
+        <PersonAddIcon />
+        {t?.fields?.create_new_member}
+      </h2>
+      <Box
+        sx={{
           display: "grid",
-          gridTemplateColumns: "min-content ",
-          gap: "1rem",
+          gridTemplateColumns: "1fr 2fr",
+          gridGap: "2vw",
         }}
       >
-        <TextField
-          required
-          id="firstName"
-          label={t?.fields?.firstName}
-          variant="standard"
-          sx={{ width: "25ch" }}
-          value={memberState?.firstName}
-          onChange={handleChange}
-          error={errorState.firstName}
-        />
-        <TextField
-          required
-          id="lastName"
-          label={t?.fields?.lastName}
-          variant="standard"
-          sx={{ width: "25ch" }}
-          value={memberState?.lastName}
-          onChange={handleChange}
-          error={errorState.lastName}
-        />
-        <CustomFormattedTextField
-          id="phoneNumber"
-          label={t?.fields?.phoneNumber}
-          value={memberState?.phoneNumber}
-          sx={{ width: "25ch" }}
-          onChange={(e) => {
-            setMemberState({ ...memberState, phoneNumber: e });
+        <CustomBox
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
           }}
-        />
-        <CustomSelect
-          id="gender"
-          label={t?.fields?.gender}
-          variant="standard"
-          value={memberState?.gender}
-          onChange={(e) => {
-            setMemberState({ ...memberState, gender: e.target.value });
-          }}
-          sx={{ width: "25ch" }}
-          options={["MALE", "FEMALE"]}
-          hasBlank={true}
-        />
-        <TextField
-          id="address"
-          label={t?.fields?.address}
-          variant="standard"
-          sx={{ width: "25ch" }}
-          value={memberState?.address}
-          onChange={handleChange}
-        />
-        <LocalizationProvider
-          dateAdapter={AdapterDateFns}
-          locale={localStorage.getItem("appLocale") || "en"}
         >
-          <DatePicker
-            label={t?.fields?.birthDate}
-            value={memberState?.birthDate}
-            format="dd/MM/yyyy"
-            disableFuture
-            slotProps={{ textField: { variant: "filled" } }}
+          <Box sx={{ display: "flex" }}>
+            <BadgeIcon />
+            {t?.fields?.avatar}
+          </Box>
+
+          <input
+            style={{ display: "none" }}
+            accept="image/*"
+            id="image-picker"
+            type="file"
+            onChange={handleImageUpload}
+          />
+          <label htmlFor="image-picker">
+            <IconButton sx={{ width: "10vw", height: "10vw" }}>
+              <PhotoCameraIcon sx={{ fontSize: "10vw" }} />
+            </IconButton>
+          </label>
+        </CustomBox>
+        <CustomBox
+          sx={{
+            width: "100%",
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gridGap: "1vw",
+          }}
+        >
+          <TextField
+            required
+            id="firstName"
+            label={t?.fields?.firstName}
+            variant="standard"
+            sx={{ width: "100%" }}
+            value={memberState?.firstName}
+            onChange={handleChange}
+            error={errorState.firstName}
+          />
+          <TextField
+            required
+            id="lastName"
+            label={t?.fields?.lastName}
+            variant="standard"
+            sx={{ width: "100%" }}
+            value={memberState?.lastName}
+            onChange={handleChange}
+            error={errorState.lastName}
+          />
+          <CustomFormattedTextField
+            id="phoneNumber"
+            label={t?.fields?.phoneNumber}
+            value={memberState?.phoneNumber}
+            sx={{ width: "100%" }}
             onChange={(e) => {
-              setMemberState({ ...memberState, birthDate: e });
+              setMemberState({ ...memberState, phoneNumber: e });
             }}
           />
-        </LocalizationProvider>
-        <input
-          style={{ display: "none" }}
-          accept="image/*"
-          id="image-picker"
-          type="file"
-          onChange={handleImageUpload}
-        />
-        <label htmlFor="image-picker">
-          <IconButton
-            title={t?.buttons?.btnUploadImage}
-            component="span"
-            leftIcon={<AccountCircleIcon />}
+          <TextField
+            required
+            id="email"
+            error={errorState.email}
+            label={t?.fields?.email}
+            variant="standard"
+            sx={{ width: "100%" }}
+            value={memberState?.email}
+            onChange={handleChange}
           />
-        </label>
-      </div>
-      <Button
-        variant="outlined"
-        endIcon={<BackspaceIcon />}
-        onClick={handleClear}
-      >
-        {t?.buttons?.btnClear}
-      </Button>
-      <Button variant="contained" endIcon={<SaveIcon />} onClick={handleSave}>
-        {t?.buttons?.btnSave}
-      </Button>
-    </Fragment>
+          <CustomSelect
+            id="gender"
+            label={t?.fields?.gender}
+            variant="standard"
+            value={memberState?.gender}
+            onChange={(e) => {
+              setMemberState({ ...memberState, gender: e.target.value });
+            }}
+            sx={{ width: "100%" }}
+            options={["MALE", "FEMALE"]}
+            hasBlank={true}
+          />
+          <TextField
+            id="address"
+            label={t?.fields?.address}
+            variant="standard"
+            sx={{ width: "100%" }}
+            value={memberState?.address}
+            onChange={handleChange}
+          />
+          <LocalizationProvider
+            dateAdapter={AdapterDateFns}
+            locale={localStorage.getItem("appLocale") || "en"}
+          >
+            <DatePicker
+              label={t?.fields?.birthDate}
+              value={memberState?.birthDate}
+              format="dd/MM/yyyy"
+              disableFuture
+              slotProps={{ textField: { variant: "standard" } }}
+              onChange={(e) => {
+                setMemberState({ ...memberState, birthDate: e });
+              }}
+            />
+          </LocalizationProvider>
+
+          <div style={{ gridColumn: "1 / span 2", justifySelf: "end" }}>
+            <Box sx={{ display: "flex", flexDirection: "row" }}>
+              <CustomIconButton
+                disabled={!Object.values(changesMade).some((value) => value)}
+                title={t?.buttons?.btnClear}
+                leftIcon={<BackspaceRoundedIcon />}
+                onClick={handleClear}
+              />
+              <CustomIconButton
+                title={t?.buttons?.btnSave}
+                leftIcon={<SaveIcon />}
+                onClick={handleSave}
+              />
+            </Box>
+          </div>
+        </CustomBox>
+      </Box>
+    </CustomBox>
   );
 };
 
 export default withTranslations(AddMembers);
+
+const initialMemberState = {
+  avatar: null,
+  firstName: "",
+  lastName: "",
+  gender: "",
+  address: "",
+  phoneNumber: "",
+  email: "",
+  birthDate: null,
+};
+const initialChangesMade = {
+  avatar: false,
+  firstName: false,
+  lastName: false,
+  phoneNumber: false,
+  email: false,
+  address: false,
+  gender: false,
+  birthDate: false,
+  username: false,
+};
+const initialErrorState = {
+  firstName: false,
+  lastName: false,
+  email: false,
+};

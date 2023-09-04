@@ -49,12 +49,15 @@ export const translation = {
 
   AddMembers: {
     fields: {
+      avatar: "Avatar",
       firstName: "First Name",
       lastName: "Last Name",
       gender: "Gender",
       address: "Address",
+      email: "Email",
       phoneNumber: "Phone Number",
       birthDate: "Date of Birth",
+      create_new_member: "Create New Member",
     },
     buttons: {
       btnSave: "Save",
