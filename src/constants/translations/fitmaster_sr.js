@@ -202,6 +202,7 @@ export const translation = {
     generalSettings: {},
     displaySettings: {
       language: "Jezik",
+      theme: "Tema",
     },
     accountSettings: {
       messages: {

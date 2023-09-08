@@ -205,6 +205,7 @@ export const translation = {
     generalSettings: {},
     displaySettings: {
       language: "Language",
+      theme: "Theme",
     },
     accountSettings: {
       messages: {

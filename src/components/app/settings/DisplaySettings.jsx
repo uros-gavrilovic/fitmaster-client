@@ -19,7 +19,7 @@ export default function DisplaySettings(props) {
 
   const theme = useTheme();
   const dispatch = useDispatch();
-  const { appTheme } = useSelector((state) => state.appReducer);
+  const { appTheme, appLocale } = useSelector((state) => state.appReducer);
 
   const languagePacks = [
     {
@@ -54,26 +54,28 @@ export default function DisplaySettings(props) {
         <Box
           sx={{
             display: "flex",
-            flexDirection: "row",
+            flexDirection: "column",
             alignItems: "center",
             marginLeft: "5vw",
           }}
         >
-          <p style={{ marginRight: "1vw" }}>
-            {`${t?.displaySettings.language}:`}
-          </p>
-          <TextField
-            id="outlined-select-language"
-            select
-            defaultValue="sr"
-            sx={{ display: "flex", flexDirection: "row" }}
-          >
-            {languagePacks.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
+          <Box sx={{ display: "flex", flexDirection: "row" }}>
+            <p style={{ marginRight: "1vw" }}>
+              {`${t?.displaySettings.language}:`}
+            </p>
+            <TextField
+              id="outlined-select-language"
+              select
+              defaultValue={appLocale}
+              sx={{ display: "flex", flexDirection: "row" }}
+            >
+              {languagePacks.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Box>
           <FormGroup>
             <FormControlLabel
               control={
@@ -83,7 +85,8 @@ export default function DisplaySettings(props) {
                   onChange={handleThemeChange}
                 />
               }
-              label="MUI switch"
+              label={t?.displaySettings?.theme}
+              labelPlacement="start"
             />
           </FormGroup>
         </Box>
