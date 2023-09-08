@@ -4,9 +4,12 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { Fragment } from "react";
+import { useTheme } from "@mui/material";
 
 export default function DisplaySettings(props) {
   const { t } = props || {};
+
+  const theme = useTheme();
 
   const languagePacks = [
     {
@@ -20,7 +23,7 @@ export default function DisplaySettings(props) {
   ];
 
   return (
-    <CustomBox sx={{ width: "100%" }}>
+    <CustomBox sx={{ width: "100%", bgcolor: theme.palette.background.paper }}>
       <h2>
         <DisplaySettingsIcon />
         {t?.tabs?.displaySettings}

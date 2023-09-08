@@ -10,9 +10,12 @@ import DisplaySettings from "./DisplaySettings";
 import AccountSettings from "./AccountSettings";
 import GeneralSettings from "./GeneralSettings";
 import { a11yProps, TabPanel } from "./TabPanel";
+import { useTheme } from "@mui/material";
 
 const Settings = (props) => {
   const { t } = props || {};
+
+  const theme = useTheme();
 
   const [value, setValue] = React.useState(0);
 
@@ -24,7 +27,7 @@ const Settings = (props) => {
     <Box
       sx={{
         flexGrow: 1,
-        bgcolor: "background.paper",
+        bgcolor: theme.palette.background.default,
         display: "flex",
         height: "100%",
       }}

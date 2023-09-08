@@ -111,7 +111,7 @@ const WorkoutPlans = (props) => {
               sx={{
                 bgcolor:
                   theme.palette.mode === themeConstants.LIGHT
-                    ? theme.palette.menu.light
+                    ? theme.palette.background.paper
                     : theme.palette.menu.dark,
                 borderRadius: "1rem",
                 padding: "1rem",

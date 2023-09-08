@@ -91,7 +91,7 @@ const AddMembers = (props) => {
   };
 
   return (
-    <CustomBox sx={{ width: "100%", bgcolor: theme.palette.menu.light }}>
+    <CustomBox sx={{ width: "100%", bgcolor: theme.palette.background.paper }}>
       <h2>
         <PersonAddIcon />
         {t?.fields?.create_new_member}
@@ -105,6 +105,7 @@ const AddMembers = (props) => {
       >
         <CustomBox
           sx={{
+            bgcolor: theme.palette.background.default,
             width: "100%",
             display: "flex",
             justifyContent: "center",
@@ -128,6 +129,7 @@ const AddMembers = (props) => {
         </CustomBox>
         <CustomBox
           sx={{
+            bgcolor: theme.palette.background.default,
             width: "100%",
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
@@ -217,11 +219,13 @@ const AddMembers = (props) => {
                 leftIcon={<BackspaceRoundedIcon />}
                 onClick={handleClear}
               />
-              <CustomIconButton
-                title={t?.buttons?.btnSave}
-                leftIcon={<SaveIcon />}
+              <Button
+                variant="contained"
+                startIcon={<SaveIcon />}
                 onClick={handleSave}
-              />
+              >
+                {t?.buttons?.btnSave}
+              </Button>
             </Box>
           </div>
         </CustomBox>
