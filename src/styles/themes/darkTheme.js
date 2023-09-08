@@ -10,6 +10,7 @@ const darkTheme = createTheme({
       main: "#d2d922",
     },
     background: {
+      paper: "#2E2E2E",
       default: "#2E2E2E",
     },
     success: {
@@ -23,8 +24,9 @@ const darkTheme = createTheme({
       dark: "#B71D18",
     },
     menu: {
-      default: "#2E2E2E",
-      darker: "#1E1E1E",
+      default: "#272727",
+      dark: "#272727",
+      light: "#2F2F2F",
     },
   },
 });

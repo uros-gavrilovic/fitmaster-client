@@ -23,16 +23,6 @@ export default function Dashboard(props) {
         <TotalMembersCard />
         <TotalMembersCard />
         <TotalMembersCard />
-
-        <BorderedSection icon={InfoIcon} title="Icon and title">
-          <div>a first child with quite a long text</div>
-          <div>a second child</div>
-        </BorderedSection>
-
-        <BorderedSection icon={InfoIcon}>
-          <div>Icon only</div>
-          <div>a second child with quite a long text</div>
-        </BorderedSection>
       </div>
     </Box>
   );

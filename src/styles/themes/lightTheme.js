@@ -26,7 +26,9 @@ const lightTheme = createTheme({
       dark: "#B71D18",
     },
     menu: {
+      light: "#e0e0e0",
       default: "#2E2E2E",
+      dark: "#e0e0e0",
     },
   },
 });

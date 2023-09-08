@@ -2,6 +2,11 @@ import apiService from "../utils/apiService";
 import { handleError } from "../utils/utilFunctions";
 import { appInfoPath } from "../constants/apiEndpoints";
 import { appActions } from "../reducers/app";
+import {
+  appInfo,
+  sessionStorageConstants,
+  themeConstants,
+} from "../constants/globals";
 
 export const fetchAppInfo = () => {
   return (dispatch) => {
@@ -15,5 +20,19 @@ export const fetchAppInfo = () => {
       .catch((err) => {
         handleError(err, appActions, dispatch);
       });
+  };
+};
+
+export const changeTheme = () => {
+  return (dispatch) => {
+    const appTheme = sessionStorage.getItem(sessionStorageConstants.APP_THEME);
+
+    dispatch(
+      appActions.changeTheme(
+        appTheme === themeConstants.LIGHT
+          ? themeConstants.DARK
+          : themeConstants.LIGHT
+      )
+    );
   };
 };

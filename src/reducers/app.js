@@ -18,6 +18,9 @@ const appSlice = createSlice({
       state.theme = action.payload;
       state.loading = false;
     },
+    changeTheme(state, action) {
+      state.appTheme = action.payload;
+    },
     fetchAppInfo(state, action) {
       state.appName = action.payload.appName;
       state.appVersion = action.payload.appVersion;

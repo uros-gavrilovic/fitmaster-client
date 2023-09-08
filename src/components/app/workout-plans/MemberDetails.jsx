@@ -7,6 +7,7 @@ import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import MemberChooserModal from "./MemberChooserModal";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import { useTheme } from "@mui/material";
+import { themeConstants } from "../../../constants/globals";
 
 const MemberDetails = (props) => {
   const { member, setMember, t } = props;
@@ -32,7 +33,10 @@ const MemberDetails = (props) => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            border: "2px dashed #000",
+            border:
+              theme.palette.mode === themeConstants.LIGHT
+                ? "2px dashed #000"
+                : "2px dashed #fff",
             borderRadius: "1rem",
             padding: "1rem",
             height: "100%",
@@ -57,7 +61,10 @@ const MemberDetails = (props) => {
         <Box
           sx={{
             height: "100%",
-            border: "2px solid #000",
+            border:
+              theme.palette.mode === themeConstants.LIGHT
+                ? "2px solid #000"
+                : "2px solid #fff",
             borderRadius: "1rem",
             padding: "0.5rem",
           }}
@@ -97,7 +104,7 @@ const MemberDetails = (props) => {
               id="memberID"
               label={t?.fields?.memberID}
               variant="outlined"
-              value={member?.memberID}
+              value={`#${member?.memberID}`}
               InputProps={{
                 readOnly: true,
               }}

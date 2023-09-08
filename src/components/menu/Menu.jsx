@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as userActions from "../../actions/user";
 import CustomAccountMenu from "../reusable/containers/CustomAccountMenu.jsx";
 import withTranslations from "../../utils/HighOrderComponent.js";
+import { themeConstants } from "../../constants/globals.js";
 
 const drawerWidth = 240;
 
@@ -134,7 +135,12 @@ const Menu = (props) => {
       <AppBar
         position="fixed"
         open={open}
-        sx={{ background: theme.palette.primary.main }}
+        sx={{
+          background:
+            theme.palette.mode === themeConstants.LIGHT
+              ? theme.palette.primary.main
+              : theme.palette.menu.dark,
+        }}
       >
         <Toolbar sx={{ justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center" }}>

@@ -2,7 +2,7 @@ export const appInfo = {
   DEFAULT_NAME: "fitmaster",
   DEFAULT_VERSION: "1.0",
   DEFAULT_LOCALE: "en",
-  DEFAULT_THEME: "light",
+  DEFAULT_THEME: "dark",
 };
 
 export const notificationType = {
@@ -15,7 +15,13 @@ export const notificationType = {
 export const sessionStorageConstants = {
   APP_NAME: "appName",
   APP_VERSION: "appVersion",
+  APP_THEME: "appTheme",
   LOCALE: "appLocale",
+};
+
+export const themeConstants = {
+  LIGHT: "light",
+  DARK: "dark",
 };
 
 export const userRoles = {
