@@ -6,14 +6,25 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import store from "./reducers/index";
 import { Provider } from "react-redux";
+import { ThemeProvider } from "@mui/material";
+import darkTheme from "./styles/themes/darkTheme";
+import lightTheme from "./styles/themes/lightTheme";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <ThemeProvider
+        theme={
+          store.getState().appReducer.appTheme === "light"
+            ? lightTheme
+            : darkTheme
+        }
+      >
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>
 );

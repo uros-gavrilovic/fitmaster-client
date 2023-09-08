@@ -15,20 +15,6 @@ import {
 import { handleError } from "../utils/utilFunctions";
 import { trainersActions } from "../reducers/trainers";
 
-export const fetchAppInfo = () => {
-  return (dispatch) => {
-    dispatch(userActions.actionStart());
-    return apiService
-      .get(appInfoPath())
-      .then((response) => {
-        setAppInfo(response.data, dispatch);
-      })
-      .catch((err) => {
-        dispatch(userActions.actionError(err?.response?.data));
-      });
-  };
-};
-
 export const login = (data, msg) => {
   return (dispatch) => {
     dispatch(userActions.actionStart());
@@ -110,9 +96,3 @@ export const changePassword = (data, messages) => {
       });
   };
 };
-
-function setAppInfo(data, dispatch) {
-  sessionStorage.setItem(sessionStorageConstants.APP_NAME, data?.appName);
-  sessionStorage.setItem(sessionStorageConstants.APP_VERSION, data?.appVersion);
-  sessionStorage.setItem(sessionStorageConstants.LOCALE, data?.appLocale);
-}

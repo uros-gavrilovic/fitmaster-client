@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 
 const StatusBox = ({ color, backgroundColor, ...props }) => {
   const boxStyles = {
@@ -15,34 +15,83 @@ const StatusBox = ({ color, backgroundColor, ...props }) => {
   return <Box sx={boxStyles} {...props}></Box>;
 };
 
-export const GoodStatus = (props) => (
-  <StatusBox
-    color="rgb(17, 141, 87)"
-    backgroundColor="rgb(219, 246, 229)"
-    {...props}
-  />
-);
+export const GoodStatus = (props) => {
+  const theme = useTheme();
+  console.log();
 
-export const OkayStatus = (props) => (
-  <StatusBox
-    color="rgb(183, 110, 0)"
-    backgroundColor="rgb(255, 241, 214)"
-    {...props}
-  />
-);
+  return (
+    <StatusBox
+      color={
+        theme.palette.mode === "light"
+          ? theme.palette.success.dark
+          : theme.palette.success.light
+      }
+      backgroundColor={
+        theme.palette.mode === "light"
+          ? theme.palette.success.light
+          : theme.palette.success.dark
+      }
+      {...props}
+    />
+  );
+};
 
-export const NeutralStatus = (props) => (
-  <StatusBox
-    color="rgb(85, 85, 85)"
-    backgroundColor="rgb(211, 211, 211)"
-    {...props}
-  />
-);
+export const OkayStatus = (props) => {
+  const theme = useTheme();
 
-export const BadStatus = (props) => (
-  <StatusBox
-    color="rgb(183, 29, 24)"
-    backgroundColor="rgb(255, 228, 222)"
-    {...props}
-  />
-);
+  return (
+    <StatusBox
+      color={
+        theme.palette.mode === "light"
+          ? theme.palette.warning.dark
+          : theme.palette.warning.light
+      }
+      backgroundColor={
+        theme.palette.mode === "light"
+          ? theme.palette.warning.light
+          : theme.palette.warning.dark
+      }
+      {...props}
+    />
+  );
+};
+
+export const NeutralStatus = (props) => {
+  const theme = useTheme();
+
+  return (
+    <StatusBox
+      color={
+        theme.palette.mode === "light"
+          ? "rgb(85, 85, 85)"
+          : "rgb(211, 211, 211)"
+      }
+      backgroundColor={
+        theme.palette.mode === "light"
+          ? "rgb(211, 211, 211)"
+          : "rgb(85, 85, 85)"
+      }
+      {...props}
+    />
+  );
+};
+
+export const BadStatus = (props) => {
+  const theme = useTheme();
+
+  return (
+    <StatusBox
+      color={
+        theme.palette.mode === "light"
+          ? theme.palette.error.dark
+          : theme.palette.error.light
+      }
+      backgroundColor={
+        theme.palette.mode === "light"
+          ? theme.palette.error.light
+          : theme.palette.error.dark
+      }
+      {...props}
+    />
+  );
+};

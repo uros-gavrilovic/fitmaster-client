@@ -156,9 +156,10 @@ export const boldTextParser = (text) => {
 export function getTranslationFile() {
   // Returns translation file name
 
-  const appName = sessionStorage.getItem("appName") || appInfo.name;
+  const appName = sessionStorage.getItem("appName") || appInfo.DEFAULT_NAME;
   const language =
-    sessionStorage.getItem("appLocale") || appInfo.default_locale;
+    sessionStorage.getItem("appLocale") || appInfo.DEFAULT_LOCALE;
+
   return `${appName}_${language}`;
 }
 

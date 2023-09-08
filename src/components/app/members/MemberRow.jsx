@@ -23,8 +23,6 @@ const MemberRow = (props) => {
   const { t, member, selectVersion, selectMember, setSelectModalOpen } =
     props || {}; // memberDTO from fetchMembersDTO list
 
-  const [selected, setSelected] = useState(false);
-
   const dispatch = useDispatch();
   const [memberState, setMemberState] = useState(member);
   const [infoModalVisible, setInfoModalVisible] = useState(false);

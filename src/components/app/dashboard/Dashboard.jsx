@@ -2,10 +2,11 @@ import { Fragment } from "react";
 import BorderedSection from "../../reusable/containers/BorderedSection";
 import InfoIcon from "@mui/icons-material/Info";
 import TotalMembersCard from "./cards/TotalMembersCard";
+import { Box } from "@mui/material";
 
 export default function Dashboard(props) {
   return (
-    <Fragment>
+    <Box>
       <h1>This is Dashboard.</h1>
 
       <div
@@ -33,6 +34,6 @@ export default function Dashboard(props) {
           <div>a second child with quite a long text</div>
         </BorderedSection>
       </div>
-    </Fragment>
+    </Box>
   );
 }

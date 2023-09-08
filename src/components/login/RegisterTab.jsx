@@ -3,7 +3,7 @@ import HowToRegIcon from "@mui/icons-material/HowToReg";
 import HttpsRoundedIcon from "@mui/icons-material/HttpsRounded";
 import AbcIcon from "@mui/icons-material/Abc";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-import { Box, Divider } from "@mui/material";
+import { Box, Button, Divider } from "@mui/material";
 import Logo from "../reusable/Logo";
 import IconTextField from "../reusable/inputFields/IconTextField";
 import { useState } from "react";
@@ -12,9 +12,9 @@ import {
   validateField,
 } from "../../utils/utilFunctions";
 import { useDispatch } from "react-redux";
-import IconButton from "../reusable/buttons/IconButton";
 import * as userActions from "../../actions/user";
 import CustomStepper from "../reusable/containers/CustomStepper";
+import { useTheme } from "@mui/material";
 
 const initialRegisterState = {
   username: "",
@@ -29,6 +29,7 @@ export default function RegisterTab(props) {
   const steps = [t?.subtitles?.generalInfo, t?.subtitles?.loginInfo];
 
   const dispatch = useDispatch();
+  const theme = useTheme();
   const [registerState, setRegisterState] = useState(initialRegisterState);
   const [registerErrorState, setRegisterErrorState] = useState({
     username: false,
@@ -79,7 +80,14 @@ export default function RegisterTab(props) {
   };
 
   return (
-    <Box id="register-container" className="center container dark-container">
+    <Box
+      id="register-container"
+      className="center container"
+      sx={{
+        background: theme.palette.menu.default,
+        color: theme.palette.text.primary,
+      }}
+    >
       <Logo />
       <h3>{t?.titleRegister}</h3>
 
@@ -96,9 +104,7 @@ export default function RegisterTab(props) {
               required
               id="firstName"
               title={t?.input?.firstName}
-              icon={
-                <AbcIcon style={{ color: "white" }} sx={{ mr: 1, my: 0.5 }} />
-              }
+              icon={<AbcIcon sx={{ mr: 1, my: 0.5 }} />}
               value={registerState?.firstName}
               error={registerErrorState.firstName}
               onChange={(e) =>
@@ -112,9 +118,7 @@ export default function RegisterTab(props) {
               required
               id="lastName"
               title={t?.input?.lastName}
-              icon={
-                <AbcIcon style={{ color: "white" }} sx={{ mr: 1, my: 0.5 }} />
-              }
+              icon={<AbcIcon sx={{ mr: 1, my: 0.5 }} />}
               margin="dense"
               value={registerState?.lastName}
               error={registerErrorState.lastName}
@@ -137,12 +141,7 @@ export default function RegisterTab(props) {
               required
               id="username"
               title={t?.input?.username}
-              icon={
-                <AccountCircle
-                  style={{ color: "white" }}
-                  sx={{ mr: 1, my: 0.5 }}
-                />
-              }
+              icon={<AccountCircle sx={{ mr: 1, my: 0.5 }} />}
               value={registerState?.username}
               error={registerErrorState.username}
               onChange={(e) =>
@@ -157,12 +156,7 @@ export default function RegisterTab(props) {
               id="password"
               title={t?.input?.password}
               type="password"
-              icon={
-                <HttpsRoundedIcon
-                  style={{ color: "white" }}
-                  sx={{ mr: 1, my: 0.5 }}
-                />
-              }
+              icon={<HttpsRoundedIcon sx={{ mr: 1, my: 0.5 }} />}
               margin="dense"
               value={registerState?.password}
               error={registerErrorState.password}
@@ -178,26 +172,29 @@ export default function RegisterTab(props) {
         steps={steps}
         isOptional={[false, false]}
         finishStep={
-          <IconButton
+          <Button
             title={t?.buttons?.btnRegister}
-            leftIcon={<HowToRegIcon style={{ color: "white" }} />}
+            endIcon={<HowToRegIcon />}
             variant="contained"
             width="100%"
             onClick={handleRegister}
-          />
+          >
+            {t?.buttons?.btnRegister}
+          </Button>
         }
         activeIndex={activeIndex}
         setActiveIndex={setActiveIndex}
         stepsFinishedMessage={t?.messages?.registerRequestSent}
         t={t?.buttons}
       />
-      <IconButton
+      <Button
         style={{ marginTop: "1rem", width: "100%" }}
-        title={t?.buttons?.btnLogIn}
-        rightIcon={<KeyboardDoubleArrowRightIcon style={{ color: "white" }} />}
+        endIcon={<KeyboardDoubleArrowRightIcon />}
         variant="outlined"
         onClick={handleTabChange}
-      />
+      >
+        {t?.buttons?.btnLogIn}
+      </Button>
     </Box>
   );
 }

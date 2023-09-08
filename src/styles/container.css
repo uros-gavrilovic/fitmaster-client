@@ -3,9 +3,5 @@
   height: fit-content;
   padding: 2vw;
   border-radius: 10px;
-  border: 1px solid gray;
-}
-
-.dark-container {
-  background-color: rgb(28, 29, 29);
+  border: 1px solid black;
 }
