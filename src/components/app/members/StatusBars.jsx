@@ -17,7 +17,6 @@ const StatusBox = ({ color, backgroundColor, ...props }) => {
 
 export const GoodStatus = (props) => {
   const theme = useTheme();
-  console.log();
 
   return (
     <StatusBox

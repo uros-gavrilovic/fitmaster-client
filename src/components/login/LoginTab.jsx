@@ -17,8 +17,6 @@ export default function LoginTab(props) {
   const { t, handleTabChange } = props || {};
   const theme = useTheme();
 
-  console.log(theme);
-
   const dispatch = useDispatch();
   const [loginState, setLoginState] = useState({
     username: "admin", // Testing purposes only

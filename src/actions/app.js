@@ -23,10 +23,8 @@ export const fetchAppInfo = () => {
   };
 };
 
-export const changeTheme = () => {
+export const changeTheme = (appTheme) => {
   return (dispatch) => {
-    const appTheme = sessionStorage.getItem(sessionStorageConstants.APP_THEME);
-
     dispatch(
       appActions.changeTheme(
         appTheme === themeConstants.LIGHT

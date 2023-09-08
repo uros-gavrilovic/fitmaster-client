@@ -14,7 +14,6 @@ export default function TotalMembersCard(props) {
   const { stats } = useSelector((state) => state.statisticsReducer);
 
   const theme = useTheme();
-  console.log(theme);
 
   useEffect(() => {
     dispatch(statisticsActions.fetchMembersActivity());

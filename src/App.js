@@ -18,7 +18,7 @@ import Settings from "./components/app/settings/Settings";
 import WorkoutPlans from "./components/app/workout-plans/WorkoutPlans";
 import { useEffect } from "react";
 import { fetchAppInfo } from "./actions/app";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,6 +26,11 @@ function App() {
   useEffect(() => {
     dispatch(fetchAppInfo());
   }, []);
+
+  const { appTheme } = useSelector((state) => state.appReducer);
+  useEffect(() => {
+    console.log("promena");
+  }, [appTheme]);
 
   return (
     <AuthContext.Provider value={{ user: null, validToken: true }}>
