@@ -2,7 +2,7 @@ export const appInfo = {
   DEFAULT_NAME: "fitmaster",
   DEFAULT_VERSION: "1.0",
   DEFAULT_LOCALE: "en",
-  DEFAULT_THEME: "dark",
+  DEFAULT_THEME: "light",
 };
 
 export const notificationType = {

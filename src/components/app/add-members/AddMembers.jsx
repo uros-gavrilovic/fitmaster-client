@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, useTheme } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
 import CustomSelect from "../../reusable/inputFields/CustomSelect";
 import BackspaceIcon from "@mui/icons-material/Backspace";
@@ -31,6 +31,8 @@ const AddMembers = (props) => {
   const { t } = props || {};
 
   const dispatch = useDispatch();
+  const theme = useTheme();
+
   const [memberState, setMemberState] = useState(initialMemberState);
   const [changesMade, setChangesMade] = useState(initialChangesMade);
   const [errorState, setErrorState] = useState(initialErrorState);
@@ -89,7 +91,7 @@ const AddMembers = (props) => {
   };
 
   return (
-    <CustomBox sx={{ width: "100%" }}>
+    <CustomBox sx={{ width: "100%", bgcolor: theme.palette.menu.light }}>
       <h2>
         <PersonAddIcon />
         {t?.fields?.create_new_member}
