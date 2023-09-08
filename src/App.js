@@ -19,6 +19,9 @@ import WorkoutPlans from "./components/app/workout-plans/WorkoutPlans";
 import { useEffect } from "react";
 import { fetchAppInfo } from "./actions/app";
 import { useDispatch, useSelector } from "react-redux";
+import { ThemeProvider } from "@mui/material";
+import darkTheme from "./styles/themes/darkTheme";
+import lightTheme from "./styles/themes/lightTheme";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,52 +36,56 @@ function App() {
   }, [appTheme]);
 
   return (
-    <AuthContext.Provider value={{ user: null, validToken: true }}>
-      <Routes>
-        <Route exact path="/" element={<Login />} />
-        <Route
-          exact
-          path="/dashboard"
-          element={<SecuredRoute component={Menu} display={<Dashboard />} />}
-        />
-        <Route
-          exact
-          path="/add-members"
-          element={<SecuredRoute component={Menu} display={<AddMembers />} />}
-        />
-        <Route
-          exact
-          path="/members"
-          element={<SecuredRoute component={Menu} display={<Members />} />}
-        />
-        <Route
-          exact
-          path="/workout-plans"
-          element={<SecuredRoute component={Menu} display={<WorkoutPlans />} />}
-        />
-        <Route
-          exact
-          path="/packages"
-          element={<SecuredRoute component={Menu} display={<Packages />} />}
-        />
-        <Route
-          exact
-          path="/planner"
-          element={<SecuredRoute component={Menu} display={<Planner />} />}
-        />
-        <Route
-          exact
-          path="/trainers"
-          element={<SecuredRoute component={Menu} display={<Trainers />} />}
-        />
-        <Route
-          exact
-          path="/settings"
-          element={<SecuredRoute component={Menu} display={<Settings />} />}
-        />
-      </Routes>
-      <NotificationContainer />
-    </AuthContext.Provider>
+    <ThemeProvider theme={appTheme === "light" ? lightTheme : darkTheme}>
+      <AuthContext.Provider value={{ user: null, validToken: true }}>
+        <Routes>
+          <Route exact path="/" element={<Login />} />
+          <Route
+            exact
+            path="/dashboard"
+            element={<SecuredRoute component={Menu} display={<Dashboard />} />}
+          />
+          <Route
+            exact
+            path="/add-members"
+            element={<SecuredRoute component={Menu} display={<AddMembers />} />}
+          />
+          <Route
+            exact
+            path="/members"
+            element={<SecuredRoute component={Menu} display={<Members />} />}
+          />
+          <Route
+            exact
+            path="/workout-plans"
+            element={
+              <SecuredRoute component={Menu} display={<WorkoutPlans />} />
+            }
+          />
+          <Route
+            exact
+            path="/packages"
+            element={<SecuredRoute component={Menu} display={<Packages />} />}
+          />
+          <Route
+            exact
+            path="/planner"
+            element={<SecuredRoute component={Menu} display={<Planner />} />}
+          />
+          <Route
+            exact
+            path="/trainers"
+            element={<SecuredRoute component={Menu} display={<Trainers />} />}
+          />
+          <Route
+            exact
+            path="/settings"
+            element={<SecuredRoute component={Menu} display={<Settings />} />}
+          />
+        </Routes>
+        <NotificationContainer />
+      </AuthContext.Provider>
+    </ThemeProvider>
   );
 }
 
