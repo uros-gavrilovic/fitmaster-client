@@ -47,6 +47,12 @@ export const translation = {
     },
   },
 
+  Dashboard: {
+    messages: {
+      welcome_back: "Welcome back",
+    },
+  },
+
   AddMembers: {
     fields: {
       avatar: "Profile Picture",

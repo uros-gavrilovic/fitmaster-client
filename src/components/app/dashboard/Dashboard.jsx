@@ -1,13 +1,16 @@
-import { Fragment } from "react";
-import BorderedSection from "../../reusable/containers/BorderedSection";
-import InfoIcon from "@mui/icons-material/Info";
 import TotalMembersCard from "./cards/TotalMembersCard";
 import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
+import withTranslations from "../../../utils/HighOrderComponent";
 
-export default function Dashboard(props) {
+export const Dashboard = (props) => {
+  const { t } = props || {};
+
+  const { user } = useSelector((state) => state.userReducer);
+
   return (
     <Box>
-      <h1>This is Dashboard.</h1>
+      <h1>{`${t?.messages?.welcome_back}, ${user.firstName}!`} </h1>
 
       <div
         style={{
@@ -26,4 +29,6 @@ export default function Dashboard(props) {
       </div>
     </Box>
   );
-}
+};
+
+export default withTranslations(Dashboard);

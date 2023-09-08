@@ -47,6 +47,12 @@ export const translation = {
     },
   },
 
+  Dashboard: {
+    messages: {
+      welcome_back: "Dobrodošli nazad",
+    },
+  },
+
   AddMembers: {
     fields: {
       firstName: "Ime",
