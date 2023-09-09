@@ -107,7 +107,7 @@ export default function LoginTab(props) {
           style={{ width: "100%" }}
           onClick={handleTabChange}
         >
-          {t?.buttons?.btnLogIn}
+          {t?.buttons?.btnRegister}
         </Button>
         <Button
           endIcon={<LoginIcon />}
