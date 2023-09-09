@@ -62,13 +62,13 @@ export const NeutralStatus = (props) => {
     <StatusBox
       color={
         theme.palette.mode === "light"
-          ? "rgb(85, 85, 85)"
-          : "rgb(211, 211, 211)"
+          ? theme.palette.neutral.dark
+          : theme.palette.neutral.light
       }
       backgroundColor={
         theme.palette.mode === "light"
-          ? "rgb(211, 211, 211)"
-          : "rgb(85, 85, 85)"
+          ? theme.palette.neutral.light
+          : theme.palette.neutral.dark
       }
       {...props}
     />

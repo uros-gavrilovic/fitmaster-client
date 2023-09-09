@@ -20,13 +20,23 @@ const lightTheme = createTheme({
     },
     success: {
       main: "#4caf50",
-      light: "#DBF6E5",
-      dark: "#118D57",
+      light: "rgba(34, 197, 94, 0.16)",
+      dark: "rgb(17, 141, 87)",
     },
     error: {
       main: "#f44336",
-      light: "#FFE4DE",
-      dark: "#B71D18",
+      light: "rgba(255, 86, 48, 0.16)",
+      dark: "rgb(183, 29, 24)",
+    },
+    warning: {
+      main: "#ff9800",
+      light: "rgba(255, 171, 0, 0.16)",
+      dark: "rgb(183, 110, 0)",
+    },
+    neutral: {
+      main: "#795548",
+      light: "rgba(145, 158, 171, 0.16)",
+      dark: "rgb(99, 115, 129)",
     },
     menu: {
       light: "#e0e0e0",
