@@ -12,6 +12,7 @@ export const translation = {
       password: "Lozinka",
       firstName: "Ime",
       lastName: "Prezime",
+      email: "E-mail",
     },
     buttons: {
       btnLogIn: "Prijavi se",
@@ -22,7 +23,8 @@ export const translation = {
     },
     messages: {
       registerTitle: "Registracija",
-      registerRequestSent: "Zahtev za registraciju poslat",
+      registerRequestSent:
+        "Zahtev za registraciju poslat. Ukoliko su podaci ispravni, dobićete e-mail za verifikaciju naloga.",
       registerSuccessMessage: "Uspešno registrovan novi trener",
       loginTitle: "Prijava",
       loginSuccessMessage: "Uspešno prijavljen",

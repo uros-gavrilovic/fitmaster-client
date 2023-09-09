@@ -29,7 +29,17 @@ export const login = (data, msg) => {
         );
       })
       .catch((err) => {
-        handleError(err, userActions, dispatch);
+        if (err.response.status === 403) {
+          const messages = err.response.data;
+
+          createNotification(
+            notificationType.warning,
+            messages.title,
+            messages?.message
+          );
+        } else {
+          handleError(err, userActions, dispatch);
+        }
       });
   };
 };

@@ -15,13 +15,8 @@ import { useDispatch } from "react-redux";
 import * as userActions from "../../actions/user";
 import CustomStepper from "../reusable/containers/CustomStepper";
 import { useTheme } from "@mui/material";
-
-const initialRegisterState = {
-  username: "",
-  password: "",
-  firstName: "",
-  lastName: "",
-};
+import validateEmail from "../../utils/validator";
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 
 export default function RegisterTab(props) {
   const { t, handleTabChange } = props || {};
@@ -31,12 +26,8 @@ export default function RegisterTab(props) {
   const dispatch = useDispatch();
   const theme = useTheme();
   const [registerState, setRegisterState] = useState(initialRegisterState);
-  const [registerErrorState, setRegisterErrorState] = useState({
-    username: false,
-    password: false,
-    firstName: false,
-    lastName: false,
-  });
+  const [registerErrorState, setRegisterErrorState] =
+    useState(initialErrorState);
   const [activeIndex, setActiveIndex] = useState(0);
 
   const handleRegister = () => {
@@ -61,11 +52,18 @@ export default function RegisterTab(props) {
       setRegisterErrorState
     );
 
+    const hasEmailError = validateEmail(
+      registerState.email,
+      "email",
+      setRegisterErrorState
+    );
+
     if (
       hasUsernameError ||
       hasPasswordError ||
       hasFirstNameError ||
-      hasLastNameError
+      hasLastNameError ||
+      hasEmailError
     )
       return;
 
@@ -167,10 +165,26 @@ export default function RegisterTab(props) {
                 })
               }
             />
+            <IconTextField
+              required
+              id="email"
+              title={t?.input?.email}
+              type="email"
+              icon={<AlternateEmailIcon sx={{ mr: 1, my: 0.5 }} />}
+              margin="dense"
+              value={registerState?.email}
+              error={registerErrorState.email}
+              onChange={(e) =>
+                setRegisterState({
+                  ...registerState,
+                  [e.target.id]: e.target.value,
+                })
+              }
+            />
           </Box>,
         ]}
         steps={steps}
-        isOptional={[false, false]}
+        isOptional={[false, false, false]}
         finishStep={
           <Button
             title={t?.buttons?.btnRegister}
@@ -198,3 +212,18 @@ export default function RegisterTab(props) {
     </Box>
   );
 }
+
+const initialRegisterState = {
+  firstName: "Uros",
+  lastName: "Gavrilovic",
+  username: "uros",
+  password: "uros",
+  email: "urosukigavrilovic@gmail.com",
+};
+const initialErrorState = {
+  username: false,
+  password: false,
+  email: false,
+  firstName: false,
+  lastName: false,
+};

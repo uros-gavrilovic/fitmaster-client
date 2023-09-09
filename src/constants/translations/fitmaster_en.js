@@ -12,6 +12,7 @@ export const translation = {
       password: "Password",
       firstName: "First Name",
       lastName: "Last Name",
+      email: "Email",
     },
     buttons: {
       btnLogIn: "Sign In",
@@ -22,7 +23,8 @@ export const translation = {
     },
     messages: {
       registerTitle: "Registration",
-      registerRequestSent: "Registration request sent",
+      registerRequestSent:
+        "Registration request sent. If your request is approved, you will receive an email to verify your account.",
       registerSuccessMessage: "Successfully registered a new trainer",
       loginTitle: "Log-In",
       loginSuccessMessage: "Successfully logged in",
