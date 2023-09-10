@@ -115,8 +115,8 @@ export function handleError(error, actions, dispatch) {
   dispatch(actions.actionError(error?.response?.data));
   createNotification(
     notificationType.error,
-    messages?.title,
-    messages?.message
+    messages?.title || "Greška!",
+    messages?.message || "Nije moguće izbrisati ovog člana!"
   );
 
   // if (error.response.status === 401) return window.location.reload();

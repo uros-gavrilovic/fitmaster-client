@@ -86,7 +86,7 @@ export const updateMember = (data, messages) => {
   return (dispatch) => {
     dispatch(membersActions.actionStart());
     return apiService
-      .put(membersPath(), data)
+      .put(membersPath(), { ...data, role: userRoles.MEMBER })
       .then((response) => {
         dispatch(membersActions.updateMember(response.data));
         createNotification(
