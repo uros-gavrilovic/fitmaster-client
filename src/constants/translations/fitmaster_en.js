@@ -30,7 +30,6 @@ export const translation = {
       loginSuccessMessage: "Successfully logged in",
     },
   },
-
   Menu: {
     tabs: {
       dashboard: "Dashboard",
@@ -38,6 +37,7 @@ export const translation = {
       members: "Members",
       workoutPlans: "Workout Plans",
       planner: "Scheduler",
+      exercises: "Exercises",
       packages: "Packages",
       trainers: "Trainers",
       settings: "Settings",
@@ -48,13 +48,11 @@ export const translation = {
       logoutSuccessMessage: "Successfully logged out",
     },
   },
-
   Dashboard: {
     messages: {
       welcome_back: "Welcome back",
     },
   },
-
   AddMembers: {
     fields: {
       avatar: "Profile Picture",
@@ -77,45 +75,12 @@ export const translation = {
       successMessage: "Successfully added a new member",
     },
   },
-
   Members: {
     search: "Search",
     messages: {
       noMembers: "No Members Found",
     },
   },
-
-  AddPackage: {
-    fields: {
-      name: "Package Name",
-      price: "Price",
-    },
-    components: {
-      h1Component: "Insert a new package",
-    },
-    buttons: {
-      btnSave: "Save",
-    },
-    messages: {
-      title: "Add Member",
-      successMessage: "Successfully added a new package",
-    },
-  },
-
-  MemberRow: {
-    fields: {
-      active: "Active",
-      inactive: "Inactive",
-      banned: "Banned",
-      pending: "Pending",
-    },
-    messages: {
-      title: "Delete Member",
-      successMessage: "Successfully deleted a member",
-      text: "Are you sure you want to delete the member?",
-    },
-  },
-
   Packages: {
     messages: {
       noPackages: "There are no packages available",
@@ -124,15 +89,6 @@ export const translation = {
       successDelete: "Successfully deleted a package",
     },
   },
-
-  PackageRow: {
-    messages: {
-      title: "Delete Package",
-      successDelete: "Successfully deleted a package",
-      text: "Are you sure you want to delete the package?",
-    },
-  },
-
   WorkoutPlans: {
     messages: {
       title: "Create Workout Plan",
@@ -203,7 +159,25 @@ export const translation = {
       loading: "Loading...",
     },
   },
-
+  Exercises: {
+    titles: {
+      add_exercise: "Add Exercise",
+    },
+    fields: {
+      name: "Name",
+      category: "Category",
+      body_part: "Body Part",
+      instructions: "Instructions",
+    },
+    buttons: {
+      save: "Save",
+      clear: "Clear",
+    },
+    messages: {
+      create_exercise_title: "Create Exercise",
+      create_exercise_success: "Successfully created an exercise",
+    },
+  },
   Settings: {
     tabs: {
       generalSettings: "General Settings",
@@ -277,6 +251,55 @@ export const translation = {
     phoneNumber: "Phone Number",
     hireDate: "Hired",
   },
+  ExercisesTable: {
+    name: "Name",
+    category: "Category",
+    bodyPart: "Body Part",
+    edit: "Edit",
+    delete: "Delete",
+  },
+
+  // Rows
+  MemberRow: {
+    fields: {
+      active: "Active",
+      inactive: "Inactive",
+      banned: "Banned",
+      pending: "Pending",
+    },
+    messages: {
+      title: "Delete Member",
+      successMessage: "Successfully deleted a member",
+      text: "Are you sure you want to delete the member?",
+    },
+  },
+  PackageRow: {
+    messages: {
+      title: "Delete Package",
+      successDelete: "Successfully deleted a package",
+      text: "Are you sure you want to delete the package?",
+    },
+  },
+  ExerciseRow: {
+    messages: {
+      confirm_delete_title: "Delete Exercise",
+      confirm_delete_text: "Are you sure you want to delete the exercise?",
+      delete_exercise_title: "Delete Exercise",
+      delete_exercise_success: "Successfully deleted an exercise",
+      edit_exercise_title: "Edit Exercise",
+      edit_exercise_success: "Successfully edited an exercise",
+    },
+    fields: {
+      name: "Name",
+      category: "Category",
+      body_part: "Body Part",
+      instructions: "Instructions",
+    },
+    buttons: {
+      save: "Save",
+      clear: "Clear",
+    },
+  },
 
   // Components
   CustomAccountMenu: {
@@ -284,7 +307,6 @@ export const translation = {
     settings: "Settings",
     logout: "Sign Out",
   },
-
   CustomStepper: {
     optional: "Optional",
     btnNext: "Next",
@@ -293,9 +315,24 @@ export const translation = {
     btnFinish: "Finish",
     btnReset: "Reset",
   },
-
   ConfirmModal: {
     btnYes: "Yes",
     btnNo: "No",
+  },
+  AddPackage: {
+    fields: {
+      name: "Package Name",
+      price: "Price",
+    },
+    components: {
+      h1Component: "Insert a new package",
+    },
+    buttons: {
+      btnSave: "Save",
+    },
+    messages: {
+      title: "Add Member",
+      successMessage: "Successfully added a new package",
+    },
   },
 };

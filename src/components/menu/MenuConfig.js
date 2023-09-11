@@ -4,6 +4,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import AddchartIcon from "@mui/icons-material/Addchart";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import EventIcon from "@mui/icons-material/Event";
+import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
 import TimerIcon from "@mui/icons-material/Timer";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -32,6 +33,12 @@ const tabs = [
     name: "Planner",
     icon: <EventIcon />,
     path: "/planner",
+  },
+  {
+    id: "exercises",
+    name: "Exercises",
+    icon: <SportsBasketballIcon />,
+    path: "/exercises",
   },
   {
     id: "packages",

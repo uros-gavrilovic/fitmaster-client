@@ -13,6 +13,7 @@ import AddMembers from "./components/app/add-members/AddMembers";
 import Members from "./components/app/members/Members";
 import Packages from "./components/app/packages/Packages";
 import Planner from "./components/app/planner/Planner";
+import Exercises from "./components/app/exercises/Exercises";
 import Trainers from "./components/app/trainers/Trainers";
 import Settings from "./components/app/settings/Settings";
 import WorkoutPlans from "./components/app/workout-plans/WorkoutPlans";
@@ -31,9 +32,6 @@ function App() {
   }, []);
 
   const { appTheme } = useSelector((state) => state.appReducer);
-  useEffect(() => {
-    console.log("promena");
-  }, [appTheme]);
 
   return (
     <ThemeProvider theme={appTheme === "light" ? lightTheme : darkTheme}>
@@ -71,6 +69,11 @@ function App() {
             exact
             path="/planner"
             element={<SecuredRoute component={Menu} display={<Planner />} />}
+          />
+          <Route
+            exact
+            path="/exercises"
+            element={<SecuredRoute component={Menu} display={<Exercises />} />}
           />
           <Route
             exact

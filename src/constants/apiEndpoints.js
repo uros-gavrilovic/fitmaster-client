@@ -14,6 +14,8 @@ export const membersIDPath = (id) => memberAPI + `/${id}`;
 
 // Exercises
 const exerciseAPI = `/api/exercise`;
+export const exercisesPath = () => exerciseAPI;
+export const exercisesIDPath = (id) => exerciseAPI + `/${id}`;
 export const exercisesDTOPath = () => exerciseAPI + `/dto`;
 export const filtersPath = () => exerciseAPI + `/filters`;
 

@@ -80,7 +80,9 @@ export function contains(obj, string, ignoreCase = false) {
 export function validateField(field, fieldName, setErrorState) {
   // Validates whetever field is empty or not.
 
-  const error = !field;
+  console.log(field);
+
+  const error = !field || field?.length === 0;
   setErrorState((prevState) => ({ ...prevState, [fieldName]: error }));
   return error;
 }
@@ -187,4 +189,17 @@ export function formatDateForScheduler(backEndDate) {
       backEndDate[4] // Minute
     )
   );
+}
+
+export function removeArray(jsonObject, fieldName) {
+  // Switches one element array to a single element
+
+  if (
+    jsonObject[fieldName] &&
+    Array.isArray(jsonObject[fieldName]) &&
+    jsonObject[fieldName].length === 1
+  ) {
+    jsonObject[fieldName] = jsonObject[fieldName][0];
+  }
+  return jsonObject;
 }
