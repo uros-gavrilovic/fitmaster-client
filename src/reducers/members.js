@@ -11,6 +11,7 @@ const membersSlice = createSlice({
 
     error: undefined,
     loading: false,
+    memberLoading: false, // Used for fetch requests to avoid table loading
   },
 
   reducers: {
@@ -39,7 +40,7 @@ const membersSlice = createSlice({
       state.member = action.payload;
 
       state.error = undefined;
-      state.loading = false;
+      state.memberLoading = false;
     },
     addMember(state, action) {
       state.members = [action.payload].concat(state.members);
@@ -64,9 +65,14 @@ const membersSlice = createSlice({
       state.loading = false;
     },
 
-    actionStart(state) {
+    actionStart(state, action) {
       state.error = undefined;
-      state.loading = true;
+
+      if (action.payload === true) {
+        state.memberLoading = true;
+      } else {
+        state.loading = true;
+      }
     },
     actionError(state, action) {
       state.error = action.payload;

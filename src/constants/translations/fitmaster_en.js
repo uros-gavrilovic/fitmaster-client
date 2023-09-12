@@ -336,4 +336,29 @@ export const translation = {
       successMessage: "Successfully added a new package",
     },
   },
+
+  // Modals
+  MemberModal: {
+    tabs: {
+      general_info: "General Information",
+      memberships: "Memberships",
+    },
+    fields: {
+      member_ID: "Member ID",
+      first_name: "First Name",
+      last_name: "Last Name",
+      gender: "Gender",
+      address: "Address",
+      phone_number: "Phone Number",
+      birth_date: "Birth Date",
+      email: "Email",
+    },
+    buttons: {
+      cancel: "Cancel",
+      edit: "Edit",
+      save: "Save",
+      delete: "Delete",
+    },
+    messages: {},
+  },
 };

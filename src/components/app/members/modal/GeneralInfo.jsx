@@ -1,5 +1,5 @@
 import { useState, useEffect, Fragment } from "react";
-import { Button, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import CustomSelect from "../../../reusable/inputFields/CustomSelect";
 import BorderedSection from "../../../reusable/containers/BorderedSection";
 import InfoIcon from "@mui/icons-material/Info";
@@ -15,33 +15,19 @@ import * as membersActions from "../../../../actions/members";
 import { useSelector } from "react-redux";
 
 export default function GeneralInfo(props) {
-  const {
-    memberState, // memberDTO passed as props from MemberModal
-    // setMemberState,
-    open,
-    setOpen,
-    dispatch,
-  } = props || {};
+  const { dispatch, t } = props || {};
 
   const { member } = useSelector((state) => state.membersReducer);
+
+  const [editEnabled, setEditEnabled] = useState(false);
+  const [confirmModalVisible, setConfirmModalVisible] = useState(false);
+  const [errorState, setErrorState] = useState(initialErrorState);
   const [newMemberState, setNewMemberState] = useState(member);
+
   useEffect(() => {
     setNewMemberState(member);
   }, [member]);
 
-  const [confirmModalVisible, setConfirmModalVisible] = useState(false);
-  const [editEnabled, setEditEnabled] = useState(false);
-  const [errorState, setErrorState] = useState({
-    firstName: false,
-    lastName: false,
-  });
-
-  const handleToggleEdit = (e, param) => {
-    setEditEnabled((prevEditEnabled) =>
-      param !== undefined ? param : !prevEditEnabled
-    );
-    setNewMemberState(memberState); // if edit is disabled, revert changes
-  };
   const handleChange = (e) => {
     if (!editEnabled) return;
 
@@ -50,62 +36,75 @@ export default function GeneralInfo(props) {
       [e.target.id]: e.target.value !== "" ? e.target.value : null,
     });
   };
-  const handleSave = () => {
-    const hasFirstNameError = validateField(
-      newMemberState.firstName,
-      "firstName",
-      setErrorState
+  const handleToggleEdit = (e, param) => {
+    setEditEnabled((prevEditEnabled) =>
+      param !== undefined ? param : !prevEditEnabled
     );
-    const hasLastNameError = validateField(
-      newMemberState.lastName,
-      "lastName",
-      setErrorState
+    setNewMemberState(member); // if edit is disabled, revert changes
+  };
+  const handleSave = () => {
+    const fieldsToValidate = ["firstName", "lastName"];
+    const hasErrors = fieldsToValidate.some((field) =>
+      validateField(newMemberState[field], field, setErrorState)
     );
 
-    if (hasFirstNameError || hasLastNameError) return;
-    dispatch(membersActions.updateMember(newMemberState));
+    if (!hasErrors) {
+      dispatch(membersActions.updateMember(newMemberState));
+    }
   };
   const handleDelete = () => {
-    dispatch(membersActions.deleteMember(memberState.memberID));
-    setOpen(false);
+    dispatch(membersActions.deleteMember(member.memberID));
   };
 
   return (
     <BorderedSection
       icon={InfoIcon}
-      title="General Information"
+      title={t?.tabs?.general_info}
       style={{ display: "grid", gridTemplateColumns: "1fr" }}
     >
+      <ConfirmModal
+        title="Delete Member"
+        text="Are you sure you want to delete this member?"
+        yes_action={handleDelete}
+        no_action={() => {
+          setConfirmModalVisible(false);
+        }}
+        open={confirmModalVisible}
+        setOpen={setConfirmModalVisible}
+      />
+
       <TextField
-        id="id"
-        label="Member ID"
         readOnly
+        id="memberID"
+        label={t?.fields?.member_ID}
         variant="filled"
         sx={{ width: "25ch" }}
-        value={newMemberState?.memberID}
+        value={`# ${newMemberState?.memberID}`}
         onChange={handleChange}
       />
       <TextField
         required
         id="firstName"
-        label="First name"
+        label={t?.fields?.first_name}
         variant="filled"
         sx={{ width: "25ch" }}
+        error={errorState.firstName}
         value={newMemberState?.firstName}
         onChange={handleChange}
       />
       <TextField
         required
         id="lastName"
-        label="Last name"
+        label={t?.fields?.last_name}
         variant="filled"
         sx={{ width: "25ch" }}
+        error={errorState.lastName}
         value={newMemberState?.lastName}
         onChange={handleChange}
       />
       <CustomSelect
         id="gender"
-        label="Gender"
+        label={t?.fields?.gender}
         variant="filled"
         value={newMemberState?.gender}
         hasBlank={true}
@@ -115,7 +114,7 @@ export default function GeneralInfo(props) {
       />
       <TextField
         id="address"
-        label="Address"
+        label={t?.fields?.address}
         variant="filled"
         sx={{ width: "25ch" }}
         value={newMemberState?.address}
@@ -123,7 +122,7 @@ export default function GeneralInfo(props) {
       />
       <TextField
         id="phoneNumber"
-        label="Phone number"
+        label={t?.fields?.phone_number}
         variant="filled"
         sx={{ width: "25ch" }}
         value={newMemberState?.phoneNumber}
@@ -132,7 +131,7 @@ export default function GeneralInfo(props) {
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DatePicker
           disableFuture
-          label="Birth date"
+          label={t?.fields?.birth_date}
           variant="filled"
           value={new Date(newMemberState?.birthDate)}
           onAccept={(e) => {
@@ -144,7 +143,7 @@ export default function GeneralInfo(props) {
         />
       </LocalizationProvider>
 
-      <div style={{ float: "right" }}>
+      <Box sx={{ float: "right" }}>
         {editEnabled ? (
           <Fragment>
             <Button
@@ -152,14 +151,14 @@ export default function GeneralInfo(props) {
               endIcon={<CancelIcon />}
               onClick={handleToggleEdit}
             >
-              Cancel
+              {t?.buttons?.cancel}
             </Button>
             <Button
               variant="contained"
               endIcon={<SaveIcon />}
               onClick={handleSave}
             >
-              Save
+              {t?.buttons?.save}
             </Button>
           </Fragment>
         ) : (
@@ -168,7 +167,7 @@ export default function GeneralInfo(props) {
             endIcon={<EditIcon />}
             onClick={handleToggleEdit}
           >
-            Edit
+            {t?.buttons?.edit}
           </Button>
         )}
         <Button
@@ -178,19 +177,15 @@ export default function GeneralInfo(props) {
             setConfirmModalVisible(true);
           }}
         >
-          Delete
+          {t?.buttons?.delete}
         </Button>
-      </div>
-      <ConfirmModal
-        title="Delete Member"
-        text="Are you sure you want to delete this member?"
-        yes_action={handleDelete}
-        no_action={() => {
-          setConfirmModalVisible(false);
-        }}
-        open={confirmModalVisible}
-        setOpen={setConfirmModalVisible}
-      />
+      </Box>
     </BorderedSection>
   );
 }
+
+const initialErrorState = {
+  firstName: false,
+  lastName: false,
+  email: false,
+};

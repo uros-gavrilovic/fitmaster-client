@@ -15,9 +15,9 @@ import { memberStatus } from "../../../constants/globals";
 
 const MemberRow = (props) => {
   const { member, selectVersion, selectMember, setSelectModalOpen, t } =
-    props || {}; // memberDTO from fetchMembersDTO list
+    props || {};
 
-  const [memberState, setMemberState] = useState(member);
+  const [memberState, setMemberState] = useState(member); // member from membersDTO mapped list
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
 

@@ -46,7 +46,7 @@ export const searchMembersDTO = (string) => {
 
 export const fetchMember = (id) => {
   return (dispatch) => {
-    // dispatch(membersActions.actionStart());
+    dispatch(membersActions.actionStart(true));
     return apiService
       .get(membersIDPath(id))
       .then((response) => {

@@ -4,7 +4,7 @@ import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { useSpring, animated } from "@react-spring/web";
-import { forwardRef, useEffect } from "react";
+import { forwardRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Avatar,
@@ -18,36 +18,34 @@ import InfoIcon from "@mui/icons-material/Info";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import GeneralInfo from "./modal/GeneralInfo";
 import MembershipHistory from "./modal/MembershipHistory";
-import * as membersActions from "../../../actions/members";
 import "../../../utils/customHooks/useIsMount";
-import { useIsMount } from "../../../utils/customHooks/useIsMount";
+import withTranslations from "../../../utils/HighOrderComponent";
+import Loading from "../../reusable/Loading";
 
 const MemberModal = (props) => {
-  const { memberState, setMemberState, open, setOpen } = props || {};
+  const { memberState, setMemberState, open, setOpen, t } = props || {};
 
   const dispatch = useDispatch();
-  const { member } = useSelector((state) => state.membersReducer);
   const [activeTab, setActiveTab] = useState(
     <GeneralInfo
       {...{
         memberState,
         setMemberState,
-        open,
         setOpen,
         dispatch,
+        t,
       }}
     />
   );
 
+  const { memberLoading } = useSelector((state) => state.membersReducer);
+
   const handleBackgroundClick = () => {
     setOpen(false);
-    // handleToggleEdit(undefined, false);
   };
 
   return (
     <Modal
-      aria-labelledby="spring-modal-title"
-      aria-describedby="spring-modal-description"
       open={open}
       onClose={handleBackgroundClick}
       closeAfterTransition
@@ -59,7 +57,7 @@ const MemberModal = (props) => {
       }}
     >
       <Fade in={open}>
-        {memberState !== "" ? (
+        {!memberLoading ? (
           <Box style={{ width: "auto" }} sx={style}>
             <div className="left-div">
               <Avatar
@@ -100,6 +98,7 @@ const MemberModal = (props) => {
                             open,
                             setOpen,
                             dispatch,
+                            t,
                           }}
                         />
                       );
@@ -117,14 +116,14 @@ const MemberModal = (props) => {
             <div className="middle-div">{activeTab}</div>
           </Box>
         ) : (
-          <Box>Unable to retreive this member.</Box>
+          <Loading />
         )}
       </Fade>
     </Modal>
   );
 };
 
-export default MemberModal;
+export default withTranslations(MemberModal);
 
 const Fade = forwardRef(function Fade(props, ref) {
   const {
