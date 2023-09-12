@@ -10,6 +10,10 @@ import IconButton from "@mui/material/IconButton";
 import * as exercisesActions from "../../../actions/exercises";
 import { Edit } from "@mui/icons-material";
 import EditExerciseModal from "./EditExerciseModal";
+import {
+  capitalizeFirstLetter,
+  removeUnderscores,
+} from "../../../utils/utilFunctions";
 
 const ExerciseRow = (props) => {
   const { exercise, t } = props;
@@ -51,10 +55,19 @@ const ExerciseRow = (props) => {
       <TableRow key={exerciseState?.exerciseID}>
         <TableCell>{exerciseState?.name}</TableCell>
         <TableCell align="center">
-          <Chip label={exerciseState?.category} />
+          <Chip
+            label={capitalizeFirstLetter(
+              removeUnderscores(exerciseState?.category)
+            )}
+          />
         </TableCell>
         <TableCell align="center">
-          <Chip label={exerciseState?.bodyPart} variant="outlined" />
+          <Chip
+            label={capitalizeFirstLetter(
+              removeUnderscores(exerciseState?.bodyPart)
+            )}
+            variant="outlined"
+          />
         </TableCell>
         <TableCell align="center">
           <IconButton

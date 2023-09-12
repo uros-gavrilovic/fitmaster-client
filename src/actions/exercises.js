@@ -89,7 +89,6 @@ export const deleteExercise = (exerciseID, msg) => {
         );
       })
       .catch((err) => {
-        console.log(err);
         handleError(err, exercisesActions, dispatch);
       });
   };
@@ -113,7 +112,6 @@ export const editExercise = (exercise, msg) => {
         );
       })
       .catch((err) => {
-        console.log(err);
         handleError(err, exercisesActions, dispatch);
       });
   };

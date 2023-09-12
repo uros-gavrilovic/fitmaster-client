@@ -13,6 +13,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBasketball } from "@fortawesome/free-solid-svg-icons";
 import { validateField } from "../../../utils/utilFunctions";
 import Loading from "../../reusable/Loading";
+import IconTextField from "../../reusable/inputFields/IconTextField";
+import SearchIcon from "@mui/icons-material/Search";
 
 const Exercises = (props) => {
   const { t } = props || {};
@@ -74,6 +76,9 @@ const Exercises = (props) => {
     dispatch(exercisesActions.createExercise(newExerciseState, t?.messages));
     handleClear();
   };
+  const handleSearch = (event) => {
+    dispatch(exercisesActions.searchExercisesDTO(event.target.value));
+  };
 
   return (
     <Fragment>
@@ -81,12 +86,21 @@ const Exercises = (props) => {
         {loading && exercisesDTO.length === 0 ? (
           <Loading />
         ) : (
-          <ExercisesTable
-            style={{ width: "100%", height: "100%" }}
-            config={exercisesConfig}
-            rows={exercisesDTO}
-            rowComponent={rowComponentFunction}
-          />
+          <Box>
+            <IconTextField
+              id="search"
+              title={t?.fields?.search}
+              icon={<SearchIcon />}
+              onChange={handleSearch}
+              style={{ float: "right" }}
+            />
+            <ExercisesTable
+              style={{ width: "100%", height: "100%" }}
+              config={exercisesConfig}
+              rows={exercisesDTO}
+              rowComponent={rowComponentFunction}
+            />
+          </Box>
         )}
 
         <Paper sx={{ marginLeft: "1vw", padding: "1vw" }}>

@@ -168,6 +168,7 @@ export const translation = {
       category: "Kategorija",
       body_part: "Deo tela",
       instructions: "Uputstva",
+      search: "Pretraži",
     },
     buttons: {
       save: "Sačuvaj",

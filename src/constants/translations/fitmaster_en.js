@@ -168,6 +168,7 @@ export const translation = {
       category: "Category",
       body_part: "Body Part",
       instructions: "Instructions",
+      search: "Search",
     },
     buttons: {
       save: "Save",

@@ -80,8 +80,6 @@ export function contains(obj, string, ignoreCase = false) {
 export function validateField(field, fieldName, setErrorState) {
   // Validates whetever field is empty or not.
 
-  console.log(field);
-
   const error = !field || field?.length === 0;
   setErrorState((prevState) => ({ ...prevState, [fieldName]: error }));
   return error;
@@ -117,8 +115,8 @@ export function handleError(error, actions, dispatch) {
   dispatch(actions.actionError(error?.response?.data));
   createNotification(
     notificationType.error,
-    messages?.title || "Greška!",
-    messages?.message || "Nije moguće izbrisati ovog člana!"
+    messages?.title || "Error!",
+    messages?.message || "Unable to connect to the server!"
   );
 
   // if (error.response.status === 401) return window.location.reload();
