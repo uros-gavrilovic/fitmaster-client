@@ -8,18 +8,24 @@ const membersSlice = createSlice({
     membersDTO: [],
     allMembersDTO: [],
     member: undefined,
+
     error: undefined,
+    loading: false,
   },
 
   reducers: {
     fetchMembers(state, action) {
       state.members = action.payload;
+
       state.error = undefined;
+      state.loading = false;
     },
     fetchMembersDTO(state, action) {
       state.membersDTO = action.payload;
       state.allMembersDTO = state.membersDTO;
+
       state.error = undefined;
+      state.loading = false;
     },
     searchMembersDTO(state, action) {
       const searchTerm = action.payload.toLowerCase();
@@ -31,34 +37,36 @@ const membersSlice = createSlice({
     },
     fetchMember(state, action) {
       state.member = action.payload;
+
       state.error = undefined;
+      state.loading = false;
     },
     addMember(state, action) {
       state.members = [action.payload].concat(state.members);
+
       state.error = undefined;
+      state.loading = false;
     },
     deleteMember(state, action) {
-      const memberIDToDelete = action.payload;
-
-      const updatedMembersDTO = state.membersDTO.filter(
-        (pack) => pack.memberID !== memberIDToDelete
+      state.membersDTO = state.membersDTO.filter(
+        (pack) => pack.memberID !== action.payload
       );
 
-      return {
-        ...state,
-        membersDTO: updatedMembersDTO,
-        error: undefined,
-      };
+      state.error = undefined;
+      state.loading = false;
     },
     updateMember(state, action) {
       state.membersDTO = state.membersDTO?.map((member) =>
         member.memberID === action.payload.memberID ? action.payload : member
       );
+
       state.error = undefined;
+      state.loading = false;
     },
 
     actionStart(state) {
       state.error = undefined;
+      state.loading = true;
     },
     actionError(state, action) {
       state.error = action.payload;

@@ -1,13 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
-import * as memberActions from "../../../actions/members";
 import { useDispatch } from "react-redux";
-import {
-  Avatar,
-  IconButton,
-  TableCell,
-  TableRow,
-  ToggleButton,
-} from "@mui/material";
+import * as memberActions from "../../../actions/members";
+import { Avatar, IconButton, TableCell, TableRow } from "@mui/material";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import InfoIcon from "@mui/icons-material/Info";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -20,19 +14,23 @@ import withTranslations from "../../../utils/HighOrderComponent";
 import { memberStatus } from "../../../constants/globals";
 
 const MemberRow = (props) => {
-  const { t, member, selectVersion, selectMember, setSelectModalOpen } =
+  const { member, selectVersion, selectMember, setSelectModalOpen, t } =
     props || {}; // memberDTO from fetchMembersDTO list
 
-  const dispatch = useDispatch();
   const [memberState, setMemberState] = useState(member);
-  const [infoModalVisible, setInfoModalVisible] = useState(false);
+  const [editModalVisible, setEditModalVisible] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
 
+  const dispatch = useDispatch();
   useEffect(() => {
     setMemberState(member);
   }, [member]);
 
   const handlePlan = () => {};
+  const handleEdit = () => {
+    setEditModalVisible(true);
+    dispatch(memberActions.fetchMember(memberState.memberID));
+  };
   const handleDelete = () => {
     dispatch(memberActions.deleteMember(memberState.memberID, t?.messages));
   };
@@ -46,8 +44,8 @@ const MemberRow = (props) => {
       <MemberModal
         memberState={memberState}
         setMemberState={setMemberState}
-        open={infoModalVisible}
-        setOpen={setInfoModalVisible}
+        open={editModalVisible}
+        setOpen={setEditModalVisible}
       />
       <ConfirmModal
         title={t?.messages.title}
@@ -82,18 +80,14 @@ const MemberRow = (props) => {
           )}
         </TableCell>
         {!selectVersion ? (
-          <>
+          <Fragment>
             <TableCell align="center">
               <IconButton onClick={handlePlan}>
                 <AssignmentIcon />
               </IconButton>
             </TableCell>
             <TableCell align="center">
-              <IconButton
-                onClick={() => {
-                  setInfoModalVisible(true);
-                }}
-              >
+              <IconButton onClick={handleEdit}>
                 <InfoIcon />
               </IconButton>
             </TableCell>
@@ -106,7 +100,7 @@ const MemberRow = (props) => {
                 <DeleteForeverIcon />
               </IconButton>
             </TableCell>
-          </>
+          </Fragment>
         ) : (
           <TableCell align="center">
             <IconButton onClick={handleSelectMember}>

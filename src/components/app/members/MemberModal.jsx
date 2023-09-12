@@ -22,60 +22,7 @@ import * as membersActions from "../../../actions/members";
 import "../../../utils/customHooks/useIsMount";
 import { useIsMount } from "../../../utils/customHooks/useIsMount";
 
-const Fade = forwardRef(function Fade(props, ref) {
-  const {
-    children,
-    in: open,
-    onClick,
-    onEnter,
-    onExited,
-    ownerState,
-    ...other
-  } = props;
-  const style = useSpring({
-    from: { opacity: 0 },
-    to: { opacity: open ? 1 : 0 },
-    onStart: () => {
-      if (open && onEnter) {
-        onEnter(null, true);
-      }
-    },
-    onRest: () => {
-      if (!open && onExited) {
-        onExited(null, true);
-      }
-    },
-  });
-
-  return (
-    <animated.div ref={ref} style={style} {...other}>
-      {cloneElement(children, { onClick })}
-    </animated.div>
-  );
-});
-Fade.propTypes = {
-  children: PropTypes.element,
-  in: PropTypes.bool,
-  onClick: PropTypes.any,
-  onEnter: PropTypes.func,
-  onExited: PropTypes.func,
-  ownerState: PropTypes.any,
-};
-const style = {
-  width: "auto",
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  display: "grid",
-  gridTemplateColumns: "1fr 3fr",
-};
-
-export default function MemberModal(props) {
+const MemberModal = (props) => {
   const { memberState, setMemberState, open, setOpen } = props || {};
 
   const dispatch = useDispatch();
@@ -91,21 +38,6 @@ export default function MemberModal(props) {
       }}
     />
   );
-
-  const initial = useIsMount();
-  useEffect(() => {
-    if (initial) return;
-
-    if (open) {
-      console.log("OPEN!");
-      dispatch(membersActions.fetchMember(memberState.memberID));
-    } else {
-      console.log("CLOSED!");
-    }
-  }, [open]);
-  useEffect(() => {
-    setMemberState(member);
-  }, [member]);
 
   const handleBackgroundClick = () => {
     setOpen(false);
@@ -190,4 +122,59 @@ export default function MemberModal(props) {
       </Fade>
     </Modal>
   );
-}
+};
+
+export default MemberModal;
+
+const Fade = forwardRef(function Fade(props, ref) {
+  const {
+    children,
+    in: open,
+    onClick,
+    onEnter,
+    onExited,
+    ownerState,
+    ...other
+  } = props;
+  const style = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: open ? 1 : 0 },
+    onStart: () => {
+      if (open && onEnter) {
+        onEnter(null, true);
+      }
+    },
+    onRest: () => {
+      if (!open && onExited) {
+        onExited(null, true);
+      }
+    },
+  });
+
+  return (
+    <animated.div ref={ref} style={style} {...other}>
+      {cloneElement(children, { onClick })}
+    </animated.div>
+  );
+});
+Fade.propTypes = {
+  children: PropTypes.element,
+  in: PropTypes.bool,
+  onClick: PropTypes.any,
+  onEnter: PropTypes.func,
+  onExited: PropTypes.func,
+  ownerState: PropTypes.any,
+};
+const style = {
+  width: "auto",
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  display: "grid",
+  gridTemplateColumns: "1fr 3fr",
+};
