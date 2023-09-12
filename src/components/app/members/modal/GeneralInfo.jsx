@@ -57,11 +57,7 @@ export default function GeneralInfo(props) {
   };
 
   return (
-    <BorderedSection
-      icon={InfoIcon}
-      title={t?.tabs?.general_info}
-      style={{ display: "grid", gridTemplateColumns: "1fr" }}
-    >
+    <BorderedSection icon={InfoIcon} title={t?.tabs?.general_info}>
       <ConfirmModal
         title="Delete Member"
         text="Are you sure you want to delete this member?"
@@ -73,75 +69,77 @@ export default function GeneralInfo(props) {
         setOpen={setConfirmModalVisible}
       />
 
-      <TextField
-        readOnly
-        id="memberID"
-        label={t?.fields?.member_ID}
-        variant="filled"
-        sx={{ width: "25ch" }}
-        value={`# ${newMemberState?.memberID}`}
-        onChange={handleChange}
-      />
-      <TextField
-        required
-        id="firstName"
-        label={t?.fields?.first_name}
-        variant="filled"
-        sx={{ width: "25ch" }}
-        error={errorState.firstName}
-        value={newMemberState?.firstName}
-        onChange={handleChange}
-      />
-      <TextField
-        required
-        id="lastName"
-        label={t?.fields?.last_name}
-        variant="filled"
-        sx={{ width: "25ch" }}
-        error={errorState.lastName}
-        value={newMemberState?.lastName}
-        onChange={handleChange}
-      />
-      <CustomSelect
-        id="gender"
-        label={t?.fields?.gender}
-        variant="filled"
-        value={newMemberState?.gender}
-        hasBlank={true}
-        sx={{ width: "25ch" }}
-        options={["MALE", "FEMALE"]}
-        onChange={handleChange}
-      />
-      <TextField
-        id="address"
-        label={t?.fields?.address}
-        variant="filled"
-        sx={{ width: "25ch" }}
-        value={newMemberState?.address}
-        onChange={handleChange}
-      />
-      <TextField
-        id="phoneNumber"
-        label={t?.fields?.phone_number}
-        variant="filled"
-        sx={{ width: "25ch" }}
-        value={newMemberState?.phoneNumber}
-        onChange={handleChange}
-      />
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <DatePicker
-          disableFuture
-          label={t?.fields?.birth_date}
+      <Box sx={{ padding: "1vw" }}>
+        <TextField
+          readOnly
+          id="memberID"
+          label={t?.fields?.member_ID}
           variant="filled"
-          value={new Date(newMemberState?.birthDate)}
-          onAccept={(e) => {
-            setNewMemberState({
-              ...newMemberState,
-              birthDate: e,
-            });
-          }}
+          sx={{ width: "25ch" }}
+          value={`# ${newMemberState?.memberID}`}
+          onChange={handleChange}
         />
-      </LocalizationProvider>
+        <TextField
+          required
+          id="firstName"
+          label={t?.fields?.first_name}
+          variant="filled"
+          sx={{ width: "25ch" }}
+          error={errorState.firstName}
+          value={newMemberState?.firstName}
+          onChange={handleChange}
+        />
+        <TextField
+          required
+          id="lastName"
+          label={t?.fields?.last_name}
+          variant="filled"
+          sx={{ width: "25ch" }}
+          error={errorState.lastName}
+          value={newMemberState?.lastName}
+          onChange={handleChange}
+        />
+        <CustomSelect
+          id="gender"
+          label={t?.fields?.gender}
+          variant="filled"
+          value={newMemberState?.gender}
+          hasBlank={true}
+          sx={{ width: "25ch" }}
+          options={["MALE", "FEMALE"]}
+          onChange={handleChange}
+        />
+        <TextField
+          id="address"
+          label={t?.fields?.address}
+          variant="filled"
+          sx={{ width: "25ch" }}
+          value={newMemberState?.address}
+          onChange={handleChange}
+        />
+        <TextField
+          id="phoneNumber"
+          label={t?.fields?.phone_number}
+          variant="filled"
+          sx={{ width: "25ch" }}
+          value={newMemberState?.phoneNumber}
+          onChange={handleChange}
+        />
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DatePicker
+            disableFuture
+            label={t?.fields?.birth_date}
+            variant="filled"
+            value={new Date(newMemberState?.birthDate)}
+            onAccept={(e) => {
+              setNewMemberState({
+                ...newMemberState,
+                birthDate: e,
+              });
+            }}
+          />
+        </LocalizationProvider>
+      </Box>
 
       <Box sx={{ float: "right" }}>
         {editEnabled ? (

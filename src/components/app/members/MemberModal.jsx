@@ -60,10 +60,12 @@ const MemberModal = (props) => {
         {!memberLoading ? (
           <Box style={{ width: "auto" }} sx={style}>
             <div className="left-div">
-              <Avatar
-                sx={{ width: "8vw", height: "10vh", margin: "0.5vw" }}
-                src={memberState?.image}
-              />
+              <Box sx={{ display: "flex", justifyContent: "center" }}>
+                <Avatar
+                  sx={{ width: "8vw", height: "10vh", margin: "0.5vw" }}
+                  src={memberState?.image}
+                />
+              </Box>
               <Fragment>
                 <MenuList>
                   <MenuItem
@@ -76,6 +78,7 @@ const MemberModal = (props) => {
                             dispatch,
                             open,
                             setOpen,
+                            t,
                           }}
                         />
                       );
