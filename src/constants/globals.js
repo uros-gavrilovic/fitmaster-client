@@ -35,3 +35,10 @@ export const memberStatus = {
   PENDING: "PENDING",
   BANNED: "BANNED",
 };
+
+export const planStatus = {
+  COMPLETED: "COMPLETED",
+  AWAITING: "AWAITING",
+  CANCELLED: "CANCELLED",
+  EXPIRED: "EXPIRED",
+};

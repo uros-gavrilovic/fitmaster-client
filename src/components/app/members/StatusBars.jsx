@@ -1,18 +1,18 @@
 import React from "react";
-import { Box, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
+import Chip from "@mui/material/Chip";
 
-const StatusBox = ({ color, backgroundColor, ...props }) => {
+const StatusBox = ({ color, backgroundColor, children, ...props }) => {
   const boxStyles = {
     height: "auto",
     width: "auto",
     color,
     backgroundColor,
-    borderRadius: "5px",
     padding: "0.7ch",
     fontWeight: "bold",
   };
 
-  return <Box sx={boxStyles} {...props}></Box>;
+  return <Chip label={children} sx={boxStyles} {...props} />;
 };
 
 export const GoodStatus = (props) => {

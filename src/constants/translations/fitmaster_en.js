@@ -386,7 +386,9 @@ export const translation = {
   CustomViewer: {
     fields: {
       loading: "Loading...",
-      status: "Status",
+      awaiting: "Awaiting",
+      cancelled: "Cancelled",
+      expired: "Expired",
       completed: "Completed",
     },
   },

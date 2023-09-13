@@ -1,16 +1,20 @@
 import { Fragment } from "react";
 import { Typography, Box } from "@mui/material";
 import { useSelector } from "react-redux";
-import Loading from "../../reusable/Loading";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { BadStatus, GoodStatus } from "../members/StatusBars";
+import {
+  GoodStatus,
+  OkayStatus,
+  NeutralStatus,
+  BadStatus,
+} from "../members/StatusBars";
 import withTranslations from "../../../utils/HighOrderComponent";
-import Chip from "@mui/material/Chip";
+import { planStatus } from "../../../constants/globals";
+import EventAvailableIcon from "@mui/icons-material/EventAvailable";
+import EventBusyIcon from "@mui/icons-material/EventBusy";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 
 const CustomViewer = (props) => {
   const { fields, event, t } = props || {};
-  console.log(event);
 
   const { plan, loading } = useSelector((state) => state.plansReducer);
   return loading ? (
@@ -26,23 +30,35 @@ const CustomViewer = (props) => {
           gap: "8px",
         }}
       >
-        <AssignmentIcon />
-        {t?.fields?.status}
-        <GoodStatus>{plan.status}</GoodStatus>
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          gap: "8px",
-        }}
-      >
-        <CheckCircleIcon />
-        {t?.fields?.completed}
+        {statusComponentMap(t?.fields)[plan.status]}
       </Box>
     </Fragment>
   );
 };
 
 export default withTranslations(CustomViewer);
+
+const getStatusComponent = (icon, statusText) => (
+  <Fragment>
+    {icon}
+    {statusText}
+  </Fragment>
+);
+const statusComponentMap = (t) => ({
+  [planStatus.COMPLETED]: getStatusComponent(
+    <EventAvailableIcon />,
+    <GoodStatus>{t?.completed?.toUpperCase()}</GoodStatus>
+  ),
+  [planStatus.CANCELLED]: getStatusComponent(
+    <EventBusyIcon />,
+    <BadStatus>{t?.cancelled?.toUpperCase()}</BadStatus>
+  ),
+  [planStatus.AWAITING]: getStatusComponent(
+    <CalendarTodayIcon />,
+    <NeutralStatus>{t?.awaiting?.toUpperCase()}</NeutralStatus>
+  ),
+  [planStatus.EXPIRED]: getStatusComponent(
+    <EventBusyIcon />,
+    <OkayStatus>{t?.expired?.toUpperCase()}</OkayStatus>
+  ),
+});
