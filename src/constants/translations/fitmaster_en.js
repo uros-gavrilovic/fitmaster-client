@@ -383,4 +383,11 @@ export const translation = {
       confirm: "Confirm",
     },
   },
+  CustomViewer: {
+    fields: {
+      loading: "Loading...",
+      status: "Status",
+      completed: "Completed",
+    },
+  },
 };

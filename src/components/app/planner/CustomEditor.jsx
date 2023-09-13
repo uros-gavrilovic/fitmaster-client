@@ -22,6 +22,7 @@ import { ListSubheader } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import PostAddIcon from "@mui/icons-material/PostAdd";
 import { useIsMount } from "../../../utils/customHooks/useIsMount";
 
 const CustomEditor = (props) => {
@@ -75,6 +76,21 @@ const CustomEditor = (props) => {
         [event.target.id]: event.target.value,
       };
     });
+  };
+  const handleEditActivities = () => {};
+  const handleRemoveActivity = (activityIndex) => {
+    let updatedActivities = [...eventState.activities];
+
+    if (updatedActivities.length === 1) {
+      updatedActivities = [];
+    } else {
+      updatedActivities.splice(activityIndex, 1);
+    }
+
+    setEventState((prev) => ({
+      ...prev,
+      activities: updatedActivities,
+    }));
   };
   const handleSubmit = async () => {
     // Your own validation
@@ -210,28 +226,44 @@ const CustomEditor = (props) => {
             <ListSubheader component="div">{`${t?.fields?.activities} *`}</ListSubheader>
           }
         >
-          {eventState.activities?.map((activity) => (
-            <ListItem
-              secondaryAction={
-                <IconButton edge="end">
-                  <RemoveIcon />
-                </IconButton>
-              }
-            >
-              <ListItemAvatar>
-                <Avatar>
-                  <FitnessCenterIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText
-                primary={activity.exercise.name}
-                secondary={`${activity.sets} ${t?.fields?.sets} x ${activity.reps} ${t?.fields?.reps}`}
-              />
-            </ListItem>
-          ))}
+          {eventState.activities?.length > 0
+            ? eventState.activities?.map((activity) => (
+                <ListItem
+                  secondaryAction={
+                    <IconButton
+                      edge="end"
+                      onClick={() => handleRemoveActivity(activity.activityID)}
+                    >
+                      <RemoveIcon />
+                    </IconButton>
+                  }
+                >
+                  <ListItemAvatar>
+                    <Avatar>
+                      <FitnessCenterIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={activity.exercise.name}
+                    secondary={`${activity.sets} ${t?.fields?.sets} x ${activity.reps} ${t?.fields?.reps}`}
+                  />
+                </ListItem>
+              ))
+            : t?.fields?.no_activities}
         </List>
-        <Button endIcon={<EditCalendarIcon />} onClick={scheduler.close}>
-          {t?.buttons?.edit_activities}
+        <Button
+          endIcon={
+            eventState.activities?.length > 0 ? (
+              <EditCalendarIcon />
+            ) : (
+              <PostAddIcon />
+            )
+          }
+          onClick={handleEditActivities}
+        >
+          {eventState.activities?.length > 0
+            ? t?.buttons?.edit_activities
+            : "ADD ACTIVITIES"}
         </Button>
       </Box>
       <DialogActions>

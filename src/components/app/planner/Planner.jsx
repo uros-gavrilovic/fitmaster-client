@@ -75,7 +75,9 @@ const Planner = (props) => {
         }
         events={events}
         customEditor={(scheduler) => <CustomEditor scheduler={scheduler} />}
-        viewerExtraComponent={(fields, event) => CustomViewer(fields, event)}
+        viewerExtraComponent={(fields, event) => (
+          <CustomViewer fields={fields} event={event} />
+        )}
         onEventClick={async (event) =>
           await dispatch(plansActions.fetchPlan(event.event_id))
         }
