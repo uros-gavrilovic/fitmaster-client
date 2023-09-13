@@ -23,6 +23,20 @@ export const fetchPlansByTrainerID = (id) => {
   };
 };
 
+export const fetchPlan = (id) => {
+  return (dispatch) => {
+    dispatch(plansActions.actionStart());
+    return apiService
+      .get(plansIDPath(id))
+      .then((response) => {
+        dispatch(plansActions.fetchPlan(response.data));
+      })
+      .catch((err) => {
+        handleError(err, plansActions, dispatch);
+      });
+  };
+};
+
 export const addPlan = (data, msg) => {
   return (dispatch) => {
     dispatch(plansActions.actionStart());

@@ -9,7 +9,7 @@ import PaginationTable from "../../reusable/tables/PaginationTable";
 import MembersTable from "../members/MembersTable";
 
 const MemberChooserModal = (props) => {
-  const { open, setOpen, t, setMember } = props || {};
+  const { open, setOpen, setMember, t } = props || {};
 
   const dispatch = useDispatch();
   const { membersDTO } = useSelector((state) => state.membersReducer);

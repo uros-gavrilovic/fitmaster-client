@@ -3,11 +3,20 @@ import { createSlice } from "@reduxjs/toolkit";
 const plansSlice = createSlice({
   name: "plans",
   initialState: {
+    plan: undefined,
     plans: [],
+
     error: undefined,
+    loading: false,
   },
 
   reducers: {
+    fetchPlan(state, action) {
+      state.plan = action.payload;
+
+      state.error = undefined;
+      state.loading = false;
+    },
     fetchPlans(state, action) {
       state.plans = action.payload;
       state.error = undefined;
@@ -23,6 +32,7 @@ const plansSlice = createSlice({
 
     actionStart(state) {
       state.error = undefined;
+      state.loading = true;
     },
     actionError(state, action) {
       state.error = action.payload;

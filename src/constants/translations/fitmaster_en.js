@@ -361,4 +361,26 @@ export const translation = {
     },
     messages: {},
   },
+
+  CustomEditor: {
+    fields: {
+      title: "Title",
+      plan_ID: "Plan ID",
+      member: "Member",
+      trainer: "Trainer",
+      starts_at: "Starts At",
+      ends_at: "Ends At",
+      comment: "Comment",
+      activities: "Activities",
+      sets: "sets",
+      reps: "reps",
+    },
+    buttons: {
+      change_member: "Change Member",
+      change_trainer: "Change Trainer",
+      edit_activities: "Edit Activities",
+      cancel: "Cancel",
+      confirm: "Confirm",
+    },
+  },
 };
