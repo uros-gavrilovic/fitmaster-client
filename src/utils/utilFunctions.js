@@ -112,7 +112,7 @@ export function handleError(error, actions, dispatch) {
   // Creates notification and dispatches error action.
 
   const messages = error.response.data;
-  dispatch(actions.actionError(error?.response?.data));
+  // dispatch(actions.actionError(error?.response?.data));
   createNotification(
     notificationType.error,
     messages?.title || "Error!",

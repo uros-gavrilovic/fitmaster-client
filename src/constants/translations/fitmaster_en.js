@@ -382,6 +382,14 @@ export const translation = {
       cancel: "Cancel",
       confirm: "Confirm",
     },
+    errors: {
+      no_activities: "No activities have been selected",
+      end_date_before_start_date: "End date must be after start date",
+    },
+    messages: {
+      title: "Edit Workout Plan",
+      success_message: "Successfully edited a workout plan",
+    },
   },
   CustomViewer: {
     fields: {

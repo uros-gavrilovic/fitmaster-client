@@ -8,6 +8,7 @@ import exercisesReducer from "./exercises";
 import packagesReducer from "./package";
 import plansReducer from "./plans";
 import statisticsReducer from "./statistics";
+import thunk from "redux-thunk";
 
 const store = configureStore({
   reducer: {
@@ -21,6 +22,7 @@ const store = configureStore({
     plansReducer,
     statisticsReducer,
   },
+  middleware: [thunk],
 });
 
 export default store;

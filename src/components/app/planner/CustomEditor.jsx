@@ -1,6 +1,6 @@
 import { Fragment, useState } from "react";
 import { useSelector } from "react-redux";
-import { formatDateForScheduler } from "../../../utils/utilFunctions";
+import { validateField } from "../../../utils/utilFunctions";
 import { Button, DialogActions, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import { LocalizationProvider } from "@mui/x-date-pickers";
@@ -24,14 +24,23 @@ import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import { useIsMount } from "../../../utils/customHooks/useIsMount";
+import { Chip } from "@mui/material";
+import * as plansActions from "../../../actions/plans";
+import { useDispatch } from "react-redux";
+import { createNotification } from "../../../utils/notificationService";
+import { notificationType } from "../../../constants/globals";
 
 const CustomEditor = (props) => {
   const { scheduler, t } = props || {};
 
-  const isMount = useIsMount();
   const event = scheduler.edited;
+  const isMount = useIsMount();
+  const dispatch = useDispatch();
 
-  const { plan } = useSelector((eventState) => eventState.plansReducer);
+  const { plan, loading } = useSelector(
+    (eventState) => eventState.plansReducer
+  );
+  const { user } = useSelector((state) => state.userReducer);
   useEffect(() => {
     // After clicking on an event, fetchByID is triggered, and it's now set as eventState
     setEventState((prev) => {
@@ -39,7 +48,7 @@ const CustomEditor = (props) => {
         ...prev,
         member: plan.member,
         activities: plan.activities,
-        comment: plan.comment,
+        comment: plan.comment ? plan.comment : "",
       };
     });
   }, [plan]);
@@ -48,8 +57,9 @@ const CustomEditor = (props) => {
     event_id: event ? event.event_id : "",
     title: event ? event.title : "",
     member: event ? { firstName: "", lastName: "", memberID: "" } : {},
+    trainer: event.trainer || user, // Optimize this
     activities: event ? event.activities : [],
-    comment: event ? event.comment : "",
+    comment: event ? (event.comment !== null ? event.comment : "") : "", // Optimize this
     start: event ? event.start : "",
     end: event ? event.end : "",
   });
@@ -92,46 +102,64 @@ const CustomEditor = (props) => {
       activities: updatedActivities,
     }));
   };
+
+  //   const handleDeleteEvent = async (deletedId) => {
+  //     await dispatch(plansActions.deletePlan(deletedId));
+
+  //     return new Promise((res, rej) => {
+  //       setTimeout(() => {
+  //         res(deletedId);
+  //       }, 500);
+  //     });
+  //   };
+
   const handleSubmit = async () => {
-    // Your own validation
-    if (eventState.title.length < 3) {
-      return setErrorState("Min 3 letters");
+    const fieldsToValidate = ["title", "member", "start", "end", "activities"];
+    const hasErrors = fieldsToValidate.some((field) => {
+      validateField(eventState[field], field, setErrorState);
+    });
+
+    if (eventState.start > eventState.end) {
+      createNotification(
+        notificationType.error,
+        t?.messages?.title,
+        t?.errors?.end_date_before_start_date
+      );
+      return;
     }
 
-    try {
-      scheduler.loading(true);
+    if (!hasErrors) {
+      await dispatch(plansActions.updatePlan(eventState, t?.messages));
+      try {
+        scheduler.loading(true);
+        console.log("eventState", eventState);
 
-      /**Simulate remote data saving */
-      const added_updated_event = await new Promise((res) => {
-        /**
-         * Make sure the event have 4 mandatory fields
-         * event_id: string|number
-         * title: string
-         * start: Date|string
-         * end: Date|string
-         */
-        setTimeout(() => {
-          res({
-            event_id: event ? event.event_id : Math.random(),
-            title: eventState.title,
-            start: scheduler.eventState.start.value,
-            end: scheduler.eventState.end.value,
-            description: eventState.description,
+        // Check if scheduler.eventState is defined before accessing its properties
+        if (
+          scheduler.eventState &&
+          scheduler.eventState.start &&
+          scheduler.eventState.end
+        ) {
+          const added_updated_event = new Promise((res) => {
+            setTimeout(() => {
+              res({
+                event_id: event ? event.event_id : Math.random(),
+                title: eventState.title,
+                start: scheduler.eventState.start.value,
+                end: scheduler.eventState.end.value,
+                comment: eventState.comment,
+              });
+            }, 500);
           });
-        }, 3000);
-      });
 
-      scheduler.onConfirm(added_updated_event, event ? "edit" : "create");
-      scheduler.close();
-    } finally {
-      scheduler.loading(false);
+          scheduler.onConfirm(added_updated_event, event ? "edit" : "create");
+          scheduler.close();
+        }
+      } finally {
+        scheduler.loading(false);
+      }
     }
   };
-
-  useEffect(() => {
-    if (isMount) return;
-    console.log(eventState);
-  }, [eventState]);
 
   return (
     <Fragment>
@@ -153,17 +181,18 @@ const CustomEditor = (props) => {
           <TextField
             required
             id="title"
+            sx={{ width: "70%" }}
             label={t?.fields?.title}
             value={eventState.title}
             onChange={handleChange}
-            sx={{ width: "70%" }}
+            error={errorState.title}
           />
           <TextField
             readOnly
             id="planID"
+            sx={{ width: "30%" }}
             label={t?.fields?.plan_ID}
             value={`# ${eventState.event_id}`}
-            sx={{ width: "30%" }}
           />
         </Box>
         <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -171,9 +200,10 @@ const CustomEditor = (props) => {
             required
             readOnly
             id="member"
+            sx={{ width: "70%" }}
             label={t?.fields?.member}
             value={`${eventState.member.firstName} ${eventState.member.lastName} (#${eventState.member.memberID})`}
-            sx={{ width: "70%" }}
+            error={errorState.member}
           />
           <Button
             variant="contained"
@@ -188,6 +218,7 @@ const CustomEditor = (props) => {
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateTimePicker
               // required
+              disablePast
               label={t?.fields?.starts_at}
               viewRenderers={noTime}
               value={eventState.start}
@@ -197,9 +228,11 @@ const CustomEditor = (props) => {
                   start: date,
                 }));
               }}
+              error={errorState.start}
             />
             <DateTimePicker
               // required
+              disablePast
               label={t?.fields?.ends_at}
               viewRenderers={noTime}
               value={eventState.end}
@@ -209,6 +242,7 @@ const CustomEditor = (props) => {
                   end: date,
                 }));
               }}
+              error={errorState.end}
             />
           </LocalizationProvider>
         </Box>
@@ -226,30 +260,39 @@ const CustomEditor = (props) => {
             <ListSubheader component="div">{`${t?.fields?.activities} *`}</ListSubheader>
           }
         >
-          {eventState.activities?.length > 0
-            ? eventState.activities?.map((activity) => (
-                <ListItem
-                  secondaryAction={
-                    <IconButton
-                      edge="end"
-                      onClick={() => handleRemoveActivity(activity.activityID)}
-                    >
-                      <RemoveIcon />
-                    </IconButton>
-                  }
-                >
-                  <ListItemAvatar>
-                    <Avatar>
-                      <FitnessCenterIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={activity.exercise.name}
-                    secondary={`${activity.sets} ${t?.fields?.sets} x ${activity.reps} ${t?.fields?.reps}`}
-                  />
-                </ListItem>
-              ))
-            : t?.fields?.no_activities}
+          {eventState.activities?.length > 0 &&
+            eventState.activities?.map((activity) => (
+              <ListItem
+                key={activity.activityID}
+                secondaryAction={
+                  <IconButton
+                    edge="end"
+                    onClick={() => handleRemoveActivity(activity.activityID)}
+                  >
+                    <RemoveIcon />
+                  </IconButton>
+                }
+              >
+                <ListItemAvatar>
+                  <Avatar>
+                    <FitnessCenterIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  primary={activity.exercise.name}
+                  secondary={`${activity.sets} ${t?.fields?.sets} x ${activity.reps} ${t?.fields?.reps}`}
+                />
+              </ListItem>
+            ))}
+          {errorState.activities && (
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <Chip
+                label={t?.errors?.no_activities}
+                color="error"
+                variant="outlined"
+              />
+            </Box>
+          )}
         </List>
         <Button
           endIcon={
@@ -283,6 +326,14 @@ const CustomEditor = (props) => {
 };
 
 export default withTranslations(CustomEditor);
+
+const initialErrorState = {
+  title: false,
+  member: false,
+  start: false,
+  end: false,
+  activities: false,
+};
 
 const noTime = {
   hours: null,

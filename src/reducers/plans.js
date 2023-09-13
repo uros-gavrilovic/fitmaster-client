@@ -29,6 +29,14 @@ const plansSlice = createSlice({
       state.plans = state.plans.filter((plan) => plan.id !== action.payload);
       state.error = undefined;
     },
+    updatePlan(state, action) {
+      state.plans = state.plans.map((plan) =>
+        plan.planID === action.payload.planID ? action.payload : plan
+      );
+
+      state.error = undefined;
+      state.loading = false;
+    },
 
     actionStart(state) {
       state.error = undefined;
