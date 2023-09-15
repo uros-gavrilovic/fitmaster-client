@@ -78,9 +78,19 @@ export function contains(obj, string, ignoreCase = false) {
 }
 
 export function validateField(field, fieldName, setErrorState) {
-  // Validates whetever field is empty or not.
+  // Validate whetever field is empty or not. Works for strings and arrays.
 
-  const error = !field || field?.length === 0;
+  let error = false;
+
+  if (typeof field === "string") {
+    error = !field.trim();
+  } else if (Array.isArray(field)) {
+    error = field.length === 0;
+  } else {
+    // Handle other types as needed
+    // ...
+  }
+
   setErrorState((prevState) => ({ ...prevState, [fieldName]: error }));
   return error;
 }

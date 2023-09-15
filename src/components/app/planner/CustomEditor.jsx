@@ -65,7 +65,7 @@ const CustomEditor = (props) => {
   });
   const [selectModalVisible, setSelectModalVisible] = useState(false);
   const [selectedMember, setSelectedMember] = useState(eventState.member); // Member selected by MemberChooserModal
-  const [errorState, setErrorState] = useState("");
+  const [errorState, setErrorState] = useState(initialErrorState);
 
   useEffect(() => {
     // After selecting a member using MemberChooserModal, set the selected member to eventState
@@ -89,35 +89,20 @@ const CustomEditor = (props) => {
   };
   const handleEditActivities = () => {};
   const handleRemoveActivity = (activityIndex) => {
-    let updatedActivities = [...eventState.activities];
-
-    if (updatedActivities.length === 1) {
-      updatedActivities = [];
-    } else {
-      updatedActivities.splice(activityIndex, 1);
-    }
+    const updatedActivities = eventState.activities.filter(
+      (activity) => activity.activityID !== activityIndex
+    );
 
     setEventState((prev) => ({
       ...prev,
       activities: updatedActivities,
     }));
   };
-
-  //   const handleDeleteEvent = async (deletedId) => {
-  //     await dispatch(plansActions.deletePlan(deletedId));
-
-  //     return new Promise((res, rej) => {
-  //       setTimeout(() => {
-  //         res(deletedId);
-  //       }, 500);
-  //     });
-  //   };
-
   const handleSubmit = async () => {
     const fieldsToValidate = ["title", "member", "start", "end", "activities"];
-    const hasErrors = fieldsToValidate.some((field) => {
-      validateField(eventState[field], field, setErrorState);
-    });
+    const hasErrors = fieldsToValidate.some((field) =>
+      validateField(eventState[field], field, setErrorState)
+    );
 
     if (eventState.start > eventState.end) {
       createNotification(
@@ -132,8 +117,6 @@ const CustomEditor = (props) => {
       await dispatch(plansActions.updatePlan(eventState, t?.messages));
       try {
         scheduler.loading(true);
-        console.log("eventState", eventState);
-
         // Check if scheduler.eventState is defined before accessing its properties
         if (
           scheduler.eventState &&
