@@ -1,33 +1,33 @@
 export const translation = {
   // General
   Login: {
-    titleLogIn: "Prijavite se koristeći postojeći račun",
-    titleRegister: "Kreirajte novi račun",
+    titleLogIn: "Prijavite se koristeći postojeći nalog",
+    titleRegister: "Kreirajte novi nalog",
     subtitles: {
       loginInfo: "Podaci za prijavu",
       generalInfo: "Opšti podaci",
     },
     input: {
       username: "Korisničko ime",
-      password: "Lozinka",
+      password: "Šifra",
       firstName: "Ime",
       lastName: "Prezime",
-      email: "E-mail",
+      email: "Email",
     },
     buttons: {
       btnLogIn: "Prijavi se",
-      btnRegister: "Registruj se",
-      btnNext: "Dalje",
+      btnRegister: "Registrujte se",
+      btnNext: "Sledeće",
       btnBack: "Nazad",
-      btnReset: "Poništi",
+      btnReset: "Resetujte",
     },
     messages: {
       registerTitle: "Registracija",
       registerRequestSent:
-        "Zahtev za registraciju poslat. Ako se odobri, dobićete e-mail za verifikaciju vašeg računa.",
+        "Zahtev za registraciju je poslat. Ako se vaš zahtev odobri, dobićete email za verifikaciju naloga.",
       registerSuccessMessage: "Uspešno registrovan novi trener",
       loginTitle: "Prijava",
-      loginSuccessMessage: "Uspešno prijavljeni",
+      loginSuccessMessage: "Uspešno ste se prijavili",
     },
   },
   Menu: {
@@ -35,9 +35,9 @@ export const translation = {
       dashboard: "Nadzorna tabla",
       addMembers: "Dodaj članove",
       members: "Članovi",
-      workoutPlans: "Trenerski planovi",
+      workoutPlans: "Planovi treninga",
       planner: "Planer",
-      exercises: "Vežbe",
+      exercises: "Vezbe",
       packages: "Paketi",
       trainers: "Treneri",
       settings: "Podešavanja",
@@ -45,7 +45,7 @@ export const translation = {
     },
     messages: {
       logoutTitle: "Odjava",
-      logoutSuccessMessage: "Uspešno odjavljeni",
+      logoutSuccessMessage: "Uspešno ste se odjavili",
     },
   },
   Dashboard: {
@@ -55,28 +55,28 @@ export const translation = {
   },
   AddMembers: {
     fields: {
-      avatar: "Profilna slika",
+      avatar: "Slika profila",
       firstName: "Ime",
       lastName: "Prezime",
       gender: "Pol",
       address: "Adresa",
-      email: "E-mail",
+      email: "Email",
       phoneNumber: "Broj telefona",
       birthDate: "Datum rođenja",
       create_new_member: "Kreirajte novog člana",
     },
     buttons: {
-      btnSave: "Sačuvaj",
-      btnClear: "Obriši",
-      btnUploadImage: "Postavi sliku",
+      btnSave: "Sačuvajte",
+      btnClear: "Očistite",
+      btnUploadImage: "Postavite sliku",
     },
     messages: {
-      title: "Dodaj člana",
+      title: "Dodajte člana",
       successMessage: "Uspešno dodat novi član",
     },
   },
   Members: {
-    search: "Pretraži",
+    search: "Pretraga",
     messages: {
       noMembers: "Nema pronađenih članova",
     },
@@ -91,16 +91,16 @@ export const translation = {
   },
   WorkoutPlans: {
     messages: {
-      title: "Kreirajte trenerski plan",
-      successMessage: "Uspešno kreiran novi trenerski plan",
-      noMemberSelected: "Nije izabran nijedan član",
-      noTrainerSelected: "Nije izabran nijedan trener",
-      noDateTimeSelected: "Nije izabran datum i vreme",
-      noExerciseSelected: "Nije izabrana vežba",
+      title: "Kreirajte plan treninga",
+      successMessage: "Uspešno kreiran novi plan treninga",
+      noMemberSelected: "Nije odabran član",
+      noTrainerSelected: "Nije odabran trener",
+      noDateTimeSelected: "Nije odabrano datum i vreme",
+      noExerciseSelected: "Nije odabrana vežba",
     },
     steps: {
-      participantsInfo: "Podaci o učesnicima",
-      workoutPlan: "Dizajniranje trenerskog plana",
+      participantsInfo: "Informacije o učesnicima",
+      workoutPlan: "Dizajniranje plana treninga",
     },
     fields: {
       firstName: "Ime",
@@ -109,24 +109,24 @@ export const translation = {
       memberID: "ID člana",
     },
     participants: {
-      noMemberSelected: "Nije izabran nijedan član",
+      noMemberSelected: "Nije odabran član",
     },
     plan: {
       category: "Kategorija",
       bodyPart: "Deo tela",
       availableExercises: "Dostupne vežbe",
-      workoutPlan: "Trenerski plan",
-      sets: "serija",
+      workoutPlan: "Plan treninga",
+      sets: "setova",
       reps: "ponavljanja",
       selected: "izabrano",
     },
     buttons: {
-      btnSavePlan: "Sačuvaj plan",
+      btnSavePlan: "Sačuvajte plan",
       btnBack: "Nazad",
-      btnNext: "Dalje",
+      btnNext: "Sledeće",
       btnChooseMember: "Izaberite člana",
-      btnChangeMember: "Promeni člana",
-      btnChangeTrainer: "Promeni trenera",
+      btnChangeMember: "Promenite člana",
+      btnChangeTrainer: "Promenite trenera",
     },
     scheduler: {
       navigation: {
@@ -145,18 +145,18 @@ export const translation = {
       event: {
         title: "Naslov",
         start: "Početak",
-        end: "Završetak",
-        allDay: "Ceo dan",
+        end: "Kraj",
+        allDay: "Celi dan",
       },
       validation: {
-        required: "Obavezno polje",
-        invalidEmail: "Nevažeća e-mail adresa",
+        required: "Obavezno",
+        invalidEmail: "Nevažeći email",
         onlyNumbers: "Dozvoljeni su samo brojevi",
-        min: "Minimum {{min}} karaktera",
-        max: "Maksimum {{max}} karaktera",
+        min: "Minimum {{min}} slova",
+        max: "Maksimum {{max}} slova",
       },
-      moreEvents: "Još...",
-      loading: "Učitava se...",
+      moreEvents: "Više...",
+      loading: "Učitavanje...",
     },
   },
   Exercises: {
@@ -168,15 +168,15 @@ export const translation = {
       category: "Kategorija",
       body_part: "Deo tela",
       instructions: "Uputstva",
-      search: "Pretraži",
+      search: "Pretraga",
     },
     buttons: {
-      save: "Sačuvaj",
-      clear: "Obriši",
+      save: "Sačuvajte",
+      clear: "Očistite",
     },
     messages: {
-      create_exercise_title: "Kreiraj vežbu",
-      create_exercise_success: "Uspešno kreirana vežba",
+      create_exercise_title: "Kreirajte vežbu",
+      create_exercise_success: "Uspešno kreirana nova vežba",
     },
   },
   Settings: {
@@ -194,13 +194,13 @@ export const translation = {
       messages: {
         titleDelete: "Obriši nalog",
         textDelete:
-          "Da li ste sigurni da želite da obrišete svoj nalog? Ova akcija ne može da se poništi i trajno će ukloniti sve podatke koji su sa njim povezani.",
-        titleUpdate: "Ažuriraj nalog",
+          "Da li ste sigurni da želite da obrišete svoj nalog? Ova akcija se ne može poništiti i trajno će ukloniti sve podatke koji su povezani sa njim.",
+        titleUpdate: "Ažurirajte nalog",
         textUpdate: "Da li ste sigurni da želite da ažurirate svoj nalog?",
-        updateSuccessMessage: "Uspešno ažuriran vaš nalog",
-        titleChangePassword: "Promeni lozinku",
-        textPasswordsMismatch: "Nove lozinke se ne poklapaju",
-        textPasswordChanged: "Lozinka uspešno promenjena",
+        updateSuccessMessage: "Uspešno ste ažurirali svoj nalog",
+        titleChangePassword: "Promenite šifru",
+        textPasswordsMismatch: "Nove šifre se ne podudaraju",
+        textPasswordChanged: "Šifra je uspešno promenjena",
       },
       fields: {
         trainerID: "ID trenera",
@@ -209,18 +209,18 @@ export const translation = {
         gender: "Pol",
         address: "Adresa",
         phoneNumber: "Broj telefona",
-        hireDate: "Datum zapošljavanja",
+        hireDate: "Datum zaposlenja",
         username: "Korisničko ime",
-        password: "Lozinka",
-        oldPassword: "Stara lozinka",
-        newPassword: "Nova lozinka",
-        confirmPassword: "Potvrdi lozinku",
+        password: "Šifra",
+        oldPassword: "Stara šifra",
+        newPassword: "Nova šifra",
+        confirmPassword: "Potvrdite šifru",
       },
       buttons: {
-        btnUpdate: "Ažuriraj nalog",
-        btnDelete: "Obriši nalog",
-        btnClear: "Obriši",
-        btnChangePassword: "Promeni lozinku",
+        btnUpdate: "Ažurirajte nalog",
+        btnDelete: "Obrišite nalog",
+        btnClear: "Očistite",
+        btnChangePassword: "Promenite šifru",
       },
     },
   },
@@ -250,7 +250,7 @@ export const translation = {
     gender: "Pol",
     address: "Adresa",
     phoneNumber: "Broj telefona",
-    hireDate: "Datum zapošljavanja",
+    hireDate: "Datum zaposlenja",
   },
   ExercisesTable: {
     name: "Naziv",
@@ -265,7 +265,7 @@ export const translation = {
     fields: {
       active: "Aktivan",
       inactive: "Neaktivan",
-      banned: "Blokiran",
+      banned: "Banovan",
       pending: "Na čekanju",
     },
     messages: {
@@ -286,9 +286,9 @@ export const translation = {
       confirm_delete_title: "Obriši vežbu",
       confirm_delete_text: "Da li ste sigurni da želite da obrišete vežbu?",
       delete_exercise_title: "Obriši vežbu",
-      delete_exercise_success: "Uspešno obrisana vežba",
+      delete_exercise_success: "Uspešno obrisan vežbu",
       edit_exercise_title: "Izmeni vežbu",
-      edit_exercise_success: "Uspešno izmenjena vežba",
+      edit_exercise_success: "Uspešno izmenjen vežbu",
     },
     fields: {
       name: "Naziv",
@@ -297,24 +297,24 @@ export const translation = {
       instructions: "Uputstva",
     },
     buttons: {
-      save: "Sačuvaj",
-      clear: "Obriši",
+      save: "Sačuvajte",
+      clear: "Očistite",
     },
   },
 
   // Components
   CustomAccountMenu: {
-    addAnotherAccount: "Dodaj drugi nalog",
+    addAnotherAccount: "Dodajte još jedan nalog",
     settings: "Podešavanja",
-    logout: "Odjava",
+    logout: "Odjavite se",
   },
   CustomStepper: {
     optional: "Opciono",
-    btnNext: "Dalje",
+    btnNext: "Sledeće",
     btnBack: "Nazad",
     btnSkip: "Preskoči",
     btnFinish: "Završi",
-    btnReset: "Poništi",
+    btnReset: "Resetujte",
   },
   ConfirmModal: {
     btnYes: "Da",
@@ -329,11 +329,76 @@ export const translation = {
       h1Component: "Unesite novi paket",
     },
     buttons: {
-      btnSave: "Sačuvaj",
+      btnSave: "Sačuvajte",
     },
     messages: {
-      title: "Dodaj člana",
+      title: "Dodajte paket",
       successMessage: "Uspešno dodat novi paket",
+    },
+  },
+
+  // Modals
+  MemberModal: {
+    tabs: {
+      general_info: "Opšti podaci",
+      memberships: "Članstva",
+    },
+    fields: {
+      member_ID: "ID člana",
+      first_name: "Ime",
+      last_name: "Prezime",
+      gender: "Pol",
+      address: "Adresa",
+      phone_number: "Broj telefona",
+      birth_date: "Datum rođenja",
+      email: "Email",
+    },
+    buttons: {
+      cancel: "Otkaži",
+      edit: "Izmeni",
+      save: "Sačuvajte",
+      delete: "Obriši",
+    },
+    messages: {},
+  },
+
+  CustomEditor: {
+    fields: {
+      title: "Naslov",
+      plan_ID: "ID plana",
+      member: "Član",
+      trainer: "Trener",
+      starts_at: "Počinje u",
+      ends_at: "Završava se u",
+      comment: "Komentar",
+      activities: "Aktivnosti",
+      sets: "setova",
+      reps: "ponavljanja",
+    },
+    buttons: {
+      change_member: "Promenite člana",
+      change_trainer: "Promenite trenera",
+      edit_activities: "Izmeni aktivnosti",
+      cancel: "Otkaži",
+      confirm: "Potvrdi",
+    },
+    errors: {
+      no_activities: "Nisu izabrane aktivnosti",
+      end_date_before_start_date:
+        "Datum završetka mora biti nakon datuma početka",
+    },
+    messages: {
+      title: "Izmeni plan treninga",
+      success_message: "Uspešno izmenjen plan treninga",
+    },
+  },
+  CustomViewer: {
+    fields: {
+      loading: "Učitavanje...",
+      awaiting: "Očekivanje",
+      cancelled: "Otkazano",
+      expired: "Isteklo",
+      completed: "Završeno",
     },
   },
 };
