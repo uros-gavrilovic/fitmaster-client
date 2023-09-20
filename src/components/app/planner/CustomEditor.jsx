@@ -29,6 +29,8 @@ import * as plansActions from "../../../actions/plans";
 import { useDispatch } from "react-redux";
 import { createNotification } from "../../../utils/notificationService";
 import { notificationType } from "../../../constants/globals";
+import ExerciseChooserModal from "./ExerciseChooserModal";
+import CloseIcon from "@mui/icons-material/Close";
 
 const CustomEditor = (props) => {
   const { scheduler, t } = props || {};
@@ -63,7 +65,10 @@ const CustomEditor = (props) => {
     start: event ? event.start : "",
     end: event ? event.end : "",
   });
-  const [selectModalVisible, setSelectModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState({
+    member: false, // MemberChooserModal
+    exercise: false, // ExerciseChooserModal
+  });
   const [selectedMember, setSelectedMember] = useState(eventState.member); // Member selected by MemberChooserModal
   const [errorState, setErrorState] = useState(initialErrorState);
 
@@ -87,7 +92,6 @@ const CustomEditor = (props) => {
       };
     });
   };
-  const handleEditActivities = () => {};
   const handleRemoveActivity = (activityIndex) => {
     const updatedActivities = eventState.activities.filter(
       (activity) => activity.activityID !== activityIndex
@@ -147,9 +151,31 @@ const CustomEditor = (props) => {
   return (
     <Fragment>
       <MemberChooserModal
-        open={selectModalVisible}
-        setOpen={setSelectModalVisible}
+        open={modalVisible.member}
+        setOpen={(isOpen) =>
+          setModalVisible((prev) => ({
+            ...prev,
+            member: isOpen,
+          }))
+        }
         setMember={setSelectedMember}
+      />
+      <ExerciseChooserModal
+        open={modalVisible.exercise}
+        setOpen={(isOpen) =>
+          setModalVisible((prev) => ({
+            ...prev,
+            exercise: isOpen,
+          }))
+        }
+        activities={eventState.activities}
+        setActivities={(newActivities) => {
+          setEventState((prev) => ({
+            ...prev,
+            activities: newActivities,
+          }));
+        }}
+        t={t}
       />
 
       <Box
@@ -191,7 +217,12 @@ const CustomEditor = (props) => {
           <Button
             variant="contained"
             endIcon={<PersonSearchIcon />}
-            onClick={() => setSelectModalVisible(true)}
+            onClick={() =>
+              setModalVisible((prev) => ({
+                ...prev,
+                member: true,
+              }))
+            }
             sx={{ width: "30%" }}
           >
             {t?.buttons?.change_member}
@@ -285,16 +316,21 @@ const CustomEditor = (props) => {
               <PostAddIcon />
             )
           }
-          onClick={handleEditActivities}
+          onClick={() =>
+            setModalVisible((prev) => ({
+              ...prev,
+              exercise: true,
+            }))
+          }
         >
           {eventState.activities?.length > 0
             ? t?.buttons?.edit_activities
-            : "ADD ACTIVITIES"}
+            : t?.buttons?.add_activities}
         </Button>
       </Box>
       <DialogActions>
-        <Button endIcon={<ClearIcon />} onClick={scheduler.close}>
-          {t?.buttons?.cancel}
+        <Button endIcon={<CloseIcon />} onClick={scheduler.close}>
+          {t?.buttons?.exit}
         </Button>
         <Button
           variant="contained"

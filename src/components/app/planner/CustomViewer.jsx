@@ -30,7 +30,7 @@ const CustomViewer = (props) => {
           gap: "8px",
         }}
       >
-        {statusComponentMap(t?.fields)[plan.status]}
+        {statusComponentMap(t?.status)[plan.status]}
       </Box>
     </Fragment>
   );
