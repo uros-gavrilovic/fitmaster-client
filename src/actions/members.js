@@ -1,7 +1,7 @@
 import apiService from "../utils/apiService";
 import { membersActions } from "../reducers/members";
 import { createNotification } from "../utils/notificationService";
-import { notificationType } from "../constants/globals";
+import { notificationType, userRoles } from "../constants/globals";
 import { handleError } from "../utils/utilFunctions";
 import {
   membersPath,
@@ -46,7 +46,7 @@ export const searchMembersDTO = (string) => {
 
 export const fetchMember = (id) => {
   return (dispatch) => {
-    dispatch(membersActions.actionStart());
+    dispatch(membersActions.actionStart(true));
     return apiService
       .get(membersIDPath(id))
       .then((response) => {
@@ -65,7 +65,7 @@ export const addMember = (data, msg) => {
   return (dispatch) => {
     dispatch(membersActions.actionStart());
     return apiService
-      .post(membersPath(), data)
+      .post(membersPath(), { ...data, role: userRoles.MEMBER })
       .then((response) => {
         dispatch(membersActions.addMember(response.data));
       })
@@ -86,7 +86,7 @@ export const updateMember = (data, messages) => {
   return (dispatch) => {
     dispatch(membersActions.actionStart());
     return apiService
-      .put(membersPath(), data)
+      .put(membersPath(), { ...data, role: userRoles.MEMBER })
       .then((response) => {
         dispatch(membersActions.updateMember(response.data));
         createNotification(

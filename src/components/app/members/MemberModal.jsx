@@ -4,7 +4,7 @@ import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { useSpring, animated } from "@react-spring/web";
-import { forwardRef, useEffect } from "react";
+import { forwardRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Avatar,
@@ -18,9 +18,115 @@ import InfoIcon from "@mui/icons-material/Info";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import GeneralInfo from "./modal/GeneralInfo";
 import MembershipHistory from "./modal/MembershipHistory";
-import * as membersActions from "../../../actions/members";
 import "../../../utils/customHooks/useIsMount";
-import { useIsMount } from "../../../utils/customHooks/useIsMount";
+import withTranslations from "../../../utils/HighOrderComponent";
+import Loading from "../../reusable/Loading";
+
+const MemberModal = (props) => {
+  const { memberState, setMemberState, open, setOpen, t } = props || {};
+
+  const dispatch = useDispatch();
+  const [activeTab, setActiveTab] = useState(
+    <GeneralInfo
+      {...{
+        memberState,
+        setMemberState,
+        setOpen,
+        dispatch,
+        t,
+      }}
+    />
+  );
+
+  const { memberLoading } = useSelector((state) => state.membersReducer);
+
+  const handleBackgroundClick = () => {
+    setOpen(false);
+  };
+
+  return (
+    <Modal
+      open={open}
+      onClose={handleBackgroundClick}
+      closeAfterTransition
+      slots={{ backdrop: Backdrop }}
+      slotProps={{
+        backdrop: {
+          TransitionComponent: Fade,
+        },
+      }}
+    >
+      <Fade in={open}>
+        {!memberLoading ? (
+          <Box style={{ width: "auto" }} sx={style}>
+            <div className="left-div">
+              <Box sx={{ display: "flex", justifyContent: "center" }}>
+                <Avatar
+                  sx={{ width: "8vw", height: "10vh", margin: "0.5vw" }}
+                  src={memberState?.image}
+                />
+              </Box>
+              <Fragment>
+                <MenuList>
+                  <MenuItem
+                    onClick={() => {
+                      setActiveTab(
+                        <GeneralInfo
+                          {...{
+                            memberState,
+                            setMemberState,
+                            dispatch,
+                            open,
+                            setOpen,
+                            t,
+                          }}
+                        />
+                      );
+                    }}
+                  >
+                    <ListItemIcon>
+                      <InfoIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText>General Information</ListItemText>
+                  </MenuItem>
+                  <Divider />
+                  {/* ------------------------------------------------- */}
+                  <MenuItem
+                    onClick={() => {
+                      setActiveTab(
+                        <MembershipHistory
+                          {...{
+                            memberState,
+                            setMemberState,
+                            open,
+                            setOpen,
+                            dispatch,
+                            t,
+                          }}
+                        />
+                      );
+                    }}
+                  >
+                    <ListItemIcon>
+                      <ManageSearchIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText>Memberships</ListItemText>
+                  </MenuItem>
+                </MenuList>
+              </Fragment>
+            </div>
+
+            <div className="middle-div">{activeTab}</div>
+          </Box>
+        ) : (
+          <Loading />
+        )}
+      </Fade>
+    </Modal>
+  );
+};
+
+export default withTranslations(MemberModal);
 
 const Fade = forwardRef(function Fade(props, ref) {
   const {
@@ -74,120 +180,3 @@ const style = {
   display: "grid",
   gridTemplateColumns: "1fr 3fr",
 };
-
-export default function MemberModal(props) {
-  const { memberState, setMemberState, open, setOpen } = props || {};
-
-  const dispatch = useDispatch();
-  const { member } = useSelector((state) => state.membersReducer);
-  const [activeTab, setActiveTab] = useState(
-    <GeneralInfo
-      {...{
-        memberState,
-        setMemberState,
-        open,
-        setOpen,
-        dispatch,
-      }}
-    />
-  );
-
-  const initial = useIsMount();
-  useEffect(() => {
-    if (initial) return;
-
-    if (open) {
-      console.log("OPEN!");
-      dispatch(membersActions.fetchMember(memberState.memberID));
-    } else {
-      console.log("CLOSED!");
-    }
-  }, [open]);
-  useEffect(() => {
-    setMemberState(member);
-  }, [member]);
-
-  const handleBackgroundClick = () => {
-    setOpen(false);
-    // handleToggleEdit(undefined, false);
-  };
-
-  return (
-    <Modal
-      aria-labelledby="spring-modal-title"
-      aria-describedby="spring-modal-description"
-      open={open}
-      onClose={handleBackgroundClick}
-      closeAfterTransition
-      slots={{ backdrop: Backdrop }}
-      slotProps={{
-        backdrop: {
-          TransitionComponent: Fade,
-        },
-      }}
-    >
-      <Fade in={open}>
-        {memberState !== "" ? (
-          <Box style={{ width: "auto" }} sx={style}>
-            <div className="left-div">
-              <Avatar
-                sx={{ width: "8vw", height: "10vh", margin: "0.5vw" }}
-                src={memberState?.image}
-              />
-              <Fragment>
-                <MenuList>
-                  <MenuItem
-                    onClick={() => {
-                      setActiveTab(
-                        <GeneralInfo
-                          {...{
-                            memberState,
-                            setMemberState,
-                            dispatch,
-                            open,
-                            setOpen,
-                          }}
-                        />
-                      );
-                    }}
-                  >
-                    <ListItemIcon>
-                      <InfoIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText>General Information</ListItemText>
-                  </MenuItem>
-                  <Divider />
-                  {/* ------------------------------------------------- */}
-                  <MenuItem
-                    onClick={() => {
-                      setActiveTab(
-                        <MembershipHistory
-                          {...{
-                            memberState,
-                            setMemberState,
-                            open,
-                            setOpen,
-                            dispatch,
-                          }}
-                        />
-                      );
-                    }}
-                  >
-                    <ListItemIcon>
-                      <ManageSearchIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText>Memberships</ListItemText>
-                  </MenuItem>
-                </MenuList>
-              </Fragment>
-            </div>
-
-            <div className="middle-div">{activeTab}</div>
-          </Box>
-        ) : (
-          <Box>Unable to retreive this member.</Box>
-        )}
-      </Fade>
-    </Modal>
-  );
-}

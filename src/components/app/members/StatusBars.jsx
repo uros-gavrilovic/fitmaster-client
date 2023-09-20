@@ -1,47 +1,96 @@
-import { Box } from '@mui/material';
+import React from "react";
+import { useTheme } from "@mui/material";
+import Chip from "@mui/material/Chip";
+
+const StatusBox = ({ color, backgroundColor, children, ...props }) => {
+  const boxStyles = {
+    height: "auto",
+    width: "auto",
+    color,
+    backgroundColor,
+    padding: "0.7ch",
+    fontWeight: "bold",
+  };
+
+  return <Chip label={children} sx={boxStyles} {...props} />;
+};
 
 export const GoodStatus = (props) => {
-	return (
-		<Box
-			sx={{
-				height: 'auto',
-				width: 'auto',
-				color: 'rgb(17, 141, 87)',
-				backgroundColor: 'rgb(219, 246, 229)',
-				borderRadius: '5px',
-				padding: '0.7ch',
-			}}
-			{...props}
-		></Box>
-	);
+  const theme = useTheme();
+
+  return (
+    <StatusBox
+      color={
+        theme.palette.mode === "light"
+          ? theme.palette.success.dark
+          : theme.palette.success.light
+      }
+      backgroundColor={
+        theme.palette.mode === "light"
+          ? theme.palette.success.light
+          : theme.palette.success.dark
+      }
+      {...props}
+    />
+  );
 };
+
+export const OkayStatus = (props) => {
+  const theme = useTheme();
+
+  return (
+    <StatusBox
+      color={
+        theme.palette.mode === "light"
+          ? theme.palette.warning.dark
+          : theme.palette.warning.light
+      }
+      backgroundColor={
+        theme.palette.mode === "light"
+          ? theme.palette.warning.light
+          : theme.palette.warning.dark
+      }
+      {...props}
+    />
+  );
+};
+
 export const NeutralStatus = (props) => {
-	return (
-		<Box
-			sx={{
-				height: 'auto',
-				width: 'auto',
-				color: 'rgb(183, 110, 0)',
-				backgroundColor: 'rgb(255,241,214)',
-				borderRadius: '5px',
-				padding: '0.7ch',
-			}}
-			{...props}
-		></Box>
-	);
+  const theme = useTheme();
+
+  return (
+    <StatusBox
+      color={
+        theme.palette.mode === "light"
+          ? theme.palette.neutral.dark
+          : theme.palette.neutral.light
+      }
+      backgroundColor={
+        theme.palette.mode === "light"
+          ? theme.palette.neutral.light
+          : theme.palette.neutral.dark
+      }
+      {...props}
+    />
+  );
 };
+
 export const BadStatus = (props) => {
-	return (
-		<Box
-			sx={{
-				height: 'auto',
-				width: 'auto',
-				color: 'rgb(183, 29, 24)',
-				backgroundColor: 'rgb(255, 228, 222)',
-				borderRadius: '5px',
-				padding: '0.7ch',
-			}}
-			{...props}
-		></Box>
-	);
+  const theme = useTheme();
+
+  return (
+    <StatusBox
+      color={
+        theme.palette.mode === "light"
+          ? theme.palette.error.dark
+          : theme.palette.error.light
+      }
+      backgroundColor={
+        theme.palette.mode === "light"
+          ? theme.palette.error.light
+          : theme.palette.error.dark
+      }
+      {...props}
+    />
+  );
 };

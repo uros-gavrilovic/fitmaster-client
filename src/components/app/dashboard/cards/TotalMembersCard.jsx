@@ -7,10 +7,13 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useDispatch, useSelector } from "react-redux";
 import * as statisticsActions from "../../../../actions/statistics";
+import { useTheme } from "@emotion/react";
 
 export default function TotalMembersCard(props) {
   const dispatch = useDispatch();
   const { stats } = useSelector((state) => state.statisticsReducer);
+
+  const theme = useTheme();
 
   useEffect(() => {
     dispatch(statisticsActions.fetchMembersActivity());
@@ -18,7 +21,10 @@ export default function TotalMembersCard(props) {
 
   return (
     <Box sx={{ width: "fit-content" }}>
-      <Card variant="outlined" sx={{ borderRadius: "15px" }}>
+      <Card
+        variant="outlined"
+        sx={{ borderRadius: "15px", bgcolor: theme.palette.menu.dark }}
+      >
         <Fragment>
           <CardContent>
             <Typography variant="h5" component="div">

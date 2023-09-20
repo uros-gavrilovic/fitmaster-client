@@ -1,19 +1,19 @@
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
-import app from "../../constants/appData";
+import { useSelector } from "react-redux";
+import { Fragment } from "react";
 
-export default function Logo(props) {
-  const { variant } = props || {};
+export default function Logo() {
+  const { appVersion } = useSelector((state) => state.appReducer);
 
   return (
-    <div style={{ color: "white", display: "inline" }}>
+    <Fragment>
       <center>
         <h1>
-          {app.name[0]}
-          <i>{app.name[1]}</i>
-          <sub className="subscript">v{app.version}</sub>
+          Fit<i>Master</i>
+          <sub className="subscript">v{appVersion}</sub>
         </h1>
         <FitnessCenterIcon sx={{ fontSize: "10vh" }} />
       </center>
-    </div>
+    </Fragment>
   );
 }

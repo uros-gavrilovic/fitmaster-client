@@ -1,5 +1,4 @@
 import {
-  registerTrainerPath,
   trainersDTOPath,
   trainersIDPath,
   trainersPath,
@@ -46,27 +45,6 @@ export const getTrainer = (id) => {
       .get(trainersIDPath(id))
       .then((response) => {
         dispatch(trainersActions.fetchTrainer(response.data));
-      })
-      .catch((err) => {
-        handleError(err, trainersActions, dispatch);
-      });
-  };
-};
-
-export const addTrainer = (data, msg) => {
-  return (dispatch) => {
-    dispatch(trainersActions.actionStart());
-    return apiService
-      .post(registerTrainerPath(), data)
-      .then((response) => {
-        dispatch(trainersActions.addTrainer(response.data));
-      })
-      .then(() => {
-        createNotification(
-          notificationType.success,
-          msg?.registerTitle,
-          msg?.registerSuccessMessage
-        );
       })
       .catch((err) => {
         handleError(err, trainersActions, dispatch);

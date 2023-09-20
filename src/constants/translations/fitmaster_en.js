@@ -12,6 +12,7 @@ export const translation = {
       password: "Password",
       firstName: "First Name",
       lastName: "Last Name",
+      email: "Email",
     },
     buttons: {
       btnLogIn: "Sign In",
@@ -22,13 +23,13 @@ export const translation = {
     },
     messages: {
       registerTitle: "Registration",
-      registerRequestSent: "Registration request sent",
+      registerRequestSent:
+        "Registration request sent. If your request is approved, you will receive an email to verify your account.",
       registerSuccessMessage: "Successfully registered a new trainer",
       loginTitle: "Log-In",
       loginSuccessMessage: "Successfully logged in",
     },
   },
-
   Menu: {
     tabs: {
       dashboard: "Dashboard",
@@ -36,6 +37,7 @@ export const translation = {
       members: "Members",
       workoutPlans: "Workout Plans",
       planner: "Scheduler",
+      exercises: "Exercises",
       packages: "Packages",
       trainers: "Trainers",
       settings: "Settings",
@@ -46,15 +48,22 @@ export const translation = {
       logoutSuccessMessage: "Successfully logged out",
     },
   },
-
+  Dashboard: {
+    messages: {
+      welcome_back: "Welcome back",
+    },
+  },
   AddMembers: {
     fields: {
+      avatar: "Profile Picture",
       firstName: "First Name",
       lastName: "Last Name",
       gender: "Gender",
       address: "Address",
+      email: "Email",
       phoneNumber: "Phone Number",
       birthDate: "Date of Birth",
+      create_new_member: "Create New Member",
     },
     buttons: {
       btnSave: "Save",
@@ -66,43 +75,12 @@ export const translation = {
       successMessage: "Successfully added a new member",
     },
   },
-
   Members: {
     search: "Search",
     messages: {
       noMembers: "No Members Found",
     },
   },
-
-  AddPackage: {
-    fields: {
-      name: "Package Name",
-      price: "Price",
-    },
-    components: {
-      h1Component: "Insert a new package",
-    },
-    buttons: {
-      btnSave: "Save",
-    },
-    messages: {
-      title: "Add Member",
-      successMessage: "Successfully added a new package",
-    },
-  },
-
-  MemberRow: {
-    fields: {
-      active: "Active",
-      inactive: "Inactive",
-    },
-    messages: {
-      title: "Delete Member",
-      successMessage: "Successfully deleted a member",
-      text: "Are you sure you want to delete the member?",
-    },
-  },
-
   Packages: {
     messages: {
       noPackages: "There are no packages available",
@@ -111,15 +89,6 @@ export const translation = {
       successDelete: "Successfully deleted a package",
     },
   },
-
-  PackageRow: {
-    messages: {
-      title: "Delete Package",
-      successDelete: "Successfully deleted a package",
-      text: "Are you sure you want to delete the package?",
-    },
-  },
-
   WorkoutPlans: {
     messages: {
       title: "Create Workout Plan",
@@ -190,7 +159,79 @@ export const translation = {
       loading: "Loading...",
     },
   },
-
+  Planner: {
+    labels: {
+      category: "Category",
+      body_part: "Body Part",
+      available_exercises: "Available Exercises",
+      workout_plan: "Workout Plan",
+      sets: "sets",
+      reps: "reps",
+      selected: "selected",
+      loading: "Loading...",
+    },
+    status: {
+      awaiting: "Awaiting",
+      cancelled: "Cancelled",
+      expired: "Expired",
+      completed: "Completed",
+    },
+    errors: {
+      no_activities: "No activities have been selected",
+      end_date_before_start_date: "End date must be after start date",
+    },
+    messages: {
+      title: "Edit Workout Plan",
+      success_message: "Successfully edited a workout plan",
+    },
+    fields: {
+      title: "Title",
+      plan_ID: "Plan ID",
+      member: "Member",
+      trainer: "Trainer",
+      starts_at: "Starts At",
+      ends_at: "Ends At",
+      comment: "Comment",
+      activities: "Activities",
+      sets: "sets",
+      reps: "reps",
+      category: "Category",
+      body_part: "Body Part",
+      selected: "selected",
+      workout_plan: "Workout Plan",
+      available_exercises: "Available Exercises",
+    },
+    buttons: {
+      change_member: "Change Member",
+      change_trainer: "Change Trainer",
+      edit_activities: "Edit Activities",
+      add_activities: "Add Activities",
+      exit: "Exit",
+      cancel: "Cancel",
+      confirm: "Confirm",
+      save: "Save",
+    },
+  },
+  Exercises: {
+    titles: {
+      add_exercise: "Add Exercise",
+    },
+    fields: {
+      name: "Name",
+      category: "Category",
+      body_part: "Body Part",
+      instructions: "Instructions",
+      search: "Search",
+    },
+    buttons: {
+      save: "Save",
+      clear: "Clear",
+    },
+    messages: {
+      create_exercise_title: "Create Exercise",
+      create_exercise_success: "Successfully created an exercise",
+    },
+  },
   Settings: {
     tabs: {
       generalSettings: "General Settings",
@@ -200,6 +241,7 @@ export const translation = {
     generalSettings: {},
     displaySettings: {
       language: "Language",
+      theme: "Theme",
     },
     accountSettings: {
       messages: {
@@ -263,6 +305,55 @@ export const translation = {
     phoneNumber: "Phone Number",
     hireDate: "Hired",
   },
+  ExercisesTable: {
+    name: "Name",
+    category: "Category",
+    bodyPart: "Body Part",
+    edit: "Edit",
+    delete: "Delete",
+  },
+
+  // Rows
+  MemberRow: {
+    fields: {
+      active: "Active",
+      inactive: "Inactive",
+      banned: "Banned",
+      pending: "Pending",
+    },
+    messages: {
+      title: "Delete Member",
+      successMessage: "Successfully deleted a member",
+      text: "Are you sure you want to delete the member?",
+    },
+  },
+  PackageRow: {
+    messages: {
+      title: "Delete Package",
+      successDelete: "Successfully deleted a package",
+      text: "Are you sure you want to delete the package?",
+    },
+  },
+  ExerciseRow: {
+    messages: {
+      confirm_delete_title: "Delete Exercise",
+      confirm_delete_text: "Are you sure you want to delete the exercise?",
+      delete_exercise_title: "Delete Exercise",
+      delete_exercise_success: "Successfully deleted an exercise",
+      edit_exercise_title: "Edit Exercise",
+      edit_exercise_success: "Successfully edited an exercise",
+    },
+    fields: {
+      name: "Name",
+      category: "Category",
+      body_part: "Body Part",
+      instructions: "Instructions",
+    },
+    buttons: {
+      save: "Save",
+      clear: "Clear",
+    },
+  },
 
   // Components
   CustomAccountMenu: {
@@ -270,7 +361,6 @@ export const translation = {
     settings: "Settings",
     logout: "Sign Out",
   },
-
   CustomStepper: {
     optional: "Optional",
     btnNext: "Next",
@@ -279,9 +369,88 @@ export const translation = {
     btnFinish: "Finish",
     btnReset: "Reset",
   },
-
   ConfirmModal: {
     btnYes: "Yes",
     btnNo: "No",
+  },
+  AddPackage: {
+    fields: {
+      name: "Package Name",
+      price: "Price",
+    },
+    components: {
+      h1Component: "Insert a new package",
+    },
+    buttons: {
+      btnSave: "Save",
+    },
+    messages: {
+      title: "Add Member",
+      successMessage: "Successfully added a new package",
+    },
+  },
+
+  // Modals
+  MemberModal: {
+    tabs: {
+      general_info: "General Information",
+      memberships: "Memberships",
+    },
+    fields: {
+      member_ID: "Member ID",
+      first_name: "First Name",
+      last_name: "Last Name",
+      gender: "Gender",
+      address: "Address",
+      phone_number: "Phone Number",
+      birth_date: "Birth Date",
+      email: "Email",
+    },
+    buttons: {
+      cancel: "Cancel",
+      edit: "Edit",
+      save: "Save",
+      delete: "Delete",
+    },
+    messages: {},
+  },
+
+  CustomEditor: {
+    fields: {
+      title: "Title",
+      plan_ID: "Plan ID",
+      member: "Member",
+      trainer: "Trainer",
+      starts_at: "Starts At",
+      ends_at: "Ends At",
+      comment: "Comment",
+      activities: "Activities",
+      sets: "sets",
+      reps: "reps",
+    },
+    buttons: {
+      change_member: "Change Member",
+      change_trainer: "Change Trainer",
+      edit_activities: "Edit Activities",
+      cancel: "Cancel",
+      confirm: "Confirm",
+    },
+    errors: {
+      no_activities: "No activities have been selected",
+      end_date_before_start_date: "End date must be after start date",
+    },
+    messages: {
+      title: "Edit Workout Plan",
+      success_message: "Successfully edited a workout plan",
+    },
+  },
+  CustomViewer: {
+    fields: {
+      loading: "Loading...",
+      awaiting: "Awaiting",
+      cancelled: "Cancelled",
+      expired: "Expired",
+      completed: "Completed",
+    },
   },
 };

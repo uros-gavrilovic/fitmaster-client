@@ -21,6 +21,8 @@ import {
 } from "../../../utils/utilFunctions";
 import { useIsMount } from "../../../utils/customHooks/useIsMount";
 import Loading from "../../reusable/Loading";
+import { useTheme } from "@emotion/react";
+import { themeConstants } from "../../../constants/globals";
 
 const WorkoutPlans = (props) => {
   const { t } = props || {};
@@ -42,8 +44,9 @@ const WorkoutPlans = (props) => {
   const [eventDetails, setEventDetails] = useState(initialEventDetails);
   const [events, setEvents] = useState([]); // events that are already set for the logged in trainer
   const [schedulerLoading, setSchedulerLoading] = useState(true);
-  const isMount = useIsMount();
 
+  const isMount = useIsMount();
+  const theme = useTheme();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(exercisesActions.fetchExercisesDTO());
@@ -81,14 +84,6 @@ const WorkoutPlans = (props) => {
       });
     });
   };
-  const handleDeleteEvent = async (deletedId) => {
-    // // Simulate http request: return the deleted id
-    // return new Promise((res, rej) => {
-    // 	setTimeout(() => {
-    // 		res(deletedId);
-    // 	}, 3000);
-    // });
-  };
   const handleSavePlan = () => {
     if (!validatePlan(eventDetails, t?.messages)) return;
 
@@ -114,7 +109,10 @@ const WorkoutPlans = (props) => {
           >
             <Box
               sx={{
-                bgcolor: "#e0e0e0",
+                bgcolor:
+                  theme.palette.mode === themeConstants.LIGHT
+                    ? theme.palette.background.paper
+                    : theme.palette.menu.dark,
                 borderRadius: "1rem",
                 padding: "1rem",
                 display: "grid",
@@ -150,7 +148,6 @@ const WorkoutPlans = (props) => {
                 deletable={false}
                 editable={false}
                 onConfirm={handleAddEvent}
-                onDelete={handleDeleteEvent}
                 translations={t?.scheduler}
               />
             )}

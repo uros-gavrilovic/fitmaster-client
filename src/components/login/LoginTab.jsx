@@ -5,19 +5,22 @@ import IconTextField from "../reusable/inputFields/IconTextField";
 import { validateField } from "../../utils/utilFunctions";
 import { useDispatch } from "react-redux";
 import * as userActions from "../../actions/user";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Logo from "../reusable/Logo";
-import IconButton from "../reusable/buttons/IconButton";
+// import IconButton from "../reusable/buttons/IconButton";
+import IconButton from "@mui/material/IconButton";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import LoginIcon from "@mui/icons-material/Login";
+import { useTheme } from "@emotion/react";
 
 export default function LoginTab(props) {
   const { t, handleTabChange } = props || {};
+  const theme = useTheme();
 
   const dispatch = useDispatch();
   const [loginState, setLoginState] = useState({
-    username: "",
-    password: "",
+    username: "admin", // Testing purposes only
+    password: "admin", // Testing purposes only
   });
   const [loginErrorState, setLoginErrorState] = useState({
     username: false,
@@ -48,17 +51,23 @@ export default function LoginTab(props) {
   };
 
   return (
-    <Box id="login-container" className="center container dark-container">
+    <Box
+      id="login-container"
+      className="center container"
+      sx={{
+        background: theme.palette.menu.default,
+        color: theme.palette.text.primary,
+      }}
+    >
       <Logo />
-      <h3>{t?.titleLogIn}</h3>
+      {t?.titleLogIn}
       <IconTextField
         id="username"
         title={t?.input?.username}
-        icon={
-          <AccountCircle style={{ color: "white" }} sx={{ mr: 1, my: 0.5 }} />
-        }
+        icon={<AccountCircle sx={{ mr: 1, my: 0.5 }} />}
         required
         error={loginErrorState.username}
+        value={loginState.username}
         onChange={(e) =>
           setLoginState({
             ...loginState,
@@ -70,15 +79,11 @@ export default function LoginTab(props) {
         id="password"
         title={t?.input?.password}
         type="password"
-        icon={
-          <HttpsRoundedIcon
-            style={{ color: "white" }}
-            sx={{ mr: 1, my: 0.5 }}
-          />
-        }
+        icon={<HttpsRoundedIcon sx={{ mr: 1, my: 0.5 }} />}
         margin="dense"
         required
         error={loginErrorState.password}
+        value={loginState.password}
         onChange={(e) =>
           setLoginState({
             ...loginState,
@@ -95,20 +100,23 @@ export default function LoginTab(props) {
           gridTemplateColumns: "1fr 1fr",
         }}
       >
-        <IconButton
+        <Button
           title={t?.buttons?.btnRegister}
-          leftIcon={<KeyboardDoubleArrowLeftIcon style={{ color: "white" }} />}
+          startIcon={<KeyboardDoubleArrowLeftIcon />}
           variant="outlined"
           style={{ width: "100%" }}
           onClick={handleTabChange}
-        />
-        <IconButton
-          title={t?.buttons?.btnLogIn}
-          rightIcon={<LoginIcon style={{ color: "white" }} />}
+        >
+          {t?.buttons?.btnRegister}
+        </Button>
+        <Button
+          endIcon={<LoginIcon />}
           variant="contained"
           style={{ width: "100%" }}
           onClick={handleLogIn}
-        />
+        >
+          {t?.buttons?.btnLogIn}
+        </Button>
       </div>
     </Box>
   );

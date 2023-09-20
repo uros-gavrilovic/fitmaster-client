@@ -2,36 +2,24 @@ import apiService from "../utils/apiService";
 import { createNotification } from "../utils/notificationService";
 import {
   appInfoPath,
-  loginTrainerPath,
-  logoutTrainerPath,
+  loginPath,
+  registerPath,
   trainersChangePasswordPath,
 } from "../constants/apiEndpoints";
 import { userActions } from "../reducers/user";
 import {
   notificationType,
   sessionStorageConstants,
+  userRoles,
 } from "../constants/globals";
 import { handleError } from "../utils/utilFunctions";
-
-export const fetchAppInfo = () => {
-  return (dispatch) => {
-    dispatch(userActions.actionStart());
-    return apiService
-      .get(appInfoPath())
-      .then((response) => {
-        setAppInfo(response.data, dispatch);
-      })
-      .catch((err) => {
-        dispatch(userActions.actionError(err?.response?.data));
-      });
-  };
-};
+import { trainersActions } from "../reducers/trainers";
 
 export const login = (data, msg) => {
   return (dispatch) => {
     dispatch(userActions.actionStart());
     return apiService
-      .post(loginTrainerPath(), data)
+      .post(loginPath(), { ...data, role: userRoles.TRAINER })
       .then((response) => {
         dispatch(userActions.login(response.data));
         createNotification(
@@ -41,7 +29,17 @@ export const login = (data, msg) => {
         );
       })
       .catch((err) => {
-        handleError(err, userActions, dispatch);
+        if (err.response.status === 403) {
+          const messages = err.response.data;
+
+          createNotification(
+            notificationType.warning,
+            messages.title,
+            messages?.message
+          );
+        } else {
+          handleError(err, userActions, dispatch);
+        }
       });
   };
 };
@@ -67,6 +65,27 @@ export const logout = (data, msg) => {
   };
 };
 
+export const register = (data, msg) => {
+  return (dispatch) => {
+    dispatch(trainersActions.actionStart());
+    return apiService
+      .post(registerPath(), { ...data, role: userRoles.TRAINER })
+      .then((response) => {
+        dispatch(trainersActions.addTrainer(response.data));
+      })
+      .then(() => {
+        createNotification(
+          notificationType.success,
+          msg?.registerTitle,
+          msg?.registerSuccessMessage
+        );
+      })
+      .catch((err) => {
+        handleError(err, trainersActions, dispatch);
+      });
+  };
+};
+
 export const changePassword = (data, messages) => {
   return (dispatch) => {
     dispatch(userActions.actionStart());
@@ -87,9 +106,3 @@ export const changePassword = (data, messages) => {
       });
   };
 };
-
-function setAppInfo(data, dispatch) {
-  sessionStorage.setItem(sessionStorageConstants.APP_NAME, data?.appName);
-  sessionStorage.setItem(sessionStorageConstants.APP_VERSION, data?.appVersion);
-  sessionStorage.setItem(sessionStorageConstants.LOCALE, data?.appLocale);
-}

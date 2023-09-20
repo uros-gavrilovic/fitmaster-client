@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import CustomAccordion from "../../reusable/containers/CustomAccordion";
 import { useState, useEffect, Fragment } from "react";
-import { TextField } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 import {
   boldTextParser,
   capitalizeFirstLetter,
@@ -23,30 +23,14 @@ import * as exercisesActions from "../../../actions/exercises";
 import GrayedOut from "../../reusable/text/GrayedOut";
 import Bold from "../../reusable/text/Bold";
 
-function not(a, b) {
-  return a.filter((value) => b.indexOf(value) === -1);
-}
-function intersection(a, b) {
-  return a.filter((value) => b.indexOf(value) !== -1);
-}
-function union(a, b) {
-  return [...a, ...not(b, a)];
-}
-
 export default function ExerciseTransferList(props) {
   const {
     availableExercises,
     setAvailableExercises,
-    chosenExercises,
-    setChosenExercises,
-    plan,
-    setPlan,
+    chosenActivities,
+    setChosenActivities,
     t,
   } = props || {};
-
-  useEffect(() => {
-    setPlan(chosenExercises);
-  }, [chosenExercises]);
 
   const [volume, setVolume] = useState({ reps: "", sets: "" });
   const [error, setError] = useState({ reps: false, sets: false });
@@ -98,26 +82,22 @@ export default function ExerciseTransferList(props) {
     setCategoriesState(categories);
   }, [bodyParts, categories]);
 
-  const getExerciseTitle = (targetID) => {
-    // Finds selected exercise in state and returns it's name with exercise volume.
-
-    const exercise = chosenExercises.find(
-      (exercise) => exercise.exerciseID === targetID
-    );
-
+  const getExerciseTitle = (activity) => {
     return (
       <Fragment>
-        {exercise.name}{" "}
-        <GrayedOut>({capitalizeFirstLetter(exercise.category)})</GrayedOut>
+        {activity.exercise.name}{" "}
+        <GrayedOut>
+          ({capitalizeFirstLetter(activity.exercise.category)})
+        </GrayedOut>
         {" | "}
-        <Bold>{exercise.sets}</Bold> {t?.sets} x <Bold>{exercise.reps}</Bold>{" "}
-        {t?.reps}
+        <Bold>{activity.sets}</Bold> {t?.fields?.sets} x{" "}
+        <Bold>{activity.reps}</Bold> {t?.fields?.reps}
       </Fragment>
     );
   };
 
   const left = filteredExercises;
-  const right = chosenExercises;
+  const right = chosenActivities;
 
   const [checked, setChecked] = useState([]);
 
@@ -159,15 +139,17 @@ export default function ExerciseTransferList(props) {
       return;
     }
 
-    const newExercises = leftChecked.map((exercise) => {
+    const newActivities = leftChecked.map((exercise) => {
       return {
-        ...exercise,
+        activityID: null,
+        exercise: exercise,
         reps: volume.reps,
         sets: volume.sets,
+        comment: null,
       };
     });
 
-    setChosenExercises(right.concat(newExercises));
+    setChosenActivities(chosenActivities.concat(newActivities));
     setFilteredExercises(not(left, leftChecked));
     setAvailableExercises(not(left, leftChecked)); // avoid duplicates when removing filters
     setChecked(not(checked, leftChecked));
@@ -176,7 +158,7 @@ export default function ExerciseTransferList(props) {
   const handleCheckedLeft = () => {
     setFilteredExercises(left.concat(rightChecked));
     setAvailableExercises(left.concat(rightChecked));
-    setChosenExercises(not(right, rightChecked));
+    setChosenActivities(not(right, rightChecked));
     setChecked(not(checked, rightChecked));
   };
 
@@ -209,7 +191,9 @@ export default function ExerciseTransferList(props) {
           />
         }
         title={title}
-        subheader={`${numberOfChecked(items)}/${items.length} ${t?.selected}`}
+        subheader={`${numberOfChecked(items)}/${items.length} ${
+          t?.fields?.selected
+        }`}
       />
       <Divider />
       <List
@@ -247,7 +231,7 @@ export default function ExerciseTransferList(props) {
               <CustomAccordion
                 title={
                   side === "RIGHT-SIDE" ? (
-                    getExerciseTitle(value.exerciseID)
+                    getExerciseTitle(value)
                   ) : (
                     <>
                       {value.name}{" "}
@@ -272,10 +256,10 @@ export default function ExerciseTransferList(props) {
   );
 
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div style={{ display: "flex", flexDirection: "column", width: "80vw" }}>
       <div>
         <CustomChipSelect
-          title={t?.category}
+          title={t?.fields?.category}
           multiple={true}
           items={categoriesState}
           selectedItems={selectedItems.categories}
@@ -287,7 +271,7 @@ export default function ExerciseTransferList(props) {
           }}
         />
         <CustomChipSelect
-          title={t?.bodyPart}
+          title={t?.fields?.body_part}
           multiple={true}
           items={bodyPartsState}
           selectedItems={selectedItems.bodyParts}
@@ -311,36 +295,30 @@ export default function ExerciseTransferList(props) {
         }}
       >
         <Grid item sx={{ flexGrow: 1 }}>
-          {customList(t?.availableExercises, left, "LEFT-SIDE", t)}
+          {customList(t?.fields?.available_exercises, left, "LEFT-SIDE", t)}
         </Grid>
         <Grid item style={{ display: " flex" }}>
           <Grid container direction="column" alignItems="center">
-            <Grid
-              container
-              direction="row"
-              alignItems="center"
-              style={{ display: "flex", justifyContent: "space-around" }}
-            >
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
               <TextField
                 id="sets"
-                label={t?.sets}
+                label={t?.fields?.sets}
                 error={error.sets}
                 sx={{ m: 1, width: "7ch" }}
                 disabled={leftChecked.length === 0}
                 value={volume.sets}
                 onChange={handleVolumeChange}
               />
-              x
               <TextField
                 id="reps"
-                label={t?.reps}
+                label={t?.fields?.reps}
                 error={error.reps}
                 sx={{ m: 1, width: "7ch" }}
                 disabled={leftChecked.length === 0}
                 value={volume.reps}
                 onChange={handleVolumeChange}
               />
-            </Grid>
+            </Box>
 
             <Button
               sx={{ my: 0.5 }}
@@ -365,9 +343,19 @@ export default function ExerciseTransferList(props) {
           </Grid>
         </Grid>
         <Grid item sx={{ flexGrow: 1 }}>
-          {customList(t?.workoutPlan, right, "RIGHT-SIDE", t)}
+          {customList(t?.fields?.workout_plan, right, "RIGHT-SIDE", t)}
         </Grid>
       </Grid>
     </div>
   );
+}
+
+function not(a, b) {
+  return a.filter((value) => b.indexOf(value) === -1);
+}
+function intersection(a, b) {
+  return a.filter((value) => b.indexOf(value) !== -1);
+}
+function union(a, b) {
+  return [...a, ...not(b, a)];
 }

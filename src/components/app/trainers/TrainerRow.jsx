@@ -9,11 +9,15 @@ import withTranslations from "../../../utils/HighOrderComponent";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import * as trainersActions from "../../../actions/trainers";
 import { StyledBadge } from "../../reusable/containers/CustomAccountMenu";
+import { useTheme } from "@mui/material";
+import { themeConstants } from "../../../constants/globals";
 
 const TrainerRow = (props) => {
   const { t, trainer } = props || {};
 
   const dispatch = useDispatch();
+  const theme = useTheme();
+
   const [trainerState, setTrainerState] = useState(trainer);
   const [infoModalVisible, setInfoModalVisible] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
@@ -42,7 +46,12 @@ const TrainerRow = (props) => {
         key={trainerState.trainerID}
         sx={
           trainerState?.trainerID === 0
-            ? { backgroundColor: "rgb(255, 228, 222)" }
+            ? {
+                bgcolor:
+                  theme.palette.mode === themeConstants.LIGHT
+                    ? theme.palette.error.light
+                    : theme.palette.error.dark,
+              }
             : null
         }
       >

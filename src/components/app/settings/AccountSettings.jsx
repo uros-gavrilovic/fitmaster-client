@@ -29,10 +29,12 @@ import { useIsMount } from "../../../utils/customHooks/useIsMount";
 import CustomModal from "../../reusable/modals/CustomModal";
 import ChangePasswordModal from "./ChangePasswordModal";
 import * as userActions from "../../../actions/user";
+import { useTheme } from "@mui/material";
 
 export default function AccountSettings(props) {
   const { t } = props || {};
 
+  const theme = useTheme();
   const isMount = useIsMount();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.userReducer);
@@ -146,7 +148,9 @@ export default function AccountSettings(props) {
         />
       </CustomModal>
 
-      <CustomBox sx={{ width: "100%" }}>
+      <CustomBox
+        sx={{ width: "100%", bgcolor: theme.palette.background.paper }}
+      >
         <h2>
           <ManageAccountsIcon />
           {t?.tabs?.accountSettings}

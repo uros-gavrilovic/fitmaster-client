@@ -1,31 +1,23 @@
-import { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as membersActions from "../../../actions/members";
-import PaginationTable from "../../reusable/tables/PaginationTable";
 import membersConfig from "./membersConfig";
 import MemberRow from "./MemberRow";
 import IconTextField from "../../reusable/inputFields/IconTextField";
 import SearchIcon from "@mui/icons-material/Search";
 import withTranslations from "../../../utils/HighOrderComponent";
 import MembersTable from "./MembersTable";
-
-const rowComponentFunction = (row) => {
-  return <MemberRow member={row} key={row.memberID} />;
-};
+import Loading from "../../reusable/Loading";
 
 const Members = (props) => {
   const { t } = props || {};
 
-  const { membersDTO } = useSelector((state) => state.membersReducer);
-  const [members, setMembers] = useState(membersDTO);
+  const { membersDTO, loading } = useSelector((state) => state.membersReducer);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(membersActions.fetchMembersDTO());
   }, [dispatch]);
-  useEffect(() => {
-    setMembers(membersDTO);
-  }, [membersDTO]);
 
   const handleSearch = (e) => {
     dispatch(membersActions.searchMembersDTO(e.target.value));
@@ -33,8 +25,10 @@ const Members = (props) => {
 
   return (
     <Fragment>
-      {membersDTO.length === undefined ? (
-        <h1>{t?.messages?.noMembers}</h1>
+      {loading ? (
+        <Loading />
+      ) : membersDTO.length === 0 ? (
+        <div>{t?.messages?.noMembers}</div>
       ) : (
         <Fragment>
           <IconTextField
@@ -47,7 +41,7 @@ const Members = (props) => {
           <MembersTable
             style={{ width: "100%", height: "100%" }}
             config={membersConfig()}
-            rows={members}
+            rows={membersDTO}
             rowComponent={rowComponentFunction}
           />
         </Fragment>
@@ -57,3 +51,7 @@ const Members = (props) => {
 };
 
 export default withTranslations(Members);
+
+const rowComponentFunction = (row) => {
+  return <MemberRow member={row} key={row.memberID} />;
+};

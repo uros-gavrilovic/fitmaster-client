@@ -78,9 +78,19 @@ export function contains(obj, string, ignoreCase = false) {
 }
 
 export function validateField(field, fieldName, setErrorState) {
-  // Validates whetever field is empty or not.
+  // Validate whetever field is empty or not. Works for strings and arrays.
 
-  const error = !field;
+  let error = false;
+
+  if (typeof field === "string") {
+    error = !field.trim();
+  } else if (Array.isArray(field)) {
+    error = field.length === 0;
+  } else {
+    // Handle other types as needed
+    // ...
+  }
+
   setErrorState((prevState) => ({ ...prevState, [fieldName]: error }));
   return error;
 }
@@ -112,11 +122,11 @@ export function handleError(error, actions, dispatch) {
   // Creates notification and dispatches error action.
 
   const messages = error.response.data;
-  dispatch(actions.actionError(error?.response?.data));
+  // dispatch(actions.actionError(error?.response?.data));
   createNotification(
     notificationType.error,
-    messages?.title,
-    messages?.message
+    messages?.title || "Greška!",
+    messages?.message || "Nije moguće pronaći plan treninga!"
   );
 
   // if (error.response.status === 401) return window.location.reload();
@@ -156,9 +166,10 @@ export const boldTextParser = (text) => {
 export function getTranslationFile() {
   // Returns translation file name
 
-  const appName = sessionStorage.getItem("appName") || appInfo.name;
+  const appName = sessionStorage.getItem("appName") || appInfo.DEFAULT_NAME;
   const language =
-    sessionStorage.getItem("appLocale") || appInfo.default_locale;
+    sessionStorage.getItem("appLocale") || appInfo.DEFAULT_LOCALE;
+
   return `${appName}_${language}`;
 }
 
@@ -186,4 +197,17 @@ export function formatDateForScheduler(backEndDate) {
       backEndDate[4] // Minute
     )
   );
+}
+
+export function removeArray(jsonObject, fieldName) {
+  // Switches one element array to a single element
+
+  if (
+    jsonObject[fieldName] &&
+    Array.isArray(jsonObject[fieldName]) &&
+    jsonObject[fieldName].length === 1
+  ) {
+    jsonObject[fieldName] = jsonObject[fieldName][0];
+  }
+  return jsonObject;
 }
