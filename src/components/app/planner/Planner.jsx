@@ -74,39 +74,21 @@ const Planner = (props) => {
           sessionStorage.getItem("appLocale") === "sr" ? srLatn : enUS // TODO: Needs to be optimized.
         }
         events={events}
-        customEditor={(scheduler) => (
-          <CustomEditor scheduler={scheduler} t={t} />
-        )}
-        viewerExtraComponent={(fields, event) => (
-          <CustomViewer fields={fields} event={event} t={t} />
-        )}
+        customEditor={(scheduler) => {
+          if (scheduler.edited) {
+            return <CustomEditor scheduler={scheduler} t={t} />;
+          } else {
+            // TODO: To be implemented. Now it just doesn't open the editor in case event is not clicked on.
+            scheduler.close();
+            return null;
+          }
+        }}
+        viewerExtraComponent={(fields, event) => {
+          return <CustomViewer fields={fields} event={event} t={t} />;
+        }}
         onEventClick={async (event) =>
           await dispatch(plansActions.fetchPlan(event.event_id))
         }
-        fields={[
-          {
-            name: "member",
-            type: "input",
-            default: "Default Value...",
-            config: {
-              label: "Member",
-              required: true,
-              errMsg: "errmsg",
-            },
-          },
-          {
-            name: "comment",
-            type: "input",
-            default: "Default Value...",
-            config: {
-              label: "Comment",
-              required: false,
-              errMsg: "errmsg",
-              multiline: true,
-              rows: 4,
-            },
-          },
-        ]}
         deleteable={true}
         editable={true}
         onDelete={handleDeleteEvent}
