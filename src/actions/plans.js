@@ -93,8 +93,6 @@ export const updatePlan = (event, msg) => {
     endsAt: event.end,
   };
 
-  console.log(plan);
-
   return async (dispatch) => {
     // Dispatch an action to indicate the start of the operation
     dispatch(plansActions.actionStart());
