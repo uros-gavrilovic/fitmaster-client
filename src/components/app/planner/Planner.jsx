@@ -6,20 +6,8 @@ import { enUS, srLatn } from "date-fns/locale";
 import { useDispatch, useSelector } from "react-redux";
 import * as plansActions from "../../../actions/plans";
 import { useIsMount } from "../../../utils/customHooks/useIsMount";
-import {
-  formatDate,
-  formatDateForScheduler,
-} from "../../../utils/utilFunctions";
+import { formatDateForScheduler } from "../../../utils/utilFunctions";
 import Loading from "../../reusable/Loading";
-import { Button, DialogActions, TextField } from "@mui/material";
-import Box from "@mui/material/Box";
-import { TimeField } from "@mui/x-date-pickers/TimeField";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import PersonIcon from "@mui/icons-material/Person";
-import IconTextField from "../../reusable/inputFields/IconTextField";
-import PersonSearchIcon from "@mui/icons-material/PersonSearch";
-import MemberChooserModal from "../workout-plans/MemberChooserModal";
 import CustomViewer from "./CustomViewer";
 import CustomEditor from "./CustomEditor";
 
@@ -31,7 +19,7 @@ const Planner = (props) => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useSelector((eventState) => eventState.userReducer);
-  const { plans, plan } = useSelector((eventState) => eventState.plansReducer);
+  const { plans } = useSelector((eventState) => eventState.plansReducer);
 
   useEffect(() => {
     dispatch(plansActions.fetchPlansByTrainerID(user.trainerID));

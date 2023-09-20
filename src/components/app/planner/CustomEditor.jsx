@@ -17,7 +17,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import SaveIcon from "@mui/icons-material/Save";
-import ClearIcon from "@mui/icons-material/Clear";
 import { ListSubheader } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
