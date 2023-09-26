@@ -19,8 +19,8 @@ export default function LoginTab(props) {
 
   const dispatch = useDispatch();
   const [loginState, setLoginState] = useState({
-    username: "admin", // Testing purposes only
-    password: "admin", // Testing purposes only
+    username: "",
+    password: "",
   });
   const [loginErrorState, setLoginErrorState] = useState({
     username: false,
