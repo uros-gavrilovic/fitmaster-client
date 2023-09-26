@@ -125,8 +125,8 @@ export function handleError(error, actions, dispatch) {
   // dispatch(actions.actionError(error?.response?.data));
   createNotification(
     notificationType.error,
-    messages?.title || "Greška!",
-    messages?.message || "Nije moguće pronaći plan treninga!"
+    messages?.title || "Error",
+    messages?.message || "Unable to communicate with the server!"
   );
 
   // if (error.response.status === 401) return window.location.reload();
