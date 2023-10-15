@@ -1,6 +1,8 @@
 import axios from "axios";
 import store from "../reducers/index";
 
+const azureBaseUrl = "https://fitmaster-server-fitmaster.azuremicroservices.io";
+
 const handleErrors = async (error) => {
   throw error;
 };
@@ -8,7 +10,7 @@ const handleErrors = async (error) => {
 const apiService = {
   get(url) {
     return axios
-      .get(url, {
+      .get(azureBaseUrl + url, {
         headers: getHeaders(),
       })
       .catch(handleErrors);
@@ -16,7 +18,7 @@ const apiService = {
 
   post(url, body) {
     return axios
-      .post(url, body, {
+      .post(azureBaseUrl + url, body, {
         headers: getHeaders(),
       })
       .catch(handleErrors);
@@ -24,7 +26,7 @@ const apiService = {
 
   put(url, body) {
     return axios
-      .put(url, body, {
+      .put(azureBaseUrl + url, body, {
         headers: getHeaders(),
       })
       .catch(handleErrors);
@@ -32,7 +34,7 @@ const apiService = {
 
   delete(url) {
     return axios
-      .delete(url, {
+      .delete(azureBaseUrl + url, {
         headers: getHeaders(),
       })
       .catch(handleErrors);
@@ -46,10 +48,6 @@ function getHeaders() {
     "Content-Type": "application/json",
     ...(jwtToken !== undefined ? { Authorization: `Bearer ${jwtToken}` } : {}),
   };
-
-  // if (jwtToken !== undefined) {
-  //   headers["Authorization"] = jwtToken;
-  // }
 
   return headers;
 }
