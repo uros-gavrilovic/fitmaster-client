@@ -27,8 +27,6 @@ const Members = (props) => {
     <Fragment>
       {loading ? (
         <Loading />
-      ) : membersDTO.length === 0 ? (
-        <div>{t?.messages?.noMembers}</div>
       ) : (
         <Fragment>
           <IconTextField

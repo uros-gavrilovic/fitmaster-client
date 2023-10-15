@@ -214,11 +214,11 @@ export default function RegisterTab(props) {
 }
 
 const initialRegisterState = {
-  firstName: "Uros",
-  lastName: "Gavrilovic",
-  username: "uros",
-  password: "uros",
-  email: "urosukigavrilovic@gmail.com",
+  firstName: "",
+  lastName: "",
+  username: "",
+  password: "",
+  email: "",
 };
 const initialErrorState = {
   username: false,
