@@ -1,7 +1,8 @@
 import axios from "axios";
 import store from "../reducers/index";
 
-const azureBaseUrl = "https://fitmaster-server-fitmaster.azuremicroservices.io";
+// const azureBaseUrl = "https://fitmaster-server-fitmaster.azuremicroservices.io";
+const azureBaseUrl = "https://fitmaster-server.azurewebsites.net/";
 
 const handleErrors = async (error) => {
   throw error;
