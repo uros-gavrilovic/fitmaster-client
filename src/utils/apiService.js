@@ -2,8 +2,7 @@ import axios from "axios";
 import store from "../reducers/index";
 
 let serverDomain;
-serverDomain =
-  "https://fitmaster-server-fitmaster-server.azuremicroservices.io"; // Production server domain (Azure)
+serverDomain = "https://fitmaster-server.azuremicroservices.io"; // Production server domain (Azure)
 serverDomain = serverDomain || "http://localhost:3000";
 
 const handleErrors = async (error) => {
