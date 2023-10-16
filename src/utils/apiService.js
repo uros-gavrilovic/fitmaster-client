@@ -1,41 +1,42 @@
 import axios from "axios";
 import store from "../reducers/index";
 
-// const azureBaseUrl = "https://fitmaster-server-fitmaster.azuremicroservices.io";
-const azureBaseUrl = "https://fitmaster-server.azurewebsites.net/";
+let serverDomain;
+serverDomain = "https://fitmaster-server.azurewebsites.net/"; // Production server domain (Azure)
+serverDomain = serverDomain || "http://localhost:3000/";
 
 const handleErrors = async (error) => {
   throw error;
 };
 
 const apiService = {
-  get(url) {
+  get(path) {
     return axios
-      .get(azureBaseUrl + url, {
+      .get(serverDomain + path, {
         headers: getHeaders(),
       })
       .catch(handleErrors);
   },
 
-  post(url, body) {
+  post(path, body) {
     return axios
-      .post(azureBaseUrl + url, body, {
+      .post(serverDomain + path, body, {
         headers: getHeaders(),
       })
       .catch(handleErrors);
   },
 
-  put(url, body) {
+  put(path, body) {
     return axios
-      .put(azureBaseUrl + url, body, {
+      .put(serverDomain + path, body, {
         headers: getHeaders(),
       })
       .catch(handleErrors);
   },
 
-  delete(url) {
+  delete(path) {
     return axios
-      .delete(azureBaseUrl + url, {
+      .delete(serverDomain + path, {
         headers: getHeaders(),
       })
       .catch(handleErrors);
