@@ -1,3 +1,5 @@
+name: Deploy FitMaster (Client) to Azure
+
 on:
   push:
     branches:
