@@ -2,7 +2,6 @@
   "name": "fitmaster-client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://fitmaster-server-fitmaster.azuremicroservices.io",
   "dependencies": {
     "@aldabil/react-scheduler": "^2.7.17",
     "@devexpress/dx-react-core": "^4.0.5",
